@@ -1,0 +1,77 @@
+# WORLD FILM — เว็บไซต์ศูนย์ติดตั้งฟิล์มกรองแสง
+
+เว็บไซต์สแตติก (HTML/CSS ล้วน ไม่มีระบบหลังบ้าน) สำหรับ WORLD FILM
+ศูนย์ติดตั้งฟิล์มกรองแสงบ้าน อาคาร สำนักงาน คอนโด
+
+## เปิดดูเว็บ
+
+ดับเบิลคลิกไฟล์ **`index.html`** เพื่อเปิดในเบราว์เซอร์ได้เลย (ไม่ต้องติดตั้งอะไร)
+
+## โครงสร้างไฟล์
+
+```
+ProjectWorldFilm/
+├── index.html              ← หน้าแรกของเว็บ (เริ่มที่ไฟล์นี้)
+├── README.md               ← ไฟล์นี้ (อธิบายโครงสร้าง)
+├── CHANGELOG.md            ← บันทึกประวัติการแก้ไขทุกครั้ง
+│
+├── assets/                 ← รูปภาพทั้งหมดที่เว็บใช้งาน
+│   ├── logo-dark.png       ← โลโก้ตัวอักษรกรมท่า (ใช้บนเฮดเดอร์พื้นอ่อน)
+│   ├── logo-white.png      ← โลโก้ตัวอักษรขาว (ใช้บนฟุตเตอร์พื้นเข้ม)
+│   ├── brands/             ← โลโก้แบรนด์ฟิล์ม
+│   │   ├── finnix.png
+│   │   ├── 3m.png
+│   │   ├── regionfilm.png
+│   │   └── ultraguard.png
+│   └── source/             ← ไฟล์ภาพต้นฉบับ/สำรอง (ไม่ได้ใช้บนเว็บโดยตรง เก็บไว้เผื่ออนาคต)
+│       └── _old-pre-reorg/ ← คลังหน้า HTML เวอร์ชันเก่าก่อนจัดโครงสร้าง (path เสีย ไม่ใช้แล้ว เก็บอ้างอิง)
+│
+└── products/               ← หน้าแบรนด์และหน้ารุ่นฟิล์มทั้งหมด
+    ├── product.css         ← สไตล์ (CSS) ของหน้าในโฟลเดอร์นี้
+    │
+    ├── brand-finnix.html       ← หน้าแบรนด์ (รวมรุ่นในแบรนด์นั้น)
+    ├── brand-3m.html
+    ├── brand-regionfilm.html
+    ├── brand-ultraguard.html
+    │
+    ├── model-finnix-ceramic.html      ← หน้ารุ่น (สเปกฟิล์มรุ่นนั้น)
+    ├── model-finnix-titanium.html
+    ├── model-finnix-uvguard.html
+    ├── model-finnix-extra-clear.html
+    ├── model-3m-ultra-clear.html
+    ├── model-3m-ceramate.html
+    ├── model-regionfilm-ceramic.html
+    ├── model-regionfilm-smart.html
+    ├── model-ultraguard-ceramic.html
+    └── model-ultraguard-nano.html
+```
+
+## ผังการเชื่อมหน้า
+
+```
+index.html (หน้าแรก)
+   └─ เมนู "ฟิล์มของเรา" / การ์ดแบรนด์ 4 ช่อง
+        ├─ products/brand-finnix.html      → model-finnix-* (Ceramic, Titanium, UV Guard, Extra Clear)
+        ├─ products/brand-3m.html          → model-3m-* (Ultra Clear, Ceramate)
+        ├─ products/brand-regionfilm.html  → model-regionfilm-* (Ceramic, Smart)
+        └─ products/brand-ultraguard.html  → model-ultraguard-* (Ceramic, Nano)
+```
+
+หน้า `index.html` กับหน้าใน `products/` ใช้ **โค้ด header/footer ชุดเดียวกัน**
+(โลโก้ + เมนู dropdown + ปุ่มลอย LINE/โทร)
+
+## แก้ไขสิ่งที่ใช้บ่อย
+
+- **เบอร์โทร** `095-229-2086` / **LINE** `@worldcenter` / **Facebook** `https://www.facebook.com/Worldsfilm1`
+  → ค้นหาข้อความเหล่านี้ในไฟล์ HTML แล้วแก้ได้เลย (ทั้ง topbar, ส่วนติดต่อ, ปุ่มลอย, footer)
+- **เปลี่ยนโลโก้** → แทนไฟล์ใน `assets/logo-dark.png` และ `assets/logo-white.png`
+- **เปลี่ยนโลโก้แบรนด์** → แทนไฟล์ใน `assets/brands/`
+- **เพิ่ม/แก้รุ่นฟิล์ม** → ก๊อปไฟล์ `model-*.html` สักไฟล์เป็นแม่แบบ แก้ชื่อ/สเปก แล้วเพิ่มการ์ดลิงก์ในหน้า `brand-*.html` ของแบรนด์นั้น
+
+## หมายเหตุสำคัญ — สเปกตัวอย่าง
+
+หน้ารุ่นที่มี **แถบเหลืองแจ้งเตือน** ด้านบน ใช้ **ตัวเลขสเปกตัวอย่าง** (VLT / ลดความร้อน / รับประกัน)
+ยังไม่ใช่ข้อมูลจริง — เมื่อใส่ตัวเลขจริงแล้ว ให้ลบ `<div class="sample-note">…</div>` ในหน้านั้นออก
+(ดูรายการหน้าที่ยังเป็นสเปกตัวอย่างได้ใน `CHANGELOG.md`)
+
+— อัปเดตล่าสุด 2026-07-01

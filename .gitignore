@@ -1,0 +1,10 @@
+# ไฟล์ต้นฉบับงานออกแบบ + ของเก่า — ไม่อัปขึ้น GitHub
+# (ครอบคลุม assets/source/_old-pre-reorg/ ที่อยู่ข้างในด้วย)
+assets/source/
+
+# ไฟล์ระบบ / โปรแกรมแก้ไข
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+*.tmp

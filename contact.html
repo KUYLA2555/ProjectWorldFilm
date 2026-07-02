@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ติดต่อเรา — WORLD FILM ศูนย์ติดตั้งฟิล์มกรองแสง</title>
+    <meta
+      name="description"
+      content="ติดต่อ WORLD FILM ศูนย์ติดตั้งฟิล์มกรองแสงพรีเมียม โทร 095-229-2086 LINE @worldcenter หรือกรอกแบบฟอร์มเพื่อรับคำปรึกษาฟรี"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Trirong:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="products/product.css" />
+    <style>
+      /* ============ reveal (เหมือน index) ============ */
+      .reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+      }
+
+      /* ============ footer socials (เติมจาก index) ============ */
+      .footer .fsoc {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+      }
+      .footer .fsoc a {
+        width: 36px;
+        height: 36px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        transition: 0.25s;
+      }
+      .footer .fsoc a:hover {
+        background: var(--gold);
+        border-color: var(--gold);
+      }
+      .footer .fsoc svg {
+        width: 16px;
+        height: 16px;
+        fill: #cfd6e2;
+      }
+      .footer .fsoc a:hover svg {
+        fill: var(--ink);
+      }
+
+      /* ============ contact hero ============ */
+      .contact-hero {
+        text-align: center;
+        max-width: 720px;
+        margin: 0 auto;
+      }
+      .contact-hero h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.6rem, 6vw, 4.2rem);
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: var(--ink);
+        line-height: 1.05;
+        margin: 12px 0 8px;
+      }
+      .contact-hero .th {
+        color: var(--slate);
+        font-weight: 300;
+        font-size: 1.08rem;
+      }
+      .contact-hero .addr {
+        margin-top: 24px;
+        display: inline-flex;
+        align-items: flex-start;
+        gap: 12px;
+        text-align: left;
+        color: var(--ink-soft);
+        font-weight: 400;
+        max-width: 480px;
+      }
+      .contact-hero .addr svg {
+        width: 22px;
+        height: 22px;
+        fill: var(--gold);
+        flex: none;
+        margin-top: 3px;
+      }
+      .contact-hero .addr b {
+        color: var(--ink);
+        font-weight: 600;
+      }
+
+      /* ============ map ============ */
+      .map-wrap {
+        position: relative;
+        margin-top: 56px;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+      }
+      .map-wrap iframe {
+        display: block;
+        width: 100%;
+        height: 460px;
+        border: 0;
+        filter: grayscale(0.25) contrast(1.03);
+      }
+      .map-badge {
+        position: absolute;
+        left: 22px;
+        top: 22px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px 18px 12px 14px;
+        box-shadow: var(--shadow-sm);
+      }
+      .map-badge .pin {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        flex: none;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(150deg, var(--gold-bright), #b9852a);
+        box-shadow:
+          inset 0 1px 1px rgba(255, 255, 255, 0.7),
+          0 6px 14px rgba(192, 151, 63, 0.4);
+      }
+      .map-badge .pin svg {
+        width: 20px;
+        height: 20px;
+        fill: #fff;
+      }
+      .map-badge b {
+        font-size: 0.94rem;
+        color: var(--ink);
+        display: block;
+      }
+      .map-badge span {
+        font-size: 0.78rem;
+        color: var(--slate);
+      }
+
+      /* ============ get in touch (split) ============ */
+      .git {
+        display: grid;
+        grid-template-columns: 0.92fr 1.08fr;
+        gap: 56px;
+        align-items: start;
+      }
+      .git .col-h {
+        margin-bottom: 26px;
+      }
+      .git .col-h .eyebrow {
+        margin-bottom: 12px;
+      }
+      .git .col-h h2 {
+        font-size: clamp(1.5rem, 3vw, 2rem);
+      }
+      .git .col-h p {
+        color: var(--slate);
+        font-weight: 300;
+        margin-top: 10px;
+      }
+
+      /* channels — glass circular icons */
+      .chan-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .chan {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 18px 22px;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        box-shadow: var(--shadow-sm);
+        transition: 0.3s ease;
+      }
+      .chan:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--gold);
+      }
+      .chan .g {
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        flex: none;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.95),
+          rgba(214, 222, 235, 0.65)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        box-shadow:
+          inset 0 1px 2px rgba(255, 255, 255, 0.9),
+          inset 0 -4px 8px rgba(20, 34, 61, 0.08),
+          0 8px 18px rgba(20, 34, 61, 0.12);
+        backdrop-filter: blur(6px);
+      }
+      .chan .g svg {
+        width: 26px;
+        height: 26px;
+        fill: var(--ink);
+      }
+      .chan .g.mail svg {
+        fill: none;
+        stroke: var(--ink);
+        stroke-width: 1.7;
+      }
+      .chan .lab {
+        font-size: 0.7rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+      .chan .val {
+        font-weight: 600;
+        color: var(--ink);
+        font-size: 1.06rem;
+      }
+
+      /* form — hairline outlines + gold submit */
+      .cform {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 38px;
+        box-shadow: var(--shadow-sm);
+      }
+      .cform .row2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .cform .field {
+        margin-bottom: 18px;
+      }
+      .cform label {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--slate);
+        margin-bottom: 8px;
+        letter-spacing: 0.02em;
+      }
+      .cform input,
+      .cform textarea {
+        width: 100%;
+        font-family: inherit;
+        font-size: 0.98rem;
+        color: var(--ink);
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 13px 15px;
+        transition: 0.25s ease;
+      }
+      .cform input::placeholder,
+      .cform textarea::placeholder {
+        color: #9aa1ad;
+      }
+      .cform input:focus,
+      .cform textarea:focus {
+        outline: none;
+        border-color: var(--gold);
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(192, 151, 63, 0.15);
+      }
+      .cform textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+      .cform .btn {
+        width: 100%;
+        justify-content: center;
+        margin-top: 4px;
+      }
+      .cform .hint {
+        text-align: center;
+        font-size: 0.84rem;
+        color: var(--slate);
+        font-weight: 300;
+        margin-top: 14px;
+      }
+      .cform .hint a {
+        color: var(--gold);
+        font-weight: 500;
+      }
+
+      /* ============ value props — metal cards ============ */
+      .vprops {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 22px;
+      }
+      .vprop {
+        text-align: center;
+        padding: 36px 22px;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        box-shadow: var(--shadow-sm);
+        transition: 0.35s ease;
+      }
+      .vprop:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-md);
+      }
+      .vprop .m {
+        width: 66px;
+        height: 66px;
+        margin: 0 auto 18px;
+        border-radius: 18px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(
+          145deg,
+          #eef1f6,
+          #c7cfdb 42%,
+          #eef1f6 58%,
+          #a9b2c1
+        );
+        box-shadow:
+          inset 0 1px 1px rgba(255, 255, 255, 0.9),
+          inset 0 -2px 5px rgba(20, 34, 61, 0.18),
+          0 8px 18px rgba(20, 34, 61, 0.14);
+      }
+      .vprop .m svg {
+        width: 30px;
+        height: 30px;
+        color: var(--ink);
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 1.5;
+      }
+      .vprop b {
+        display: block;
+        font-size: 1.04rem;
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .vprop span {
+        font-size: 0.86rem;
+        color: var(--slate);
+        font-weight: 300;
+      }
+
+      /* ============ responsive ============ */
+      @media (max-width: 900px) {
+        .git {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .vprops {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 560px) {
+        .map-wrap iframe {
+          height: 340px;
+        }
+        .map-badge {
+          left: 14px;
+          top: 14px;
+          padding: 10px 14px 10px 12px;
+        }
+        .cform {
+          padding: 26px;
+        }
+        .cform .row2 {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+        .vprops {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============ TOP BAR ============ -->
+    <div class="topbar">
+      <div class="wrap">
+        <div class="socials">
+          <a href="https://line.me/R/ti/p/@worldcenter" aria-label="LINE"
+            ><svg viewBox="0 0 24 24">
+              <path
+                d="M12 2C6.5 2 2 5.6 2 10c0 3.9 3.5 7.2 8.3 7.8.3.1.7.2.8.5.1.3.1.7 0 1l-.1.8c0 .2-.2 1 .8.5s5.3-3.1 7.2-5.3C20.5 13.7 22 12 22 10c0-4.4-4.5-8-10-8z"
+              /></svg
+            >@WORLDCENTER</a
+          >
+          <a
+            href="https://www.facebook.com/Worldsfilm1"
+            aria-label="Facebook"
+            target="_blank"
+            rel="noopener"
+            ><svg viewBox="0 0 24 24">
+              <path
+                d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"
+              /></svg
+            >Facebook</a
+          >
+        </div>
+        <a class="addr" href="tel:+66952292086"
+          ><svg viewBox="0 0 24 24">
+            <path
+              d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.2 2.2z"
+            /></svg
+          >โทร 095-229-2086</a
+        >
+      </div>
+    </div>
+
+    <!-- ============ HEADER ============ -->
+    <header class="header" id="top">
+      <div class="wrap nav">
+        <a class="brand" href="index.html">
+          <img
+            class="brand-logo"
+            src="assets/logo-dark.png"
+            alt="WORLD FILM CENTER"
+          />
+        </a>
+        <ul class="menu" id="menu">
+          <li><a href="index.html">หน้าแรก</a></li>
+          <li class="has-sub">
+            <a href="index.html#brands"
+              >ฟิล์มของเรา
+              <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M6 9l6 6 6-6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+            <ul class="submenu">
+              <li><a href="products/brand-finnix.html">Finnix</a></li>
+              <li><a href="products/brand-3m.html">3M</a></li>
+              <li><a href="products/brand-regionfilm.html">Regionfilm</a></li>
+              <li><a href="products/brand-ultraguard.html">Ultra Guard</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#why">บริการ</a></li>
+          <li><a href="index.html#work">ผลงาน</a></li>
+          <li><a href="index.html#process">ขั้นตอน</a></li>
+          <li><a href="contact.html" class="active">ติดต่อ</a></li>
+        </ul>
+        <div class="nav-right">
+          <button
+            class="burger"
+            id="burger"
+            aria-label="เมนู"
+            aria-expanded="false"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ BREADCRUMB ============ -->
+    <nav class="crumb" aria-label="breadcrumb">
+      <div class="wrap">
+        <a href="index.html">หน้าแรก</a>
+        <span class="sep">/</span>
+        <b>ติดต่อเรา</b>
+      </div>
+    </nav>
+
+    <!-- ============ CONTACT HERO + ADDRESS ============ -->
+    <section class="section">
+      <div class="wrap">
+        <div class="contact-hero reveal">
+          <span class="eyebrow center">ติดต่อ WORLD FILM</span>
+          <h1>CONTACT US</h1>
+          <p class="th">พร้อมให้คำปรึกษาและประเมินหน้างานฟรี ทุกพื้นที่ทั่วประเทศ</p>
+          <div class="addr">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"
+              />
+            </svg>
+            <span
+              ><b>สำนักงานใหญ่</b><br />1177 ถ.กาญจนาภิเษก แขวงบางแคเหนือ
+              เขตบางแค กรุงเทพฯ 10160</span
+            >
+          </div>
+        </div>
+
+        <!-- MAP -->
+        <div class="map-wrap reveal">
+          <iframe
+            title="แผนที่ WORLD FILM"
+            src="https://maps.google.com/maps?q=1177%20%E0%B8%96.%E0%B8%81%E0%B8%B2%E0%B8%8D%E0%B8%88%E0%B8%99%E0%B8%B2%E0%B8%A0%E0%B8%B4%E0%B9%80%E0%B8%A9%E0%B8%81%20%E0%B9%80%E0%B8%82%E0%B8%95%E0%B8%9A%E0%B8%B2%E0%B8%87%E0%B9%81%E0%B8%84%20%E0%B8%81%E0%B8%A3%E0%B8%B8%E0%B8%87%E0%B9%80%E0%B8%97%E0%B8%9E%E0%B8%AF%2010160&z=15&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GET IN TOUCH ============ -->
+    <section class="section section--tint">
+      <div class="wrap">
+        <div class="git">
+          <!-- LEFT: channels -->
+          <div class="reveal">
+            <div class="col-h">
+              <span class="eyebrow">ช่องทางติดต่อ</span>
+              <h2 class="h-thai">Get In Touch</h2>
+              <p>เลือกช่องทางที่สะดวก ทีมงานพร้อมตอบทุกวัน</p>
+            </div>
+            <div class="chan-list">
+              <a class="chan" href="https://line.me/R/ti/p/@worldcenter">
+                <span class="g"
+                  ><svg viewBox="0 0 24 24">
+                    <path
+                      d="M12 2C6.5 2 2 5.6 2 10c0 3.9 3.5 7.2 8.3 7.8.3.1.7.2.8.5.1.3.1.7 0 1l-.1.8c0 .2-.2 1 .8.5s5.3-3.1 7.2-5.3C20.5 13.7 22 12 22 10c0-4.4-4.5-8-10-8z"
+                    /></svg
+                ></span>
+                <span>
+                  <span class="lab">Line / แชท</span>
+                  <span class="val">@WORLDCENTER</span>
+                </span>
+              </a>
+              <a
+                class="chan"
+                href="https://www.facebook.com/Worldsfilm1"
+                target="_blank"
+                rel="noopener"
+              >
+                <span class="g"
+                  ><svg viewBox="0 0 24 24">
+                    <path
+                      d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"
+                    /></svg
+                ></span>
+                <span>
+                  <span class="lab">Facebook</span>
+                  <span class="val">World's Film</span>
+                </span>
+              </a>
+              <a class="chan" href="mailto:worldfilmcenter@email.com">
+                <span class="g mail"
+                  ><svg viewBox="0 0 24 24">
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+                    <path d="m4 7 8 6 8-6" />
+                  </svg></span
+                >
+                <span>
+                  <span class="lab">Email</span>
+                  <span class="val">worldfilmcenter@email.com</span>
+                </span>
+              </a>
+              <a class="chan" href="tel:+66952292086">
+                <span class="g"
+                  ><svg viewBox="0 0 24 24">
+                    <path
+                      d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.2 2.2z"
+                    /></svg
+                ></span>
+                <span>
+                  <span class="lab">โทรศัพท์</span>
+                  <span class="val">095-229-2086</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- RIGHT: form -->
+          <div class="reveal">
+            <form class="cform" id="cform" novalidate>
+              <div class="col-h">
+                <span class="eyebrow">ส่งข้อความถึงเรา</span>
+                <h2 class="h-thai">กรอกแบบฟอร์ม</h2>
+              </div>
+              <div class="row2">
+                <div class="field">
+                  <label for="cname">ชื่อ-นามสกุล</label>
+                  <input id="cname" name="cname" type="text" placeholder="ชื่อของคุณ" required />
+                </div>
+                <div class="field">
+                  <label for="cphone">เบอร์โทร</label>
+                  <input id="cphone" name="cphone" type="tel" placeholder="08x-xxx-xxxx" required />
+                </div>
+              </div>
+              <div class="field">
+                <label for="cemail">อีเมล</label>
+                <input id="cemail" name="cemail" type="email" placeholder="you@email.com" />
+              </div>
+              <div class="field">
+                <label for="cmsg">รายละเอียด / พื้นที่ที่ต้องการติดฟิล์ม</label>
+                <textarea id="cmsg" name="cmsg" placeholder="เช่น บ้าน 2 ชั้น ต้องการฟิล์มกันร้อน..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-gold">SUBMIT</button>
+              <p class="hint">
+                หรือทัก <a href="https://line.me/R/ti/p/@worldcenter">LINE @worldcenter</a>
+                / <a href="tel:+66952292086">โทร 095-229-2086</a> ได้เลย
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ VALUE PROPS (metal cards) ============ -->
+    <section class="section">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="eyebrow center">ทำไมต้อง WORLD FILM</span>
+          <h2 class="h-thai">บริการครบ มั่นใจได้ทุกขั้นตอน</h2>
+        </div>
+        <div class="vprops reveal">
+          <div class="vprop">
+            <div class="m">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M21 11.5a8.4 8.4 0 0 1-9 8.4L3 21l1.1-4A8.4 8.4 0 1 1 21 11.5z"
+                />
+              </svg>
+            </div>
+            <b>ปรึกษาฟรี</b><span>โดยผู้เชี่ยวชาญ</span>
+          </div>
+          <div class="vprop">
+            <div class="m">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 19 19 5M8 8h.01M16 16h.01" />
+                <circle cx="7.5" cy="7.5" r="2.5" />
+                <circle cx="16.5" cy="16.5" r="2.5" />
+              </svg>
+            </div>
+            <b>ผ่อน 0%</b><span>นานสูงสุด 10 เดือน</span>
+          </div>
+          <div class="vprop">
+            <div class="m">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2 4 6v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V6l-8-4z" />
+                <path d="M9 12l2 2 4-4" />
+              </svg>
+            </div>
+            <b>รับประกัน 8 ปี</b><span>ยาวนานหมดห่วง</span>
+          </div>
+          <div class="vprop">
+            <div class="m">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 22c4-2.5 7-6.6 7-11V5l-7-3-7 3v6c0 4.4 3 8.5 7 11z" />
+                <path d="M12 8v4M12 15h.01" />
+              </svg>
+            </div>
+            <b>ปลอดสารพิษ</b><span>Low VOCs ปลอดภัย</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="wrap">
+        <div class="top">
+          <div class="fbrand">
+            <img
+              class="flogo"
+              src="assets/logo-white.png"
+              alt="WORLD FILM CENTER"
+            />
+            <p>
+              ศูนย์บริการติดตั้งฟิล์มกรองแสง บ้าน อาคาร สำนักงาน คอนโด มากกว่า 40
+              สาขาทั่วประเทศ
+            </p>
+            <div class="fsoc">
+              <a href="https://line.me/R/ti/p/@worldcenter" aria-label="LINE"
+                ><svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C6.5 2 2 5.6 2 10c0 3.9 3.5 7.2 8.3 7.8.3.1.7.2.8.5.1.3.1.7 0 1l-.1.8c0 .2-.2 1 .8.5s5.3-3.1 7.2-5.3C20.5 13.7 22 12 22 10c0-4.4-4.5-8-10-8z"
+                  /></svg
+              ></a>
+              <a
+                href="https://www.facebook.com/Worldsfilm1"
+                aria-label="Facebook"
+                target="_blank"
+                rel="noopener"
+                ><svg viewBox="0 0 24 24">
+                  <path
+                    d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"
+                  /></svg
+              ></a>
+              <a href="tel:+66952292086" aria-label="โทร"
+                ><svg viewBox="0 0 24 24">
+                  <path
+                    d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.2 2.2z"
+                  /></svg
+              ></a>
+            </div>
+          </div>
+          <div>
+            <h4>ฟิล์มของเรา</h4>
+            <ul>
+              <li><a href="products/brand-finnix.html">Finnix</a></li>
+              <li><a href="products/brand-3m.html">3M</a></li>
+              <li><a href="products/brand-regionfilm.html">Regionfilm</a></li>
+              <li><a href="products/brand-ultraguard.html">Ultra Guard</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>ติดต่อ</h4>
+            <ul>
+              <li>โทร 095-229-2086</li>
+              <li>LINE @WORLDCENTER</li>
+              <li>1177 ถ.กาญจนาภิเษก แขวงบางแคเหนือ เขตบางแค กรุงเทพฯ 10160</li>
+            </ul>
+          </div>
+        </div>
+        <div class="bottom">
+          <span>© 2026 WORLD FILM Center · ศูนย์ติดตั้งฟิล์มกรองแสง</span>
+          <span>ฟิล์มเซรามิกพรีเมียม Finnix Ceramic</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ============ FLOATING CTA ============ -->
+    <div class="fab">
+      <a class="line" href="https://line.me/R/ti/p/@worldcenter" aria-label="LINE"
+        ><svg viewBox="0 0 24 24" fill="#fff">
+          <path
+            d="M12 2C6.5 2 2 5.6 2 10c0 3.9 3.5 7.2 8.3 7.8.3.1.7.2.8.5.1.3.1.7 0 1l-.1.8c0 .2-.2 1 .8.5s5.3-3.1 7.2-5.3C20.5 13.7 22 12 22 10c0-4.4-4.5-8-10-8z"
+          /></svg
+      ></a>
+      <a class="call" href="tel:+66952292086" aria-label="โทร"
+        ><svg viewBox="0 0 24 24" fill="#14223D">
+          <path
+            d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.2 2.2z"
+          /></svg
+      ></a>
+    </div>
+
+    <script>
+      /* header shadow on scroll */
+      const header = document.querySelector(".header");
+      addEventListener("scroll", () =>
+        header.classList.toggle("scrolled", scrollY > 20),
+      );
+
+      /* mobile menu */
+      const burger = document.getElementById("burger"),
+        menu = document.getElementById("menu");
+      burger.addEventListener("click", () => {
+        const open = menu.classList.toggle("open");
+        burger.setAttribute("aria-expanded", open);
+      });
+      menu
+        .querySelectorAll("a")
+        .forEach((a) =>
+          a.addEventListener("click", () => menu.classList.remove("open")),
+        );
+
+      /* scroll reveal */
+      const io = new IntersectionObserver(
+        (es) => {
+          es.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      /* contact form -> เปิดโปรแกรมอีเมลพร้อมข้อมูลที่กรอก
+         TODO: เปลี่ยน RECIPIENT เป็นอีเมลจริงของธุรกิจ หรือแจ้งให้ผมต่อ Formspree/ระบบหลังบ้าน */
+      const RECIPIENT = "worldfilmcenter@email.com";
+      document.getElementById("cform").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const f = e.target;
+        if (!f.reportValidity()) return;
+        const subject = encodeURIComponent("ติดต่อจากเว็บไซต์ WORLD FILM");
+        const body = encodeURIComponent(
+          `ชื่อ: ${f.cname.value}\nเบอร์โทร: ${f.cphone.value}\nอีเมล: ${f.cemail.value}\n\nรายละเอียด:\n${f.cmsg.value}`,
+        );
+        window.location.href = `mailto:${RECIPIENT}?subject=${subject}&body=${body}`;
+      });
+    </script>
+  </body>
+</html>
