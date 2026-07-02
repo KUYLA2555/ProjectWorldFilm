@@ -264,5 +264,7 @@ model-ultraguard-ceramic, model-ultraguard-nano
 **สิ่งที่แก้ไข (เตรียมโปรเจกต์ขึ้น GitHub):**
 - สร้าง `.gitignore` — ยกเว้น `assets/source/` (~9MB, รวม `_old-pre-reorg/`) และไฟล์ระบบ/โปรแกรมแก้ไข
 - `git init` + ตั้งค่า user แบบเฉพาะ repo (ไม่แตะ global): email `mr.pream.2555@gmail.com`
-- commit แรก: เฉพาะเว็บที่ใช้งานจริง (index/contact/products/assets/brands + logo, README, CHANGELOG) ~0.5MB
-- รอผู้ใช้สร้าง repo Private ชื่อ `ProjectWorldFilm` บน github.com แล้วจึงตั้ง remote + push (ทางเลือก A)
+- commit แรก `e3b26e3`: เฉพาะเว็บที่ใช้งานจริง (index/contact/products/assets/brands + logo, README, CHANGELOG) 26 ไฟล์ ~0.5MB
+- ตั้ง remote `origin` = https://github.com/KUYLA2555/ProjectWorldFilm.git (repo Private) แล้ว push branch `main`
+- push ครั้งแรกโดน reject เพราะ repo ถูกสร้างพร้อม README auto (`# ProjectWorldFilm`) → เขียนทับด้วย `git push --force-with-lease` (README ตัวเต็มของเราแทน placeholder)
+- ✅ ขึ้น GitHub สำเร็จ, local กับ origin/main ตรงกัน
