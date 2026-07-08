@@ -354,3 +354,16 @@ model-ultraguard-ceramic, model-ultraguard-nano
 - **ลบ dead CSS ใน products/product.css** (ยืนยันแล้วไม่มี HTML ไหนใช้): `.serif`, `.section--ink`, `.badge`, และทั้งชุด `.brandhero*` (หน้า brand ใช้ `.brand-top` แทน) รวม responsive overrides — brace ยังสมดุล 188/188
 - **ตรวจ dead reference ทั้งไซต์:** ไม่มีลิงก์ไปหน้า/ไฟล์ที่ถูกลบ (cm15/cm35/xt/phoenix) และไม่มี asset (html/css/img) ที่ลิงก์ไปแล้วหาย — สะอาดทั้งหมด
 - ยืนยันด้วย static analysis + preview (browser hang ที่ iframe แผนที่ตอนท้าย ไม่เกี่ยวกับโค้ด)
+
+---
+
+## ครั้งที่ 23 — 2026-07-08
+
+**Prompt:**
+> ช่วยเคลียร์โค้ด html ที่ไม่จำเป็นออกและจัดเรียงไฟล์ให้สวยและอัปขึ้น github KUYLA2555/ProjectWorldFilm เลย
+
+**สิ่งที่แก้ไข / ดำเนินการ:**
+- ตรวจ HTML รอบสุดท้าย: สคริปต์ index.html สะอาด (`data-img` ยังใช้จริง — JS โหลดรูป gallery แบบ lazy, เมนู/scroll/reveal ครบ ไม่มี JS ตาย), หน้าแรก+หน้าติดต่อไม่มี HTML ที่ไม่จำเป็นค้าง, ไฟล์ฟอร์แมต 2-space สม่ำเสมออยู่แล้ว (Node ไม่ได้ติดตั้ง จึงจัดฟอร์แมตด้วยมือ/คงสไตล์เดิม)
+- รวมงานทั้งเซสชัน (ครั้งที่ 17–22) commit เดียว `de97397`: 18 ไฟล์, +237/−678 บรรทัด (assets/source ถูก .gitignore ไม่ติดมา)
+- `git add -A` เพื่อรวมส่วนที่ค้าง staged แบบไม่สมบูรณ์ให้ตรง working tree ก่อน commit
+- ✅ push ขึ้น GitHub สำเร็จ `35fc498..de97397 main -> main`, local = origin/main = `de97397`, working tree สะอาด
