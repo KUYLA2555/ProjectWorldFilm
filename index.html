@@ -609,114 +609,6 @@
         font-weight: 300;
       }
 
-      /* ============ products ============ */
-      .products {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 28px;
-      }
-      .pcard {
-        background: var(--white);
-        border: 1px solid var(--line);
-        border-radius: 4px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        transition: 0.3s;
-      }
-      .pcard:hover {
-        box-shadow: 0 22px 48px rgba(20, 34, 61, 0.1);
-        transform: translateY(-5px);
-      }
-      .pcard .top {
-        background: var(--ink);
-        color: #fff;
-        padding: 30px 28px;
-        position: relative;
-      }
-      .pcard .top .tag {
-        font-size: 0.72rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: #e7c879;
-      }
-      .pcard .top h3 {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 2rem;
-        font-weight: 600;
-        margin-top: 4px;
-      }
-      .pcard .top .th {
-        font-size: 0.9rem;
-        color: #c3ccdc;
-        font-weight: 300;
-        margin-top: 2px;
-      }
-      .pcard.feat .top {
-        background: linear-gradient(135deg, #1b2c4d, #0d1830);
-      }
-      .pcard.feat .top::after {
-        content: "แนะนำ";
-        position: absolute;
-        top: 20px;
-        right: 24px;
-        background: var(--gold-bright);
-        color: var(--ink);
-        font-size: 0.72rem;
-        font-weight: 600;
-        padding: 3px 12px;
-        border-radius: 2px;
-      }
-      .pcard .specs {
-        padding: 24px 28px;
-        flex: 1;
-      }
-      .spec-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 11px 0;
-        border-bottom: 1px dashed var(--line);
-        font-size: 0.92rem;
-      }
-      .spec-row:last-child {
-        border-bottom: none;
-      }
-      .spec-row .k {
-        color: var(--slate);
-      }
-      .spec-row .v {
-        font-weight: 600;
-        color: var(--ink);
-      }
-      .spec-row .v em {
-        font-style: normal;
-        color: var(--gold);
-      }
-      .pcard .foot {
-        padding: 0 28px 28px;
-      }
-      .pcard .foot a {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: var(--ink);
-        font-weight: 500;
-        font-size: 0.94rem;
-        padding-top: 8px;
-      }
-      .pcard .foot a svg {
-        width: 18px;
-        height: 18px;
-        stroke: var(--gold);
-        fill: none;
-        stroke-width: 1.6;
-        transition: 0.25s;
-      }
-      .pcard .foot a:hover svg {
-        transform: translateX(5px);
-      }
-
       /* ============ showcase ============ */
       .gallery {
         display: grid;
@@ -761,109 +653,6 @@
       .tile:hover .cap {
         opacity: 1;
         transform: translateY(0);
-      }
-
-      /* ============ process ============ */
-      .steps {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 0;
-      }
-      .step {
-        padding: 0 26px;
-        position: relative;
-      }
-      .step:not(:last-child)::after {
-        content: "";
-        position: absolute;
-        top: 26px;
-        right: -1px;
-        width: 1px;
-        height: 60%;
-        background: var(--line);
-      }
-      .step .no {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 2.6rem;
-        font-weight: 600;
-        color: var(--gold);
-        line-height: 1;
-      }
-      .step h3 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin: 14px 0 8px;
-      }
-      .step p {
-        font-size: 0.9rem;
-        color: var(--slate);
-        font-weight: 300;
-      }
-
-      /* ============ reviews ============ */
-      .rev-top {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 24px;
-        margin-bottom: 48px;
-      }
-      .rev-score {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-      }
-      .rev-score .big {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 4.2rem;
-        font-weight: 600;
-        color: var(--ink);
-        line-height: 0.9;
-      }
-      .rev-score .meta .star {
-        color: var(--gold-bright);
-        letter-spacing: 3px;
-        font-size: 1.05rem;
-      }
-      .rev-score .meta span {
-        display: block;
-        color: var(--slate);
-        font-size: 0.9rem;
-        margin-top: 4px;
-      }
-      .reviews {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 26px;
-      }
-      .rcard {
-        background: var(--white);
-        border: 1px solid var(--line);
-        border-radius: 4px;
-        padding: 32px;
-      }
-      .rcard .quote {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 2.6rem;
-        color: var(--gold);
-        line-height: 0;
-        height: 18px;
-      }
-      .rcard p {
-        color: var(--ink);
-        font-weight: 300;
-        margin: 18px 0 20px;
-      }
-      .rcard .by {
-        font-weight: 600;
-        font-size: 0.94rem;
-      }
-      .rcard .by span {
-        display: block;
-        font-weight: 300;
-        color: var(--slate);
-        font-size: 0.85rem;
       }
 
       /* ============ feature bar ============ */
@@ -956,41 +745,6 @@
         font-size: 1.05rem;
         color: var(--ink);
       }
-      .closing {
-        margin-top: 72px;
-        display: grid;
-        grid-template-columns: 1.1fr 1fr;
-        border-radius: 14px;
-        overflow: hidden;
-        border: 1px solid var(--line);
-        box-shadow: var(--shadow-md);
-      }
-      .closing .pic {
-        background: var(--ink) center/cover no-repeat;
-        min-height: 360px;
-        /* IMG closing */
-        background-image: url("https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1000&q=80");
-      }
-      .closing .panel {
-        background: var(--white);
-        padding: 56px 48px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-      .closing .panel h3 {
-        font-family: "Trirong", "IBM Plex Sans Thai", serif;
-        font-size: 2.15rem;
-        font-weight: 600;
-        color: var(--ink);
-        line-height: 1.3;
-      }
-      .closing .panel .s {
-        color: var(--slate);
-        font-weight: 300;
-        margin: 14px 0 28px;
-      }
-
       /* ============ footer ============ */
       .footer {
         background: var(--ink);
@@ -1130,27 +884,8 @@
         .benefits {
           grid-template-columns: repeat(2, 1fr);
         }
-        .products {
-          grid-template-columns: 1fr;
-        }
         .gallery {
           grid-template-columns: repeat(2, 1fr);
-        }
-        .steps {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 36px 0;
-        }
-        .step:nth-child(2)::after {
-          display: none;
-        }
-        .reviews {
-          grid-template-columns: 1fr;
-        }
-        .closing {
-          grid-template-columns: 1fr;
-        }
-        .closing .pic {
-          min-height: 240px;
         }
         .footer .top {
           grid-template-columns: 1fr 1fr;
@@ -1503,9 +1238,6 @@
           padding: 30px 20px;
           border-bottom: 1px solid var(--line);
         }
-        .closing .panel {
-          padding: 40px 26px;
-        }
       }
     </style>
   </head>
@@ -1576,9 +1308,8 @@
               <li><a href="products/brand-ultraguard.html">Ultra Guard</a></li>
             </ul>
           </li>
-          <li><a href="#why">บริการ</a></li>
+          <li><a href="#why">ประโยชน์</a></li>
           <li><a href="#work">ผลงาน</a></li>
-          <li><a href="#process">ขั้นตอน</a></li>
           <li><a href="contact.html">ติดต่อ</a></li>
         </ul>
         <div class="nav-right">
@@ -1684,52 +1415,8 @@
       </div>
     </section>
 
-    <!-- ============ BRANDS ============ -->
-    <section class="section section--tint" id="brands">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <span class="eyebrow center">แบรนด์ฟิล์มของเรา</span>
-          <h2 class="h-thai">ฟิล์มคุณภาพจาก 4 แบรนด์ชั้นนำ</h2>
-        </div>
-        <div class="brandlogos reveal">
-          <a
-            class="brandlogo"
-            id="brand-finnix"
-            href="products/brand-finnix.html"
-            aria-label="ฟิล์ม Finnix"
-          >
-            <img src="assets/brands/finnix.png" alt="Finnix" />
-          </a>
-          <a
-            class="brandlogo"
-            id="brand-3m"
-            href="products/brand-3m.html"
-            aria-label="ฟิล์ม 3M"
-          >
-            <img src="assets/brands/3m.png" alt="3M" />
-          </a>
-          <a
-            class="brandlogo"
-            id="brand-regionfilm"
-            href="products/brand-regionfilm.html"
-            aria-label="ฟิล์ม Regionfilm"
-          >
-            <img src="assets/brands/regionfilm.png" alt="Regionfilm" />
-          </a>
-          <a
-            class="brandlogo"
-            id="brand-ultraguard"
-            href="products/brand-ultraguard.html"
-            aria-label="ฟิล์ม Ultra Guard"
-          >
-            <img src="assets/brands/ultraguard.png" alt="Ultra Guard" />
-          </a>
-        </div>
-      </div>
-    </section>
-
     <!-- ============ BENEFITS / WHY ============ -->
-    <section class="section" id="why">
+    <section class="section section--tint" id="why">
       <div class="wrap">
         <div class="sec-head reveal">
           <span class="eyebrow center">ทำไมต้องติดฟิล์ม</span>
@@ -1793,6 +1480,50 @@
       </div>
     </section>
 
+    <!-- ============ BRANDS ============ -->
+    <section class="section" id="brands">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="eyebrow center">แบรนด์ฟิล์มของเรา</span>
+          <h2 class="h-thai">ฟิล์มคุณภาพจาก 4 แบรนด์ชั้นนำ</h2>
+        </div>
+        <div class="brandlogos reveal">
+          <a
+            class="brandlogo"
+            id="brand-finnix"
+            href="products/brand-finnix.html"
+            aria-label="ฟิล์ม Finnix"
+          >
+            <img src="assets/brands/finnix.png" alt="Finnix" />
+          </a>
+          <a
+            class="brandlogo"
+            id="brand-3m"
+            href="products/brand-3m.html"
+            aria-label="ฟิล์ม 3M"
+          >
+            <img src="assets/brands/3m.png" alt="3M" />
+          </a>
+          <a
+            class="brandlogo"
+            id="brand-regionfilm"
+            href="products/brand-regionfilm.html"
+            aria-label="ฟิล์ม Regionfilm"
+          >
+            <img src="assets/brands/regionfilm.png" alt="Regionfilm" />
+          </a>
+          <a
+            class="brandlogo"
+            id="brand-ultraguard"
+            href="products/brand-ultraguard.html"
+            aria-label="ฟิล์ม Ultra Guard"
+          >
+            <img src="assets/brands/ultraguard.png" alt="Ultra Guard" />
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ SHOWCASE ============ -->
     <section class="section section--tint" id="work">
       <div class="wrap">
@@ -1830,43 +1561,6 @@
             data-img="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=700&q=80"
           >
             <span class="cap">ห้องนั่งเล่น</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ PROCESS ============ -->
-    <section class="section" id="process">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <span class="eyebrow center">ขั้นตอนบริการ</span>
-          <h2 class="h-thai">ง่าย ครบ จบในที่เดียว</h2>
-        </div>
-        <div class="steps">
-          <div class="step reveal">
-            <div class="no">01</div>
-            <h3>ปรึกษาฟรี</h3>
-            <p>
-              ทักไลน์หรือโทรหาเรา แจ้งความต้องการและพื้นที่ที่ต้องการติดฟิล์ม
-            </p>
-          </div>
-          <div class="step reveal">
-            <div class="no">02</div>
-            <h3>สำรวจ &amp; เสนอราคา</h3>
-            <p>
-              ทีมงานเข้าสำรวจหน้างาน วัดพื้นที่จริง
-              และเสนอราคาชัดเจนก่อนตัดสินใจ
-            </p>
-          </div>
-          <div class="step reveal">
-            <div class="no">03</div>
-            <h3>ติดตั้งโดยทีมช่าง</h3>
-            <p>ติดตั้งโดยช่างผู้เชี่ยวชาญ เรียบร้อย สะอาด ตรงตามมาตรฐาน</p>
-          </div>
-          <div class="step reveal">
-            <div class="no">04</div>
-            <h3>ตรวจงาน &amp; รับประกัน</h3>
-            <p>ตรวจรับงานร่วมกัน พร้อมการรับประกันยาวนานสูงสุด 8 ปี</p>
           </div>
         </div>
       </div>
@@ -1956,26 +1650,6 @@
             </div>
           </a>
         </div>
-
-        <div class="closing reveal">
-          <div class="pic" aria-hidden="true"></div>
-          <div class="panel">
-            <span class="eyebrow">Tailored Solutions</span>
-            <h3>ฟิล์มที่ใช่<br />สำหรับทุกพื้นที่ของคุณ</h3>
-            <p class="s">
-              ปรึกษาฟรีไม่มีข้อผูกมัด
-              ทีมงานพร้อมประเมินหน้างานและแนะนำรุ่นฟิล์มที่เหมาะกับบ้านหรืออาคารของคุณที่สุด
-            </p>
-            <div class="hero-cta">
-              <a href="https://line.me/R/ti/p/@worldcenter" class="btn btn-gold"
-                >ทักไลน์ปรึกษาเลย</a
-              >
-              <a href="tel:+66952292086" class="btn btn-line"
-                >โทร 095-229-2086</a
-              >
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -2033,7 +1707,6 @@
               <li><a href="#why">ฟิล์มบ้าน</a></li>
               <li><a href="#why">ฟิล์มอาคาร / สำนักงาน</a></li>
               <li><a href="#work">ผลงานติดตั้ง</a></li>
-              <li><a href="#process">ขั้นตอนบริการ</a></li>
             </ul>
           </div>
           <div>
