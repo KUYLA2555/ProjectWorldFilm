@@ -226,24 +226,37 @@ a {
   list-style: none;
 }
 .menu a {
-  font-size: 0.94rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  line-height: 1.15;
+  font-size: 0.9rem;
   font-weight: 500;
   color: var(--ink);
   position: relative;
-  padding: 4px 0;
+  padding: 5px 0;
 }
 .menu a::after {
+  content: attr(data-th);
+  display: block;
+  font-size: 0.64rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--slate);
+}
+.menu a::before {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -2px;
+  bottom: -4px;
   width: 0;
   height: 2px;
   background: var(--gold);
   transition: width 0.25s;
 }
-.menu a:hover::after,
-.menu a.active::after {
+.menu a:hover::before,
+.menu a.active::before {
   width: 100%;
 }
 .nav-right {
@@ -810,9 +823,13 @@ a {
   position: relative;
 }
 .menu .has-sub > a {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 6px;
+}
+.menu .has-sub > a::after {
+  flex-basis: 100%;
 }
 .menu .has-sub > a .caret {
   width: 10px;
@@ -1076,4 +1093,113 @@ a {
 :focus-visible {
   outline: 2px solid var(--gold-bright);
   outline-offset: 3px;
+}
+
+/* ============ contact block (ยกมาจากหน้าแรก — ใช้ในหน้าผลงาน/หน้าแบรนด์) ============ */
+.featurebar {
+  background: var(--light);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 48px;
+}
+.featurebar .grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.fitem {
+  padding: 40px 22px;
+  text-align: center;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.fitem:last-child {
+  border-right: none;
+}
+.fitem svg {
+  width: 34px;
+  height: 34px;
+  color: var(--gold);
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.4;
+}
+.fitem b {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.fitem span {
+  font-size: 0.85rem;
+  color: var(--slate);
+  font-weight: 300;
+}
+.contact-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+  align-items: center;
+}
+.ccard {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 28px 30px;
+  transition: 0.28s ease;
+  box-shadow: var(--shadow-sm);
+}
+.ccard:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.ccard .ci {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--ink);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.ccard .ci svg {
+  width: 22px;
+  height: 22px;
+  fill: #e7c879;
+}
+.ccard .lab {
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.ccard .val {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+@media (max-width: 760px) {
+  .featurebar .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .fitem:nth-child(2) {
+    border-right: none;
+  }
+  .contact-cards {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 480px) {
+  .featurebar .grid {
+    grid-template-columns: 1fr;
+  }
+  .fitem {
+    border-right: none;
+  }
 }

@@ -259,23 +259,37 @@
         list-style: none;
       }
       .menu a {
-        font-size: 0.94rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1px;
+        line-height: 1.15;
+        font-size: 0.9rem;
         font-weight: 500;
         color: var(--ink);
         position: relative;
-        padding: 4px 0;
+        padding: 5px 0;
       }
       .menu a::after {
+        content: attr(data-th);
+        display: block;
+        font-size: 0.64rem;
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        color: var(--slate);
+      }
+      .menu a::before {
         content: "";
         position: absolute;
         left: 0;
-        bottom: -2px;
+        bottom: -4px;
         width: 0;
         height: 2px;
         background: var(--gold);
         transition: width 0.25s;
       }
-      .menu a:hover::after {
+      .menu a:hover::before,
+      .menu a.active::before {
         width: 100%;
       }
       .nav-right {
@@ -994,9 +1008,13 @@
         position: relative;
       }
       .menu .has-sub > a {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0 6px;
+      }
+      .menu .has-sub > a::after {
+        flex-basis: 100%;
       }
       .menu .has-sub > a .caret {
         width: 10px;
@@ -1289,10 +1307,10 @@
           />
         </a>
         <ul class="menu" id="menu">
-          <li><a href="index.html">หน้าแรก</a></li>
+          <li><a href="index.html" data-th="หน้าแรก">Home</a></li>
           <li class="has-sub">
-            <a href="#brands"
-              >ฟิล์มของเรา
+            <a href="#brands" data-th="ฟิล์มของเรา"
+              >Our Films
               <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
                 <path
                   d="M6 9l6 6 6-6"
@@ -1308,9 +1326,9 @@
               <li><a href="products/brand-ultraguard.html">Ultra Guard</a></li>
             </ul>
           </li>
-          <li><a href="#why">ประโยชน์</a></li>
-          <li><a href="#work">ผลงาน</a></li>
-          <li><a href="contact.html">ติดต่อ</a></li>
+          <li><a href="works.html" data-th="ผลงาน">Works</a></li>
+          <li><a href="about.html" data-th="เกี่ยวกับเรา">About Us</a></li>
+          <li><a href="contact.html" data-th="ติดต่อ">Contact</a></li>
         </ul>
         <div class="nav-right">
           <button
@@ -1706,7 +1724,7 @@
             <ul>
               <li><a href="#why">ฟิล์มบ้าน</a></li>
               <li><a href="#why">ฟิล์มอาคาร / สำนักงาน</a></li>
-              <li><a href="#work">ผลงานติดตั้ง</a></li>
+              <li><a href="works.html">ผลงานติดตั้ง</a></li>
             </ul>
           </div>
           <div>

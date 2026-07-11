@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ผลงานติดตั้ง — WORLD FILM ศูนย์ติดตั้งฟิล์มกรองแสง</title>
+    <meta
+      name="description"
+      content="รวมผลงานติดตั้งฟิล์มกรองแสง WORLD FILM บ้าน คอนโด อาคารสำนักงาน โรงแรม และร้านค้า มากกว่า 40 สาขาทั่วประเทศ ผลงานจริงจากทีมช่างมืออาชีพ"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Trirong:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="products/product.css" />
+    <style>
+      /* ============ reveal (เหมือน index) ============ */
+      .reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* ============ footer socials (เหมือน index) ============ */
+      .footer .fsoc {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+      }
+      .footer .fsoc a {
+        width: 36px;
+        height: 36px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        transition: 0.25s;
+      }
+      .footer .fsoc a:hover {
+        background: var(--gold);
+        border-color: var(--gold);
+      }
+      .footer .fsoc svg {
+        width: 16px;
+        height: 16px;
+        fill: #cfd6e2;
+      }
+      .footer .fsoc a:hover svg {
+        fill: var(--ink);
+      }
+
+      /* ============ PAGE HERO (แถบหัวเพจ กรมท่า) ============ */
+      .work-hero {
+        background: var(--ink);
+        color: #e9ecf2;
+        /* IMG page-hero — เปลี่ยนเป็นรูปหน้างานสวย ๆ ของ WorldFilm ได้ */
+        background-image:
+          linear-gradient(
+            180deg,
+            rgba(15, 25, 47, 0.82),
+            rgba(15, 25, 47, 0.92)
+          ),
+          url("https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80");
+        background-size: cover;
+        background-position: center;
+        text-align: center;
+        padding: 92px 0 84px;
+      }
+      .work-hero .eyebrow {
+        color: #e7c879;
+      }
+      .work-hero .eyebrow::before,
+      .work-hero .eyebrow::after {
+        background: #e7c879;
+      }
+      .work-hero h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.6rem, 6vw, 4.2rem);
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: #fff;
+        line-height: 1.05;
+        margin: 14px 0 10px;
+      }
+      .work-hero .th {
+        color: #c3ccdc;
+        font-weight: 300;
+        font-size: 1.08rem;
+        max-width: 46ch;
+        margin: 0 auto;
+      }
+      .work-hero .mini {
+        display: flex;
+        justify-content: center;
+        gap: 46px;
+        margin-top: 34px;
+        flex-wrap: wrap;
+      }
+      .work-hero .mini div {
+        text-align: center;
+      }
+      .work-hero .mini b {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.4rem;
+        font-weight: 600;
+        color: #e7c879;
+        line-height: 1;
+        display: block;
+      }
+      .work-hero .mini span {
+        font-size: 0.84rem;
+        color: #aeb8cb;
+        letter-spacing: 0.02em;
+      }
+
+      /* ============ FILTER BAR (ตัวกรองหมวด) ============ */
+      .filterbar {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 48px;
+      }
+      .chip {
+        font-family: inherit;
+        font-size: 0.92rem;
+        font-weight: 500;
+        color: var(--ink);
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 40px;
+        padding: 10px 22px;
+        cursor: pointer;
+        transition: 0.22s ease;
+      }
+      .chip:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+      .chip.active {
+        background: var(--ink);
+        border-color: var(--ink);
+        color: #fff;
+      }
+
+      /* ============ WORKS GRID (การ์ดผลงาน) ============ */
+      .works {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 26px;
+      }
+      .workcard {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: var(--shadow-sm);
+        transition: 0.35s ease;
+      }
+      .workcard:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-md);
+        border-color: transparent;
+      }
+      /* พื้นที่รูป — degrade เป็นกรมท่าถ้ารูปไม่โหลด (เหมือน tile หน้าแรก) */
+      .workcard .thumb {
+        aspect-ratio: 4/3;
+        background: var(--ink) center/cover no-repeat;
+        position: relative;
+      }
+      .workcard .thumb::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(transparent 55%, rgba(15, 25, 47, 0.55));
+        opacity: 0;
+        transition: 0.3s;
+      }
+      .workcard:hover .thumb::after {
+        opacity: 1;
+      }
+      .workcard .cat {
+        position: absolute;
+        left: 14px;
+        top: 14px;
+        z-index: 2;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 30px;
+        padding: 5px 14px;
+      }
+      .workcard .body {
+        padding: 22px 24px 24px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .workcard h3 {
+        font-size: 1.12rem;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 8px;
+      }
+      .workcard .meta {
+        font-size: 0.88rem;
+        color: var(--slate);
+        font-weight: 300;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 6px;
+      }
+      .workcard .meta svg {
+        width: 15px;
+        height: 15px;
+        fill: var(--gold);
+        flex: none;
+      }
+      .workcard .film {
+        font-size: 0.82rem;
+        color: var(--ink-soft);
+        margin-top: 2px;
+      }
+      .workcard .film b {
+        color: var(--gold);
+        font-weight: 600;
+      }
+      .workcard .go {
+        margin-top: 16px;
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--ink);
+      }
+      .workcard .go svg {
+        width: 16px;
+        height: 16px;
+        stroke: var(--gold);
+        fill: none;
+        stroke-width: 1.6;
+        transition: 0.25s;
+      }
+      .workcard:hover .go svg {
+        transform: translateX(4px);
+      }
+
+      /* ปุ่มโหลดเพิ่ม / pagination (โครง) */
+      .more {
+        text-align: center;
+        margin-top: 52px;
+      }
+
+      /* ============ responsive ============ */
+      @media (max-width: 980px) {
+        .works {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 620px) {
+        .works {
+          grid-template-columns: 1fr;
+        }
+        .work-hero {
+          padding: 60px 0 54px;
+        }
+        .work-hero .mini {
+          gap: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============ TOP BAR ============ -->
+    <div class="topbar">
+      <div class="wrap">
+        <div class="socials">
+          <a href="https://line.me/R/ti/p/@worldcenter" aria-label="LINE"
+            ><svg viewBox="0 0 24 24">
+              <path
+                d="M12 2C6.5 2 2 5.6 2 10c0 3.9 3.5 7.2 8.3 7.8.3.1.7.2.8.5.1.3.1.7 0 1l-.1.8c0 .2-.2 1 .8.5s5.3-3.1 7.2-5.3C20.5 13.7 22 12 22 10c0-4.4-4.5-8-10-8z"
+              /></svg
+            >@WORLDCENTER</a
+          >
+          <a
+            href="https://www.facebook.com/Worldsfilm1"
+            aria-label="Facebook"
+            target="_blank"
+            rel="noopener"
+            ><svg viewBox="0 0 24 24">
+              <path
+                d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"
+              /></svg
+            >Facebook</a
+          >
+        </div>
+        <a class="addr" href="tel:+66952292086"
+          ><svg viewBox="0 0 24 24">
+            <path
+              d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.2 2.2z"
+            /></svg
+          >โทร 095-229-2086</a
+        >
+      </div>
+    </div>
+
+    <!-- ============ HEADER ============ -->
+    <header class="header" id="top">
+      <div class="wrap nav">
+        <a class="brand" href="index.html">
+          <img
+            class="brand-logo"
+            src="assets/logo-dark.png"
+            alt="WORLD FILM CENTER"
+          />
+        </a>
+        <ul class="menu" id="menu">
+          <li><a href="index.html" data-th="หน้าแรก">Home</a></li>
+          <li class="has-sub">
+            <a href="index.html#brands" data-th="ฟิล์มของเรา"
+              >Our Films
+              <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M6 9l6 6 6-6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+            <ul class="submenu">
+              <li><a href="products/brand-finnix.html">Finnix</a></li>
+              <li><a href="products/brand-3m.html">3M</a></li>
+              <li><a href="products/brand-regionfilm.html">Regionfilm</a></li>
+              <li><a href="products/brand-ultraguard.html">Ultra Guard</a></li>
+            </ul>
+          </li>
+          <li><a href="works.html" class="active" data-th="ผลงาน">Works</a></li>
+          <li><a href="about.html" data-th="เกี่ยวกับเรา">About Us</a></li>
+          <li><a href="contact.html" data-th="ติดต่อ">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+          <button
+            class="burger"
+            id="burger"
+            aria-label="เมนู"
+            aria-expanded="false"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ BREADCRUMB ============ -->
+    <nav class="crumb" aria-label="breadcrumb">
+      <div class="wrap">
+        <a href="index.html">หน้าแรก</a>
+        <span class="sep">/</span>
+        <b>ผลงานติดตั้ง</b>
+      </div>
+    </nav>
+
+    <!-- ============ PAGE HERO ============ -->
+    <section class="work-hero">
+      <div class="wrap">
+        <span class="eyebrow center">ผลงานการติดตั้ง</span>
+        <h1>OUR WORK</h1>
+        <p class="th">
+          ผลงานจริงจากทีมช่างมืออาชีพ WORLD FILM ทั้งบ้าน คอนโด อาคารสำนักงาน
+          โรงแรม และร้านค้า ทั่วประเทศ
+        </p>
+        <div class="mini">
+          <div><b>200+</b><span>โครงการที่ส่งมอบ</span></div>
+          <div><b>40+</b><span>สาขาทั่วประเทศ</span></div>
+          <div><b>8</b><span>ปี รับประกัน</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- แจ้งเตือนว่าเป็นภาพตัวอย่าง (ลบ block นี้เมื่อใส่รูป/ข้อมูลจริง) -->
+    <div class="sample-note">
+      <span
+        >โครงร่างหน้า “ผลงาน” — การ์ดด้านล่างเป็นภาพและข้อมูลตัวอย่าง
+        รอแทนที่ด้วยรูปหน้างานจริงและรายละเอียดโครงการของ WORLD FILM</span
+      >
+    </div>
+
+    <!-- ============ WORKS GRID ============ -->
+    <section class="section">
+      <div class="wrap">
+        <!-- ตัวกรองหมวดหมู่ -->
+        <div class="filterbar reveal">
+          <button class="chip active" data-filter="all">ทั้งหมด</button>
+          <button class="chip" data-filter="home">บ้าน</button>
+          <button class="chip" data-filter="condo">คอนโด</button>
+          <button class="chip" data-filter="office">อาคาร / สำนักงาน</button>
+          <button class="chip" data-filter="hotel">โรงแรม / รีสอร์ท</button>
+          <button class="chip" data-filter="shop">ร้านค้า / คาเฟ่</button>
+        </div>
+
+        <!-- กริดการ์ดผลงาน -->
+        <div class="works reveal" id="works">
+          <!-- การ์ด 1 -->
+          <article class="workcard" data-cat="home">
+            <div
+              class="thumb"
+              data-img="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+            >
+              <span class="cat">บ้านเดี่ยว</span>
+            </div>
+            <div class="body">
+              <h3>บ้านพักอาศัย 2 ชั้น · กรุงเทพฯ</h3>
+              <p class="meta">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"
+                  />
+                </svg>
+                เขตบางแค กรุงเทพฯ
+              </p>
+              <p class="film">ฟิล์มที่ใช้ · <b>Finnix Ceramic 60</b></p>
+              <a class="go" href="#"
+                >ดูผลงาน
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M5 12h14M13 6l6 6-6 6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  /></svg
+              ></a>
+            </div>
+          </article>
+
+          <!-- การ์ด 2 -->
+          <article class="workcard" data-cat="condo">
+            <div
+              class="thumb"
+              data-img="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=800&q=80"
+            >
+              <span class="cat">คอนโดมิเนียม</span>
+            </div>
+            <div class="body">
+              <h3>ห้องชุด High Rise · วิวแม่น้ำ</h3>
+              <p class="meta">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"
+                  />
+                </svg>
+                เจริญนคร กรุงเทพฯ
+              </p>
+              <p class="film">ฟิล์มที่ใช้ · <b>3M Ceramate</b></p>
+              <a class="go" href="#"
+                >ดูผลงาน
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M5 12h14M13 6l6 6-6 6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  /></svg
+              ></a>
+            </div>
+          </article>
+
+          <!-- การ์ด 3 -->
+          <article class="workcard" data-cat="office">
+            <div
+              class="thumb"
+              data-img="https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=800&q=80"
+            >
+              <span class="cat">สำนักงาน</span>
+            </div>
+            <div class="body">
+              <h3>อาคารสำนักงาน · ผนังกระจกทั้งหลัง</h3>
+              <p class="meta">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"
+                  />
+                </svg>
+                รัชดาภิเษก กรุงเทพฯ
+              </p>
+              <p class="film">ฟิล์มที่ใช้ · <b>Ultra Guard Ceramic</b></p>
+              <a class="go" href="#"
+                >ดูผลงาน
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M5 12h14M13 6l6 6-6 6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  /></svg
+              ></a>
+            </div>
+          </article>
+
+          <!-- การ์ด 4 -->
+          <article class="workcard" data-cat="home">
+            <div
+              class="thumb"
+              data-img="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80"
+            >
+              <span class="cat">บ้านเดี่ยว</span>
+            </div>
+            <div class="body">
+              <h3>บ้านโมเดิร์น · กระจกบานใหญ่</h3>
+              <p class="meta">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"
+                  />
+                </svg>
+                นนทบุรี
+              </p>
+              <p class="film">ฟิล์มที่ใช้ · <b>Finnix Titanium</b></p>
+              <a class="go" href="#"
+                >ดูผลงาน
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M5 12h14M13 6l6 6-6 6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  /></svg
+              ></a>
+            </div>
+          </article>
+
+          <!-- การ์ด 5 -->
+          <article class="workcard" data-cat="hotel">
+            <div
+              class="thumb"
+              data-img="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=800&q=80"
+            >
+              <span class="cat">โรงแรม</span>
+            </div>
+            <div class="body">
+              <h3>โรงแรม / รีสอร์ท · ห้องพักวิวทะเล</h3>
+              <p class="meta">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"
+                  />
+                </svg>
+                หัวหิน ประจวบคีรีขันธ์
+              </p>
+              <p class="film">ฟิล์มที่ใช้ · <b>Regionfilm Ceramic</b></p>
+              <a class="go" href="#"
+                >ดูผลงาน
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M5 12h14M13 6l6 6-6 6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  /></svg
+              ></a>
+            </div>
+          </article>
+
+          <!-- การ์ด 6 -->
+          <article class="workcard" data-cat="shop">
+            <div
+              class="thumb"
+              data-img="https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=800&q=80"
+            >
+              <span class="cat">ร้านค้า / คาเฟ่</span>
+            </div>
+            <div class="body">
+              <h3>คาเฟ่กระจกโค้ง · หน้าร้านรับแดด</h3>
+              <p class="meta">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"
+                  />
+                </svg>
+                เชียงใหม่
+              </p>
+              <p class="film">ฟิล์มที่ใช้ · <b>Finnix Extra Clear</b></p>
+              <a class="go" href="#"
+                >ดูผลงาน
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M5 12h14M13 6l6 6-6 6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  /></svg
+              ></a>
+            </div>
+          </article>
+        </div>
+
+        <!-- ปุ่มโหลดเพิ่ม / pagination (โครง) -->
+        <div class="more reveal">
+          <a href="#" class="btn btn-line">ดูผลงานเพิ่มเติม</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT (ติดต่อเรา — ยกมาจากหน้าแรก) ============ -->
+    <section class="section section--tint" id="contact">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="eyebrow center">ติดต่อเรา</span>
+          <h2 class="h-thai">พร้อมให้คำปรึกษาทุกพื้นที่</h2>
+        </div>
+        <div class="featurebar reveal">
+          <div class="grid">
+            <div class="fitem">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M21 11.5a8.4 8.4 0 0 1-9 8.4L3 21l1.1-4A8.4 8.4 0 1 1 21 11.5z"
+                /></svg
+              ><b>ปรึกษาฟรี</b><span>โดยผู้เชี่ยวชาญ</span>
+            </div>
+            <div class="fitem">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 19 19 5M8 8h.01M16 16h.01" />
+                <circle cx="7.5" cy="7.5" r="2.5" />
+                <circle cx="16.5" cy="16.5" r="2.5" /></svg
+              ><b>ผ่อน 0%</b><span>นานสูงสุด 10 เดือน</span>
+            </div>
+            <div class="fitem">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2 4 6v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V6l-8-4z" />
+                <path d="M9 12l2 2 4-4" /></svg
+              ><b>รับประกัน 8 ปี</b><span>ยาวนานหมดห่วง</span>
+            </div>
+            <div class="fitem">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 22c4-2.5 7-6.6 7-11V5l-7-3-7 3v6c0 4.4 3 8.5 7 11z" />
+                <path d="M12 8v4M12 15h.01" /></svg
+              ><b>ปลอดสารพิษ</b><span>Low VOCs ปลอดภัย</span>
+            </div>
+          </div>
+        </div>
+        <div class="contact-cards reveal">
+          <a class="ccard" href="https://line.me/R/ti/p/@worldcenter">
+            <span class="ci"
+              ><svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2C6.5 2 2 5.6 2 10c0 3.9 3.5 7.2 8.3 7.8.3.1.7.2.8.5.1.3.1.7 0 1l-.1.8c0 .2-.2 1 .8.5s5.3-3.1 7.2-5.3C20.5 13.7 22 12 22 10c0-4.4-4.5-8-10-8z"
+                /></svg
+            ></span>
+            <div>
+              <div class="lab">Line</div>
+              <div class="val">@WORLDCENTER</div>
+            </div>
+          </a>
+          <a class="ccard" href="tel:+66952292086">
+            <span class="ci"
+              ><svg viewBox="0 0 24 24">
+                <path
+                  d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.2 2.2z"
+                /></svg
+            ></span>
+            <div>
+              <div class="lab">Call</div>
+              <div class="val">095-229-2086</div>
+            </div>
+          </a>
+          <a
+            class="ccard"
+            href="https://www.facebook.com/Worldsfilm1"
+            target="_blank"
+            rel="noopener"
+          >
+            <span class="ci"
+              ><svg viewBox="0 0 24 24">
+                <path
+                  d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"
+                /></svg
+            ></span>
+            <div>
+              <div class="lab">Facebook</div>
+              <div class="val">World's Film</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="wrap">
+        <div class="top">
+          <div class="fbrand">
+            <img
+              class="flogo"
+              src="assets/logo-white.png"
+              alt="WORLD FILM CENTER"
+            />
+            <p>
+              ศูนย์บริการติดตั้งฟิล์มกรองแสง บ้าน อาคาร สำนักงาน คอนโด มากกว่า
+              40 สาขาทั่วประเทศ
+            </p>
+            <div class="fsoc">
+              <a href="https://line.me/R/ti/p/@worldcenter" aria-label="LINE"
+                ><svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C6.5 2 2 5.6 2 10c0 3.9 3.5 7.2 8.3 7.8.3.1.7.2.8.5.1.3.1.7 0 1l-.1.8c0 .2-.2 1 .8.5s5.3-3.1 7.2-5.3C20.5 13.7 22 12 22 10c0-4.4-4.5-8-10-8z"
+                  /></svg
+              ></a>
+              <a
+                href="https://www.facebook.com/Worldsfilm1"
+                aria-label="Facebook"
+                target="_blank"
+                rel="noopener"
+                ><svg viewBox="0 0 24 24">
+                  <path
+                    d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"
+                  /></svg
+              ></a>
+              <a href="tel:+66952292086" aria-label="โทร"
+                ><svg viewBox="0 0 24 24">
+                  <path
+                    d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.2 2.2z"
+                  /></svg
+              ></a>
+            </div>
+          </div>
+          <div>
+            <h4>ฟิล์มของเรา</h4>
+            <ul>
+              <li><a href="products/brand-finnix.html">Finnix</a></li>
+              <li><a href="products/brand-3m.html">3M</a></li>
+              <li><a href="products/brand-regionfilm.html">Regionfilm</a></li>
+              <li><a href="products/brand-ultraguard.html">Ultra Guard</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>ติดต่อ</h4>
+            <ul>
+              <li>โทร 095-229-2086</li>
+              <li>LINE @WORLDCENTER</li>
+              <li>1177 ถ.กาญจนาภิเษก แขวงบางแคเหนือ เขตบางแค กรุงเทพฯ 10160</li>
+            </ul>
+          </div>
+        </div>
+        <div class="bottom">
+          <span>© 2026 WORLD FILM Center · ศูนย์ติดตั้งฟิล์มกรองแสง</span>
+          <span>ฟิล์มเซรามิกพรีเมียม Finnix Ceramic</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ============ FLOATING CTA ============ -->
+    <div class="fab">
+      <a
+        class="line"
+        href="https://line.me/R/ti/p/@worldcenter"
+        aria-label="LINE"
+        ><svg viewBox="0 0 24 24" fill="#fff">
+          <path
+            d="M12 2C6.5 2 2 5.6 2 10c0 3.9 3.5 7.2 8.3 7.8.3.1.7.2.8.5.1.3.1.7 0 1l-.1.8c0 .2-.2 1 .8.5s5.3-3.1 7.2-5.3C20.5 13.7 22 12 22 10c0-4.4-4.5-8-10-8z"
+          /></svg
+      ></a>
+      <a class="call" href="tel:+66952292086" aria-label="โทร"
+        ><svg viewBox="0 0 24 24" fill="#14223D">
+          <path
+            d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.2 2.2z"
+          /></svg
+      ></a>
+    </div>
+
+    <script>
+      /* header shadow on scroll */
+      const header = document.querySelector(".header");
+      addEventListener("scroll", () =>
+        header.classList.toggle("scrolled", scrollY > 20),
+      );
+
+      /* mobile menu */
+      const burger = document.getElementById("burger"),
+        menu = document.getElementById("menu");
+      burger.addEventListener("click", () => {
+        const open = menu.classList.toggle("open");
+        burger.setAttribute("aria-expanded", open);
+      });
+      menu
+        .querySelectorAll("a")
+        .forEach((a) =>
+          a.addEventListener("click", () => menu.classList.remove("open")),
+        );
+
+      /* lazy background thumbs (degrade to navy if image fails) */
+      document.querySelectorAll(".thumb[data-img]").forEach((t) => {
+        const img = new Image();
+        img.onload = () =>
+          (t.style.backgroundImage = `url('${t.dataset.img}')`);
+        img.src = t.dataset.img;
+      });
+
+      /* category filter */
+      const chips = document.querySelectorAll(".chip"),
+        cards = document.querySelectorAll(".workcard");
+      chips.forEach((chip) =>
+        chip.addEventListener("click", () => {
+          chips.forEach((c) => c.classList.remove("active"));
+          chip.classList.add("active");
+          const f = chip.dataset.filter;
+          cards.forEach((card) => {
+            const show = f === "all" || card.dataset.cat === f;
+            card.style.display = show ? "" : "none";
+          });
+        }),
+      );
+
+      /* scroll reveal */
+      const io = new IntersectionObserver(
+        (es) => {
+          es.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
