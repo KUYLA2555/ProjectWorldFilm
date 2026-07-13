@@ -474,3 +474,222 @@ model-ultraguard-ceramic, model-ultraguard-nano
 - แก้ CSS 2 ที่ (index.html inline + `products/product.css`) ให้ตรงกัน; submenu (Finnix/3M/…) และ breadcrumb/footer ยังเป็นไทยตามเดิม (มี `.submenu a::after{display:none}` กันไทยเปล่าโผล่)
 - **วิธีทำ markup:** ใช้ sed script ไฟล์ UTF-8 (`root.sed`/`prod.sed`) จับ label ไทยแบบ href-scoped (`<li>`) กัน breadcrumb/footer โดน + `>ฟิล์มของเรา$` ($ ท้ายบรรทัด) แยก has-sub ออกจาก breadcrumb/h4 — ทดสอบบนสำเนา brand-3m ก่อนว่าไทยไม่เพี้ยนแล้วค่อยรันจริง
 - ยืนยัน: computed `::after` = ไทยจาก data-th ครบ 5 เมนู, พรีวิวมือถือ (EN บน/ไทยเล็กล่าง + submenu ถูก) และจำลองเดสก์ท็อป (แนวนอน + caret ข้าง Our Films) ถูกต้อง
+
+---
+
+## ครั้งที่ 31 — 2026-07-11
+
+**Prompt:**
+> จัดเลยขั้นเลย (= ยืนยันให้ commit + push ขึ้น GitHub)
+
+**สิ่งที่แก้ไข / ดำเนินการ:**
+- รวมงานทั้งเซสชัน (ครั้งที่ 24-30) เป็น commit เดียว `6c31968` — 23 ไฟล์, +2258/−162 (มีไฟล์ใหม่ about.html, works.html, CLAUDE.md)
+- `git add -A` รวมไฟล์ใหม่ + การลบ backup ที่ค้าง; `assets/source/` ยังถูก gitignore ไม่ติดมา (ตรงตาม workflow เดิม)
+- ✅ push สำเร็จ `5c32cfe..6c31968 main -> main`, local = origin/main, working tree สะอาด (เหลือแค่บรรทัดนี้ที่จะเข้าคอมมิตรอบถัดไป)
+
+---
+
+## ครั้งที่ 32 — 2026-07-11
+
+**Prompt:**
+> ปรับเว็บให้เป็น Responsive Design (โฟกัส ≤768px): คงดีไซน์เดสก์ท็อปเดิม, เพิ่ม viewport ถ้ายังไม่มี, ใช้ media queries ปรับ layout/เมนู hamburger/ฟอนต์/ปุ่ม ≥44px, รูปไม่ล้นจอ, ตารางเลื่อนแนวนอน + อธิบายว่าแก้ตรงไหน — วิเคราะห์ + เสนอแผนก่อนลงมือ
+
+**สิ่งที่แก้ไข / ดำเนินการ:** (แผนได้รับอนุมัติแล้วจึงลงมือ — งานเป็น CSS ล้วน ไม่แตะ markup/โครงสร้าง)
+- **ผลวิเคราะห์:** เว็บมี responsive foundation อยู่แล้ว (viewport ครบ 18 หน้า, hamburger, `img max-width:100%`, grid ยุบได้) → งานคือ "อุดช่องโหว่ให้ครบ" ไม่ใช่ทำใหม่
+- **หลักคุมข้อ 1 (จอใหญ่ต้องไม่เปลี่ยน):** ทุกการแก้อยู่ใน `@media (max-width:768px)` หรือ `480px` เท่านั้น + ไม่แตะ tier 980px → จอ >768px หน้าตาเดิมเป๊ะ (ยืนยัน brace สมดุลทุกไฟล์)
+- **Breakpoint สม่ำเสมอ:** เปลี่ยนจุดยุบหลักให้เป็น **768px** ทุกไฟล์ — product.css 760→768 (3 บล็อก), index.html 760→768 (2), works.html 620→768, about.html 760→768, contact.html 560→768 (คง 560 ไว้เฉพาะปรับความสูงแผนที่, คง 900 ไว้ tier แท็บเล็ต vprops)
+- **3.4 touch target ≥44px** (เพิ่มใน ≤768): topbar links (+ `.topbar .wrap` height auto/min 44), submenu links (flex center 44), footer links (inline-flex 44), `.btn`, `.chip` (works), `.cmc .go`/`.brand-go` — วัดจริงบนมือถือ: topbar 44 / nav 56 / submenu 44 / footer 44 / chip 46 / hero btn 60 ✓
+- **4. รูป/สื่อไม่ล้น:** เสริม `img,svg,iframe,video { max-width:100% }` ใน ≤768 (index + product.css)
+- **5. ตารางเลื่อนแนวนอน:** `.spectable { overflow-x:auto; -webkit-overflow-scrolling:touch }` ใน ≤768 (ไม่มี `<table>`/`<video>` จริงในเว็บ — สเปกทำด้วย flex; เสริมกันเหนียว) — วัดจริง spectable overflow-x=auto กว้าง 390 พอดีจอ 430 ✓
+- **3.3 ฟอนต์/ระยะห่าง ≤480px:** ลดขนาดหัวเรื่อง/ตัวเลขสถิติ/statement/quote + ลด padding (index/product.css/works/about/contact)
+- **ยืนยันด้วย Chrome preview @430px:** ทุกหน้า (index, model+spectable, works, contact) ไม่มี horizontal overflow, ไม่มี element กว้างเกินจอ, hamburger ทำงาน, grid เป็นคอลัมน์เดียว — ผ่านครบ; จอ >768px พิสูจน์ว่าไม่เปลี่ยน (การแก้ทั้งหมดอยู่ใน media query ≤768)
+
+---
+
+## ครั้งที่ 33 — 2026-07-11
+
+**Prompt:**
+> /init — วิเคราะห์โค้ดเบสและอัปเดต CLAUDE.md ให้ทันสถานะปัจจุบัน
+
+**สิ่งที่แก้ไข / ดำเนินการ:**
+- **อัปเดต `CLAUDE.md` เดิม** (สร้างครั้งที่ 27) ให้ตรงงานที่ทำหลังจากนั้น — ไม่เขียนใหม่ทั้งไฟล์ แก้เฉพาะส่วนที่ล้าสมัย:
+  - เพิ่ม `about.html` ในรายการหน้า + ผังหน้า + path rules (เดิมมีแค่ works/contact)
+  - เพิ่มหัวข้อ **Bilingual nav**: label อังกฤษ + ไทยจาก `data-th` ผ่าน `::after{content:attr(data-th)}`, เส้นใต้ย้ายไป `::before`, submenu/breadcrumb/footer ยังไทย — แก้ชื่อเมนูต้องแก้ทั้ง EN + data-th
+  - เพิ่มหัวข้อ **Responsive**: breakpoint มาตรฐาน 768 (hamburger/stack/touch 44px) + 480 (ฟอนต์) + 980 (tablet tier), แก้มือถือต้องอยู่ใน media query ≤768 และ mirror ทั้ง index inline + product.css
+  - แก้ nav order เป็น Home · Our Films ▾ · Works · About Us · Contact
+  - ลบการอ้างถึง `_old-pre-reorg/` (ลบไปแล้วครั้งที่ 29) — เหลือแค่ design originals ใน assets/source/
+- ตรวจสถานะจริงก่อนแก้ (หน้า html, markup เมนู, ไฟล์ที่ลบ, การลิงก์ css) ให้ตรงก่อนเขียน
+
+---
+
+## ครั้งที่ 34 — 2026-07-11
+
+**Prompt:**
+> font ฟิล์มของเราไม่ตรงแก้ไขให้มันตรง และเปลี่ยนชื่อ Our Films เป็น Products และย่อขนาดเว็บให้เหมาะกับ 430×932 (มือถือยังมีปัญหาเรื่องขนาด ย่อลงอีก) และตรวจเช็คแก้ไขดีไซน์ที่เพี้ยนเมื่อเปิดในโทรศัพท์
+
+**สิ่งที่แก้ไข / ดำเนินการ:**
+- **แก้ไทย "ฟิล์มของเรา" ใต้เมนูไม่กึ่งกลาง:** ต้นเหตุคือ `::after` ของ dropdown ถูกตั้ง `flex-basis:100%` แต่ข้อความชิดซ้าย → เพิ่ม `text-align:center` ที่ `.menu a::after` + `.menu .has-sub > a::after` (ทั้ง index inline + product.css) — ซูมยืนยันบนเดสก์ท็อป ไทยกึ่งกลางใต้ EN ทุกเมนู
+- **เปลี่ยนเมนู "Our Films" → "Products" (18 ไฟล์)** ด้วย sed `>Our Films$` → `>Products` (data-th ยังเป็น "ฟิล์มของเรา" ตามเดิม) + อัปเดต CLAUDE.md 2 จุด
+- **ย่อขนาดชั้นมือถือ (≤480px ครอบ 430×932):**
+  - คีย์หลัก `html{font-size:15px}` (ทั้ง 2 stylesheet) — ย่อ typography ที่เป็น rem ทั้งเว็บ ~6% โดย touch target 44px (px) ไม่ลด
+  - index: hero 78→70vh, h1/สถิติ/หัวข้อ/statement เล็กลง, `.section` 44px, `.wrap` 18px, ซ่อน scrollcue, การ์ด/brandlogo/fitem/ccard padding ลด, gallery row 200px, **footer เหลือ 1 คอลัมน์**
+  - product.css: phead h1/phl.hi b/swatch 260px/fc/cmc/ctaband h2 ลด, breadcrumb ตัดบรรทัดได้ (height:auto + flex-wrap กันบีบ/ล้น), footer 1 คอลัมน์
+  - works: hero 48px + mini b 1.9rem, filterbar/works gap ลด, workcard body 18px; about: astat/quote/statement ลด; contact: map margin/vprop/chan ลด
+- **ไล่เช็กดีไซน์เพี้ยนบนมือถือ (iframe 430×932 จริง เพราะ OS ไม่ให้ย่อหน้าต่าง):**
+  - 🐛 **เจอ+แก้:** submenu (Finnix/3M/…) ในเมนู burger **ชิดซ้ายติดขอบจอ** — กฎ touch `display:flex;justify-content:center` แพ้กฎ base `.submenu a{display:block}` ที่นิยามท้ายไฟล์กว่า (specificity เท่ากัน) → เปลี่ยน selector เป็น `.menu .submenu a` ทั้ง 2 stylesheet — ยืนยันแล้ว display:flex, กึ่งกลาง, สูง 44px
+  - 🐛 **กันไว้:** กรอบทองรอบรูป (`.figure::after` translate 18px) เกือบชนขอบจอ → ลดเป็น 12px ที่ ≤480 (index intro + about) — วัดจริง 397+12=409 ≤ 415 พอดี
+- **ยืนยันทุกหน้า @430 (iframe):** index/works/about/brand/model/contact — ไม่มี horizontal overflow, ไม่มี element กว้างเกินจอ, root font 15px ทุกหน้า, เมนู+submenu กึ่งกลาง, footer 1 คอลัมน์, hero กระชับ; จอเดสก์ท็อป 1920 ตรวจแล้วหน้าตาเดิม (แก้เฉพาะใน ≤480 + กฎ ::after ที่ผลลัพธ์เท่าเดิมบนจอใหญ่ ยกเว้นไทยที่กึ่งกลางขึ้นตามที่ขอ)
+
+---
+
+## ครั้งที่ 35 — 2026-07-11
+
+**Prompt:**
+> (ส่งพรอมป์ต์เจนภาพ Floating Capsule Navbar 2 แบบ — Option 1 มู้ดแอนด์โทน / Option 2 ปุ่ม 3 สเตป default-hover-copied) ปรับมาเป็นในแบบของเราธีมเราและจัดเรียงให้สวยงาม
+
+**สิ่งที่แก้ไข / ดำเนินการ:**
+- **สร้างไฟล์ใหม่ `navbar-demo.html`** (หน้าเดโมคอนเซปต์ standalone — ยังไม่ผูกกับเว็บจริง มีแถบเหลืองแจ้งบนหน้า) แปลงพรอมป์ต์เจนภาพเป็น **HTML mockup จริงในธีม WORLD FILM**: แคปซูลกรมท่า `--ink` ลอยด้วยเงานุ่ม บนพื้น `--light` ลายจุด, โลโก้ `logo-white.png` ซ้าย, เมนูสองภาษากลาง (Home/Products/Works/About Us/Contact + ไทยตัวเล็ก), ปุ่ม pill ทอง `--gold-bright` ขวาเป็นเบอร์โทร (แทนอีเมลในต้นแบบ)
+- จัดเรียง 3 บอร์ด: **01 Mood & Tone** (ตาม Option 1 + ghost hero ให้เห็นบริบทลอย + ปุ่มกดได้จริง: กดแล้วคัดลอกเบอร์ → ✓ "คัดลอกเบอร์แล้ว" เขียว แล้วคืนสภาพใน 2 วิ) · **02 Button States** (ตาม Option 2: ปกติ/ชี้เมาส์ "แตะเพื่อคัดลอกเบอร์"/กดแล้ว pill ขาว+✓เขียว) · **03 Mobile** (แคปซูลย่อ: โลโก้ + burger กลม + ปุ่มโทรวงกลมทอง ≥44px)
+- ยืนยันด้วย Chrome preview: ทั้ง 3 บอร์ดแสดงถูกต้อง + ทดสอบคลิกปุ่มจริง (state เปลี่ยน → คืน) ผ่าน
+- **ไม่แตะเว็บจริง** — เป็นบอร์ดคอนเซปต์ให้ดูมู้ดก่อน ถ้าชอบค่อยสั่งติดตั้ง navbar แบบนี้ทั้งไซต์ (แทน header เดิม 18 หน้า)
+
+---
+
+## ครั้งที่ 36 — 2026-07-13
+
+**Prompt:**
+> /init — วิเคราะห์โค้ดเบสและสร้าง/ปรับปรุง CLAUDE.md สำหรับ Claude Code
+
+**สิ่งที่แก้ไข / ดำเนินการ:**
+- ตรวจสอบ CLAUDE.md เดิมเทียบกับโค้ดจริง: โครงสร้างหน้า, เมนูสองภาษา `data-th` (ครบ 15 หน้า), `.sample-note` (ยังอยู่ครบ 10 หน้ารุ่น), breakpoints, path rules — **ถูกต้องทั้งหมด ไม่ต้องแก้**
+- **เพิ่ม 2 จุดที่ขาด:**
+  - หมายเหตุ `navbar-demo.html` เป็นหน้าเดโมคอนเซปต์ standalone (ไม่ลิงก์กับเว็บจริง ไม่ใช้ shared chrome/product.css) — **ต้องข้ามไฟล์นี้เวลาแก้ sitewide** (เมนู/เบอร์โทร/footer)
+  - หมายเหตุ `README.md` เป็นคู่มือภาษาไทยของเจ้าของเว็บ (มี file tree + ข้อมูลติดต่อซ้ำ) — เวลาเพิ่ม/ลบหน้า หรือแก้ข้อมูลติดต่อ ต้องอัปเดต README.md และบรรทัด "อัปเดตล่าสุด" ด้วย
+
+---
+
+## ครั้งที่ 37 — 2026-07-13
+
+**Prompt:**
+> แถบเมนูแก้ไขปรับเรียงให้มันสวยงามเพราะแถบเมนูยังมีช่องว่างอยู่แก้ไข → (สเปก Floating Navigation Bar: แคปซูลลอย เงานุ่ม dark glass, โลโก้ = ปุ่ม Home, hover เปลี่ยนสี 0.2–0.3s, ปุ่ม CTA ขยายความกว้างตอน hover, responsive, minimal) เอาแถบเมนูนี้ไปแทนที่ของเราในเว็บหลักเลยและส่วนธีมปรับให้อยู่ในรูปแบบเรา
+
+**สิ่งที่แก้ไข / ดำเนินการ:**
+- **จัดช่องว่างแคปซูลใน `navbar-demo.html`:** `.cap-menu` เพิ่ม `flex:1` + `justify-content:space-evenly` — เมนูกระจายเต็มกลางแถบ ไม่มีช่องโหว่สองข้างแล้ว (ยืนยันทั้งบอร์ด 01/02)
+- **ติดตั้ง Floating Capsule Navbar แทน header เดิมทั้งเว็บ 18 หน้า** (root 4 + products 14, ผ่านสคริปต์ PowerShell + template UTF-8):
+  - **ถอด `.topbar` ออกทุกหน้า** (LINE/Facebook ยังอยู่ครบใน ส่วนติดต่อ + footer + ปุ่มลอย FAB)
+  - `.header` เป็น sticky โปร่งใส, `.nav` เป็นแคปซูลกรมท่า dark glass (`rgba(20,34,61,.92)` + blur 12px + ขอบ hairline + เงานุ่ม 2 ชั้น, เงาเข้มขึ้นเมื่อ scroll), มุมโค้ง 999px, กว้างสุด 980px
+  - **โลโก้ขาว = ปุ่มกลับหน้าแรก** — ตัดเมนู "Home" ออกตามสเปก เหลือ Products ▾ / Works / About Us / Contact (สองภาษา data-th เดิม) กระจาย `space-evenly`; hover/active = เปลี่ยนสีทอง transition 0.25s (เลิกใช้เส้นใต้ ::before), ไทยตัวเล็กซ่อนที่ ≤980px
+  - **ปุ่ม CTA ขยายได้:** ปกติ "โทร 095-229-2086" → hover พื้นทองเข้ม + สลับข้อความเป็น "แตะเพื่อคัดลอกเบอร์" ด้วยแอนิเมชัน max-width ease-in-out 0.28s → กดคัดลอกเบอร์ ขึ้น ✓ "คัดลอกเบอร์แล้ว" (พื้นขาว) 2 วิ — สคริปต์ `#copyPill` เพิ่มในทุกหน้า
+  - **Dropdown Products** เปลี่ยนเป็นการ์ดกรมท่าโค้ง 18px ตามธีมแคปซูล (ลิงก์ขาว hover ทอง)
+  - **มือถือ ≤768:** แคปซูลย่อ 58px, pill ซ่อน → ปุ่มโทรวงกลมทอง 44px + burger วงกลมขอบขาว 44px, เมนูเป็นแผงการ์ดกรมท่าโค้ง 24px ลอยใต้แคปซูล (ลิงก์ ≥44px, submenu แบรนด์สีเทาฟ้า)
+  - อัปเดต CSS ทั้ง 2 ชุดให้ตรงกัน (index inline + product.css), แก้ specificity `.brand .brand-logo` ให้กฎมือถือชนะกฎ base ที่นิยามทีหลัง
+- 🐛 **เจอ+แก้ระหว่างทดสอบ:** `await navigator.clipboard.writeText()` ค้างเมื่อเอกสารไม่โฟกัส ทำให้ปุ่มไม่ตอบสนอง → เปลี่ยนเป็น fire-and-forget `.catch(()=>{})` ทั้ง 18 หน้า — feedback ขึ้นทันทีเสมอ
+- **ยืนยันด้วย Chrome (localhost:8753):** เดสก์ท็อป index/works/brand-finnix/model-finnix-ceramic/contact — แคปซูลลอย+active ทองถูกหน้า, dropdown, hover/กดปุ่ม CTA ครบวงจร, เงาเข้มขึ้นตอน scroll; มือถือ 430×932 (iframe) — ไม่มี horizontal overflow (413=413), burger เปิดแผงเมนูครบทุกลิงก์สูง ≥44px
+- อัปเดต CLAUDE.md (สถาปัตยกรรม header ใหม่ + กฎ clipboard) และ README.md ให้ตรงของจริง
+
+---
+
+## ครั้งที่ 38 — 2026-07-13
+
+**Prompt:**
+> Ultra clean, luxury, modern, minimal, premium web navigation with polished micro-interactions and buttery smooth animations. ใส่ลงไปในแถบเมนูด้วย
+
+**สิ่งที่แก้ไข / ดำเนินการ:**
+- **เพิ่มบล็อก `nav micro-interactions` ท้าย stylesheet ทั้ง 2 ชุด** (index inline + product.css — ต้องอยู่ท้ายไฟล์เพื่อ override กฎเดิม) ใช้ easing เดียวกันทั้งระบบ `cubic-bezier(0.22, 1, 0.36, 1)`:
+  - **เปิดตัวตอนโหลด:** แคปซูลเลื่อนลง+จางเข้า (`navIn` 0.7s)
+  - **Hover เมนู:** ยกตัว -1px นุ่มๆ ควบคู่การเปลี่ยนสีทองเดิม · caret หมุนช้าลงเป็น 0.35s
+  - **Dropdown Products:** เปิดแบบ scale 0.97→1 + รายการแบรนด์ 4 ตัว**ไล่จังหวะทีละตัว** (transition-delay 0.05–0.2s) จางกลับทันทีตอนปิด
+  - **ปุ่ม CTA ทอง:** hover ยกตัว -1px · **กดแล้วยุบ scale 0.96** (press feedback) · ปุ่ม burger/โทรมือถือกดยุบ scale 0.9, ขอบ burger สว่างขึ้นตอน hover
+  - **แผงเมนูมือถือ:** เปิดแบบเลื่อนลง+จาง พร้อมลิงก์ 4 รายการ**ไล่จังหวะ** (animation-delay 0.05–0.2s) — มีบล็อก ≤768 ล้าง transform ของ dropdown เดสก์ท็อปกันชนกัน
+- **Smart hide-on-scroll (ทั้ง 18 หน้า, สคริปต์ PS 2 รอบ — root มีคอมเมนต์เดิม / products ไม่มี):** เลื่อนลงเกิน 260px แถบเมนูเลื่อนหลบขึ้นนุ่มๆ (translateY -130%, 0.45s) · เลื่อนขึ้นเมื่อไหร่โผล่กลับทันที · ใกล้หัวหน้า/แผงเมนูมือถือเปิดอยู่ = ไม่ซ่อน
+- **ยืนยันด้วย Chrome:** wheel ลง → แคปซูลหลบ, wheel ขึ้น → โผล่กลับ ✓ · dropdown ทุกรายการถึง opacity 1 พร้อม delay ไล่ลำดับ ✓ · แผงมือถือ (iframe 430) ลิงก์+submenu ครบ ✓ — หมายเหตุ: ใน iframe/แท็บ background Chrome หยุดนาฬิกาแอนิเมชัน (currentTime=0) เป็นพฤติกรรมปกติ ตรวจ end state ด้วย WAAPI `finish()` แล้วถูกต้อง
+- อัปเดต CLAUDE.md: บล็อก micro-interactions ต้องคงอยู่ท้าย stylesheet + พฤติกรรม `.nav-hidden`
+
+---
+
+## ครั้งที่ 39 — 2026-07-13
+
+**Prompt:**
+> แถบเมนูตรง product มันห่างทำให้มันชิดๆ กัน หรือจัดสัดส่วนให้มันสวยงามและใส่ Animation: Framer Motion style / Smooth width interpolation / Fade text transition / Hover scale 1.02 / Active state with subtle glow ไปแถบเมนูนั้นด้วย
+
+**สิ่งที่แก้ไข / ดำเนินการ (ทั้ง index inline CSS + product.css):**
+- **จัดสัดส่วนเมนูใหม่:** เลิกใช้ `space-evenly` (ที่ดันเมนูห่างกันมาก) → `justify-content: center` + gap 4px — เมนู 4 รายการเกาะกลุ่มกลางแถบแบบกระชับ สมมาตรระหว่างโลโก้กับปุ่มทอง; ลิงก์แต่ละตัวเป็นทรง pill (padding 7×15px + radius 999px) ให้มีจังหวะหายใจ · tier ≤980 ลด padding เหลือ 12px
+- **Animation สไตล์ Framer Motion:**
+  - **Hover scale 1.02** + ยกตัว -1px + พื้นหลัง pill ขาวโปร่ง `rgba(255,255,255,.07)` จางเข้า 0.3s (ปุ่มทอง CTA ก็ scale 1.02 ตอน hover ด้วย)
+  - **Active state = subtle glow ทอง:** พื้น `rgba(217,165,58,.13)` + เงาเรือง 18px + วงแหวน inset บางๆ — หน้าไหนเปิดอยู่ pill นั้นเรืองทอง
+  - **Smooth width interpolation + fade text:** ปุ่ม CTA ใช้ max-width interpolate + crossfade ข้อความ (มีอยู่แล้วจากครั้งที่ 37 — คงเดิม), พื้น pill hover ยืดตามความกว้างรายการอัตโนมัติ
+  - มือถือ ≤768: pill radius ปรับเป็น 14px (แถวเต็มกว้าง), ตัด scale ตอน hover, active glow ยังอยู่
+- **ยืนยันด้วย Chrome:** works.html เดสก์ท็อป — เมนูเกาะกลุ่มกลาง, "Works" เรืองทอง, hover "Products" ขึ้น pill ขาว+scale พร้อม dropdown ปกติ; มือถือ 430 (iframe) — ไม่มี overflow, แถว active radius 14 + glow ครบ, แผงเมนูเปิดปกติ
+
+---
+
+## ครั้งที่ 40 — 2026-07-13
+
+**Prompt:**
+> แถบเมนูเพิ่มหน้า home เข้าไปด้วยแต่ลิงก์กับหน้าหลัก และแถบเมนูยังมีช่องว่างอยู่เลยตรง product แก้ไขเดี๋ยวนี้
+
+**สิ่งที่แก้ไข / ดำเนินการ:**
+- **เพิ่มเมนู "Home" (หน้าแรก) กลับเข้าแถบเมนูทั้ง 18 หน้า** (สคริปต์ PS + snippet UTF-8): ลิงก์ไป `index.html` (products ใช้ `../index.html`), หน้าแรกได้ `class="active"` → pill เรืองทองบนหน้า Home; ลำดับเมนูเป็น **Home · Products ▾ · Works · About Us · Contact**
+- **แก้ช่องว่างตรง Products:** ต้นเหตุคือ caret (ลูกศร dropdown) เพิ่มความกว้างท้ายคำ — ลด gap ระหว่างคำกับ caret เหลือ 5px + ตัด padding ขวาของลิงก์ Products เหลือ 11px (ทั้ง 2 stylesheet) → วัดจริงช่องว่างระหว่างเมนูทุกคู่ **เท่ากันหมด 4px** และระยะข้างซ้าย/ขวาของกลุ่มเมนูสมมาตร 100.6px พอดี
+- เพิ่ม stagger delay รายการที่ 5 ในแผงเมนูมือถือ (0.25s) รองรับ 5 เมนู
+- เก็บกวาด: ลบคอมเมนต์ `<!-- TOP BAR -->` ตกค้างจากยุค topbar ออกทั้ง 18 หน้า
+- **ยืนยันด้วย Chrome:** works.html — Home เข้าแถบ ช่องว่างเท่ากันทุกคู่ (วัดด้วย JS), Works เรืองทอง; index.html — Home active เรืองทอง; มือถือ 430 (iframe) — เมนู 5 รายการ delay ไล่ 0.05–0.25s ครบ ไม่มี overflow
+- อัปเดต CLAUDE.md (ลำดับเมนูใหม่ + index มาร์ก Home active)
+
+---
+
+## ครั้งที่ 41 — 2026-07-13
+
+**Prompt:**
+> แก้ไขหัวข้อ product มันยังใหญ่กว่าหัวข้ออื่นๆ อยู่เลยปรับขนาดให้เท่ากับหัวข้ออื่นเดี๋ยวนี้
+
+**สิ่งที่แก้ไข / ดำเนินการ:**
+- ต้นเหตุ: ลิงก์ Products มีโครงพิเศษต่างจากเมนูอื่น — ลูกศร caret + เลย์เอาต์ row + padding เฉพาะตัว ทำให้กล่อง/pill ใหญ่กว่าหัวข้ออื่น
+- **ถอด caret (ลูกศร dropdown) ออกจาก markup ทั้ง 18 หน้า** (สคริปต์ PS regex) — สอดคล้องสเปกเดิม "minimal ไม่มีไอคอนเกินจำเป็น"; dropdown ยังเปิดตอน hover/focus เหมือนเดิม
+- **ลบ CSS พิเศษของ Products ทั้งหมด** (ทั้ง index inline + product.css): กฎ row/flex-wrap/padding-right ของ `.has-sub > a`, กฎ `::after flex-basis`, กฎ caret ทุกจุด (base + hover หมุน + micro-transition + ซ่อนที่มือถือ) → Products ใช้เลย์เอาต์ column เดียวกับเมนูอื่นทุกประการ
+- **วัดจริงหลังแก้:** ทั้ง 5 หัวข้อ สูง 42.6px / ฟอนต์ 14.08px / padding 7×15px **เท่ากันหมด** — ความกว้าง Products 87.7px แคบกว่า About Us 88.8px แล้ว (เหลือต่างตามความยาวข้อความเท่านั้น)
+- ยืนยันด้วย Chrome: brand-finnix — pill ทอง active ของ Products ขนาดเดียวกับหัวข้ออื่น, dropdown เปิดปกติ (ทดสอบผ่าน focus-within = เส้นทาง CSS เดียวกับ hover)
+
+---
+
+## ครั้งที่ 42 — 2026-07-13
+
+**Prompt:**
+> แถบเมนูตรงหัวข้อจัดหัวข้อให้มัน spread ให้มันเท่าๆ และตรวจเช็คข้อผิดผลาดในเว็บไซต์
+
+**สิ่งที่แก้ไข / ดำเนินการ:**
+- **จัดหัวข้อเมนูแบบ spread เท่ากัน:** `.menu` เปลี่ยน `justify-content: center` → `space-evenly` (ทั้ง index inline + product.css) — วัดจริง: ช่องว่างระหว่างหัวข้อทุกคู่ **44px เท่ากันหมด** ขอบซ้าย/ขวาของกลุ่มเมนูสมมาตร 54px, เมนู 5 หัวข้อกระจายเต็มพื้นที่กลางแคปซูลอย่างสมดุล
+- **ตรวจสุขภาพทั้งเว็บ (สคริปต์ site-check.ps1 + Chrome):**
+  - ✅ ลิงก์/รูป/`data-img` ภายในทั้ง 18 หน้า — ไฟล์ปลายทางมีจริงครบ ไม่มีลิงก์เสีย
+  - ✅ ไม่มี id ซ้ำในหน้าเดียวกัน · แท็กหลัก (header/footer/nav/section/style/script) เปิด-ปิดครบทุกหน้า
+  - ✅ Console ไม่มี error เลยทั้ง 6 หน้าหลักที่ไล่โหลด (index/works/about/contact/brand-finnix/model-finnix-ceramic)
+  - ✅ มือถือ 430: ไม่มี horizontal overflow, แผงเมนู 5 รายการเปิดปกติ
+  - 📌 พบว่า `navbar-demo.html` ถูกลบออกจากโปรเจกต์แล้ว (ไฟล์เดโมคอนเซปต์ — ดีไซน์ถูกติดตั้งจริงไปแล้วตั้งแต่ครั้งที่ 37) → เอาการอ้างถึงออกจาก CLAUDE.md ให้ตรงสภาพจริง
+
+---
+
+## ครั้งที่ 43 — 2026-07-13
+
+**Prompt:**
+> เอาแสงสีเหลืองเวลาเราอยู่หน้านั้นแล้วมีแสงค้างอยู่ตรงหัวข้อหน้าเมนูนั้นเอาออก แล้วตรงหัวข้อ product เวลาเอาเคอร์เซอร์ไปชี้ให้มันโชว์แบรนด์ฟิล์มค้างหน่อยเพราะแบบเดิมพอจะมาเลือกแบรนด์แล้วมันหาย และขอ logo แบรนด์ใหญ่ขึ้นให้เห็นชัดๆ ในขนาดเหมาะสม และหน้าไหนที่มีแถวเขียนว่า โครงร่างหน้า "…" เอาแถวนั้นออก (ยืนยันผ่าน AskUserQuestion: ใส่โลโก้ในดรอปดาวน์)
+
+**สิ่งที่แก้ไข / ดำเนินการ (แผนอนุมัติใน plan mode):**
+- **เอา glow ทองของเมนู active ออก** (ทั้ง index inline + product.css): ลบกฎ `.menu a.active { background + box-shadow }` — เหลือตัวหนังสือสีทองบอกหน้าปัจจุบันอย่างเดียว (วัดจริง: bg โปร่งใส, shadow none)
+- **Dropdown ค้างให้เลือกแบรนด์ได้:**
+  - ปิดช่องตาย: สะพาน hover `.submenu::before` 14→18px (ช่องว่างแคปซูล→ดรอปดาวน์ = 16px, วัดจริงสะพานคลุมเต็ม)
+  - เพิ่ม grace delay ตอนปิด: `opacity/transform` หน่วง 0.35s + `visibility` หน่วง 0.6s, สถานะเปิด `transition-delay: 0s` (เปิดทันที ปิดค่อยหาย) + `.submenu li` หน่วง 0.35s ให้รายการไม่จางก่อนแผง
+- **ใส่โลโก้แบรนด์ในดรอปดาวน์ทั้ง 18 หน้า** (สคริปต์ PS จำกัดเฉพาะบล็อก `<ul class="submenu">` — ไม่โดน footer/breadcrumb ที่มีลิงก์หน้าตาเดียวกัน): แต่ละรายการมีชิปพื้นขาวโค้ง 8px ขนาด 64×36px ใส่โลโก้จาก `assets/brands/*.png` แบบ object-fit contain + ชื่อแบรนด์ข้างๆ; ขยาย `.submenu` เป็น min-width 230px, แถวสูง 54px
+- 🐛 เจอ+แก้ระหว่างทำ: ลิงก์ดรอปดาวน์สืบทอด `flex-direction: column` จากกฎ `.menu a` ทำให้ชิปซ้อนบนชื่อ → เพิ่ม `flex-direction: row` ที่ `.submenu a`
+- **ลบแถว "โครงร่างหน้า …" (skeleton note):** works.html ("ผลงาน") + about.html ("About Us") — สองหน้าที่มีทั้งหมด; แบนเนอร์สเปกตัวอย่างบนหน้ารุ่นคงไว้ตามเดิม
+- **ยืนยัน:** เดสก์ท็อป works — active ทองล้วนไม่มีเรือง, ดรอปดาวน์โชว์ชิปโลโก้ 4 แบรนด์ชัดเจน (Finnix/3M/Regionfilm/Ultra Guard); มือถือ 430 (iframe) — แผงเมนูมีชิป 64×36 แถวสูง 54px ไม่ล้นจอ; ไม่มี console error; "โครงร่างหน้า" หายจากทั้ง 2 หน้า
+
+---
+
+## ครั้งที่ 44 — 2026-07-13
+
+**Prompt:**
+> เก่งมากเคลียร์ไฟล์ที่ไม่จำเป็นออกและอัพขึ้น git เราได้เลย
+
+**สิ่งที่แก้ไข / ดำเนินการ:**
+- **ตรวจไฟล์ไม่จำเป็น:** ใน repo ไม่มีไฟล์ขยะ/untracked เหลืออยู่ — `navbar-demo.html` (ไฟล์เดโม) ถูกลบไปแล้วก่อนหน้านี้, ไฟล์ชั่วคราวทั้งหมด (template/สคริปต์ PS) อยู่นอก repo ใน scratchpad ของเซสชัน, `assets/source/` ถูก .gitignore ตามเดิม
+- **Commit + push ขึ้น GitHub** (`KUYLA2555/ProjectWorldFilm`, branch main): งานครั้งที่ 36–44 ทั้งหมด — Floating Capsule Navbar ทั้งไซต์, micro-interactions, โลโก้ในดรอปดาวน์+grace delay, ลบแถวโครงร่าง, อัปเดตเอกสาร (22 ไฟล์)
