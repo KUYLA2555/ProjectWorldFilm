@@ -355,19 +355,43 @@
           <ul class="menu" id="menu">
             <li><a href="index.html" data-th="หน้าแรก">Home</a></li>
             <li class="has-sub">
-              <a href="index.html#brands" data-th="ฟิล์มของเรา"
-                >Products
-              </a>
+              <a href="index.html#brands" data-th="ฟิล์มของเรา">Products </a>
               <ul class="submenu">
-                <li><a href="products/brand-finnix.html"><span class="bl"><img src="assets/brands/finnix.png" alt="" /></span>Finnix</a></li>
-                <li><a href="products/brand-3m.html"><span class="bl"><img src="assets/brands/3m.png" alt="" /></span>3M</a></li>
-                <li><a href="products/brand-regionfilm.html"><span class="bl"><img src="assets/brands/regionfilm.png" alt="" /></span>Regionfilm</a></li>
-                <li><a href="products/brand-ultraguard.html"><span class="bl"><img src="assets/brands/ultraguard.png" alt="" /></span>Ultra Guard</a></li>
+                <li>
+                  <a href="products/brand-finnix.html"
+                    ><span class="bl"
+                      ><img src="assets/brands/finnix.png" alt="" /></span
+                    >Finnix</a
+                  >
+                </li>
+                <li>
+                  <a href="products/brand-3m.html"
+                    ><span class="bl"
+                      ><img src="assets/brands/3m.png" alt="" /></span
+                    >3M</a
+                  >
+                </li>
+                <li>
+                  <a href="products/brand-regionfilm.html"
+                    ><span class="bl"
+                      ><img src="assets/brands/regionfilm.png" alt="" /></span
+                    >Regionfilm</a
+                  >
+                </li>
+                <li>
+                  <a href="products/brand-ultraguard.html"
+                    ><span class="bl"
+                      ><img src="assets/brands/ultraguard.png" alt="" /></span
+                    >Ultra Guard</a
+                  >
+                </li>
               </ul>
             </li>
-            <li><a href="works.html" data-th="ผลงาน">Works</a></li>
+            <li><a href="works.html" data-th="ผลงาน">Project Reference</a></li>
             <li><a href="about.html" data-th="เกี่ยวกับเรา">About Us</a></li>
-            <li><a href="contact.html" class="active" data-th="ติดต่อ">Contact</a></li>
+            <li>
+              <a href="contact.html" class="active" data-th="ติดต่อ">Contact</a>
+            </li>
           </ul>
           <div class="nav-right">
             <button class="pill" id="copyPill" type="button">
@@ -700,7 +724,7 @@
       );
       document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
     </script>
-  <script>
+    <script>
       /* expandable CTA pill — กดคัดลอกเบอร์โทร */
       const copyPill = document.getElementById("copyPill");
       if (copyPill) {

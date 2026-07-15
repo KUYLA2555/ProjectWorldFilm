@@ -358,23 +358,111 @@
       /* ============ hero ============ */
       .hero {
         position: relative;
-        min-height: 88vh;
+        /* ดึงขึ้นไปใต้แคปซูล nav (slot สูง 92px) ให้ภาพเต็มจอถึงขอบบน */
+        margin-top: -92px;
+        min-height: 100vh;
+        min-height: 100svh;
         display: flex;
         align-items: center;
         background: var(--ink);
-        /* IMG hero — เปลี่ยนเป็นรูปบ้าน/อาคารหรูของ WorldFilm */
-        background-image:
-          linear-gradient(
-            90deg,
-            rgba(15, 25, 47, 0.86) 0%,
-            rgba(15, 25, 47, 0.55) 55%,
-            rgba(15, 25, 47, 0.25) 100%
-          ),
-          url("https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80");
-        background-size: cover;
-        background-position: center;
         color: #fff;
         overflow: hidden;
+      }
+      /* พื้นหลังสไลด์เต็มจอ — เฟดสลับด้วย JS + จุด pagination (รูปโหลดผ่าน data-img) */
+      .hero-slides {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+      .hero-slides .slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transform: scale(1);
+        transition:
+          opacity 1.4s ease,
+          transform 7s linear;
+      }
+      .hero-slides .slide.on {
+        opacity: 1;
+        transform: scale(1.06);
+      }
+      /* ใบสนเบลอหน้าเลนส์ฝั่งซ้าย — บังตัวอักษรบางส่วนให้ภาพมีมิติความลึก */
+      .hero-foliage {
+        position: absolute;
+        left: -70px;
+        top: -40px;
+        height: calc(100% + 80px);
+        /* กว้างอิงกึ่งกลางจอ ให้ปลายกิ่งบังต้นตัวอักษรพอดีทุกขนาดจอ */
+        width: clamp(300px, calc(53vw - 272px), 760px);
+        z-index: 3;
+        pointer-events: none;
+        filter: blur(10px);
+        opacity: 0.92;
+        transform-origin: 0% 40%;
+        animation: foliageSway 10s ease-in-out infinite alternate;
+      }
+      @keyframes foliageSway {
+        from {
+          transform: rotate(-0.7deg);
+        }
+        to {
+          transform: rotate(0.9deg);
+        }
+      }
+      /* จุด pagination กลางล่างของสไลด์ — จุด active เป็นสีทอง */
+      .hero-dots {
+        position: absolute;
+        left: 50%;
+        bottom: 30px;
+        transform: translateX(-50%);
+        z-index: 3;
+        display: flex;
+        gap: 12px;
+      }
+      .hero-dots button {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.45);
+        transition: 0.3s ease;
+      }
+      .hero-dots button:hover {
+        background: rgba(255, 255, 255, 0.8);
+      }
+      .hero-dots button.active {
+        background: #e7c879;
+        transform: scale(1.25);
+        box-shadow: 0 0 0 4px rgba(231, 200, 121, 0.22);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .hero-slides .slide {
+          transition: opacity 0.5s ease;
+          transform: none;
+        }
+        .hero-slides .slide.on {
+          transform: none;
+        }
+        .hero-foliage {
+          animation: none;
+        }
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(
+          90deg,
+          rgba(15, 25, 47, 0.86) 0%,
+          rgba(15, 25, 47, 0.55) 55%,
+          rgba(15, 25, 47, 0.35) 100%
+        );
       }
       .hero .wrap {
         position: relative;
@@ -398,10 +486,11 @@
         color: #e7c879;
       }
       .hero .thai-sub {
+        font-family: "Trirong", "IBM Plex Sans Thai", serif;
         font-size: clamp(1.05rem, 2.2vw, 1.45rem);
-        font-weight: 300;
+        font-weight: 500;
         max-width: 34ch;
-        color: #e6eaf1;
+        color: #fff;
         margin-bottom: 10px;
       }
       .hero .note {
@@ -418,16 +507,10 @@
         fill: #e7c879;
         flex: none;
       }
-      .hero-cta {
-        display: flex;
-        gap: 14px;
-        flex-wrap: wrap;
-      }
       .scrollcue {
         position: absolute;
-        left: 50%;
+        right: 120px;
         bottom: 26px;
-        transform: translateX(-50%);
         z-index: 2;
         color: #cfd6e2;
         font-size: 0.72rem;
@@ -454,39 +537,6 @@
           opacity: 1;
           transform: scaleY(1);
         }
-      }
-
-      /* ============ stat band ============ */
-      .stats {
-        background: var(--white);
-        color: var(--ink);
-        border-bottom: 1px solid var(--line);
-      }
-      .stats .grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-      }
-      .stat {
-        padding: 56px 24px;
-        text-align: center;
-        border-right: 1px solid var(--line);
-      }
-      .stat:last-child {
-        border-right: none;
-      }
-      .stat .num {
-        font-family: "Cormorant Garamond", serif;
-        font-weight: 600;
-        font-size: 3.4rem;
-        color: var(--gold);
-        line-height: 1;
-      }
-      .stat .lab {
-        font-size: 0.9rem;
-        color: var(--slate);
-        margin-top: 10px;
-        font-weight: 400;
-        letter-spacing: 0.01em;
       }
 
       /* ============ brand logos (คลิก → หน้าแบรนด์) ============ */
@@ -562,9 +612,7 @@
       .intro-grid .figure {
         aspect-ratio: 4/5;
         border-radius: 12px;
-        background: var(--ink) center/cover no-repeat;
-        /* IMG intro */
-        background-image: url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80");
+        background: var(--ink);
         position: relative;
         box-shadow: var(--shadow-md);
       }
@@ -577,13 +625,129 @@
         z-index: -1;
         border-radius: 12px;
       }
-      .intro-copy .statement {
-        font-family: "Trirong", "IBM Plex Sans Thai", serif;
-        font-size: 1.9rem;
+      /* รูปในกรอบ เปลี่ยนตามแผงข้อความ (โหลดผ่าน data-img) */
+      .figure-slides {
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .figure-slides .fslide {
+        position: absolute;
+        inset: 0;
+        background: var(--ink) center/cover no-repeat;
+        opacity: 0;
+        transform: scale(1.04);
+        transition:
+          opacity 0.7s ease,
+          transform 0.9s ease;
+      }
+      .figure-slides .fslide.on {
+        opacity: 1;
+        transform: scale(1);
+      }
+      /* แผงข้อความสรรพคุณฟิล์ม — ซ้อนใน grid เดียว สลับด้วยลูกศร/จุด */
+      .intro-panels {
+        display: grid;
+        margin-top: 18px;
+      }
+      .ipanel {
+        grid-area: 1 / 1;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(14px);
+        transition: 0.55s ease;
+        pointer-events: none;
+      }
+      .ipanel.on {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        pointer-events: auto;
+      }
+      .ipanel .ikicker {
+        font-size: 0.78rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold);
         font-weight: 600;
+        margin-bottom: 14px;
+      }
+      .ipanel h3 {
+        font-family: "IBM Plex Sans Thai", sans-serif;
+        font-size: clamp(1.5rem, 2.6vw, 2.15rem);
+        font-weight: 700;
         color: var(--ink);
-        line-height: 1.4;
-        margin: 18px 0 24px;
+        line-height: 1.35;
+        margin: 0 0 22px;
+        max-width: 18ch;
+      }
+      .ipanel p {
+        max-width: 46ch;
+        line-height: 1.9;
+      }
+      /* ลูกศรเลื่อน: ซ้ายเส้นบางเรียบ / ขวาอยู่ในกรอบสี่เหลี่ยม */
+      .intro-nav {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-top: 36px;
+      }
+      .intro-nav button {
+        display: grid;
+        place-items: center;
+        background: none;
+        border: 0;
+        padding: 0;
+        color: var(--ink);
+        cursor: pointer;
+        transition: 0.3s ease;
+      }
+      .intro-nav svg {
+        width: 30px;
+        height: 30px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 1.1;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .intro-nav .iprev:hover {
+        color: var(--gold);
+        transform: translateX(-3px);
+      }
+      .intro-nav .inext {
+        width: 58px;
+        height: 58px;
+        border: 1px solid var(--ink);
+      }
+      .intro-nav .inext:hover {
+        background: var(--ink);
+        color: #e7c879;
+      }
+      /* จุดไข่ปลาล่างสุด — จุด active สีทอง จุดอื่นเทาเข้มบนพื้นอ่อน */
+      .intro-dots {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 52px;
+      }
+      .intro-dots button {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        background: #97a1b3;
+        transition: 0.3s ease;
+      }
+      .intro-dots button:hover {
+        background: var(--ink);
+      }
+      .intro-dots button.active {
+        background: var(--gold);
+        transform: scale(1.3);
       }
       .intro-copy p {
         color: var(--slate);
@@ -802,6 +966,31 @@
         font-size: 1.05rem;
         color: var(--ink);
       }
+      /* contact cards ในฮีโร่ (วางบนพื้นหลังเข้ม) */
+      .hero .contact-cards {
+        margin-top: 0;
+        max-width: 780px;
+        gap: 14px;
+      }
+      .hero .ccard {
+        background: rgba(255, 255, 255, 0.07);
+        border-color: rgba(255, 255, 255, 0.16);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        padding: 18px 22px;
+        box-shadow: none;
+      }
+      .hero .ccard:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: var(--gold);
+        transform: translateY(-3px);
+      }
+      .hero .ccard .ci {
+        background: rgba(231, 200, 121, 0.14);
+      }
+      .hero .ccard .val {
+        color: #fff;
+      }
       /* ============ footer ============ */
       .footer {
         background: var(--ink);
@@ -1015,11 +1204,9 @@
         .pill {
           display: none;
         }
-        .stats .grid,
         .featurebar .grid {
           grid-template-columns: repeat(2, 1fr);
         }
-        .stat:nth-child(2),
         .fitem:nth-child(2) {
           border-right: none;
         }
@@ -1298,6 +1485,9 @@
         .contact-cards {
           grid-template-columns: 1fr;
         }
+        .hero-foliage {
+          display: none;
+        }
         .menu .has-sub {
           width: 100%;
         }
@@ -1336,7 +1526,7 @@
           padding: 0 18px;
         }
         .hero {
-          min-height: 70vh;
+          min-height: 100svh;
         }
         .hero h1 {
           font-size: clamp(1.9rem, 8.5vw, 2.4rem);
@@ -1350,24 +1540,11 @@
         .scrollcue {
           display: none;
         }
-        .hero-cta .btn {
-          width: 100%;
-          justify-content: center;
-        }
-        .stats .grid,
         .featurebar .grid {
           grid-template-columns: 1fr;
         }
-        .stat,
         .fitem {
           border-right: none;
-        }
-        .stat {
-          padding: 24px 20px;
-          border-bottom: 1px solid var(--line);
-        }
-        .stat .num {
-          font-size: 2.3rem;
         }
         .sec-head h2 {
           font-size: clamp(1.4rem, 6.5vw, 1.85rem);
@@ -1375,8 +1552,12 @@
         .sec-head {
           margin-bottom: 42px;
         }
-        .intro-copy .statement {
-          font-size: 1.4rem;
+        .ipanel h3 {
+          font-size: 1.35rem;
+        }
+        .intro-nav .inext {
+          width: 50px;
+          height: 50px;
         }
         .intro-grid {
           gap: 30px;
@@ -1583,15 +1764,37 @@
             <li class="has-sub">
               <a href="#brands" data-th="ฟิล์มของเรา">Products </a>
               <ul class="submenu">
-                <li><a href="products/brand-finnix.html"><span class="bl"><img src="assets/brands/finnix.png" alt="" /></span>Finnix</a></li>
-                <li><a href="products/brand-3m.html"><span class="bl"><img src="assets/brands/3m.png" alt="" /></span>3M</a></li>
-                <li><a href="products/brand-regionfilm.html"><span class="bl"><img src="assets/brands/regionfilm.png" alt="" /></span>Regionfilm</a></li>
                 <li>
-                  <a href="products/brand-ultraguard.html"><span class="bl"><img src="assets/brands/ultraguard.png" alt="" /></span>Ultra Guard</a>
+                  <a href="products/brand-finnix.html"
+                    ><span class="bl"
+                      ><img src="assets/brands/finnix.png" alt="" /></span
+                    >Finnix</a
+                  >
+                </li>
+                <li>
+                  <a href="products/brand-3m.html"
+                    ><span class="bl"
+                      ><img src="assets/brands/3m.png" alt="" /></span
+                    >3M</a
+                  >
+                </li>
+                <li>
+                  <a href="products/brand-regionfilm.html"
+                    ><span class="bl"
+                      ><img src="assets/brands/regionfilm.png" alt="" /></span
+                    >Regionfilm</a
+                  >
+                </li>
+                <li>
+                  <a href="products/brand-ultraguard.html"
+                    ><span class="bl"
+                      ><img src="assets/brands/ultraguard.png" alt="" /></span
+                    >Ultra Guard</a
+                  >
                 </li>
               </ul>
             </li>
-            <li><a href="works.html" data-th="ผลงาน">Works</a></li>
+            <li><a href="works.html" data-th="ผลงาน">Project Reference</a></li>
             <li><a href="about.html" data-th="เกี่ยวกับเรา">About Us</a></li>
             <li><a href="contact.html" data-th="ติดต่อ">Contact</a></li>
           </ul>
@@ -1638,9 +1841,54 @@
 
     <!-- ============ HERO ============ -->
     <section class="hero">
+      <div class="hero-slides" aria-hidden="true">
+        <div
+          class="slide"
+          data-img="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80"
+        ></div>
+        <div
+          class="slide"
+          data-img="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80"
+        ></div>
+        <div
+          class="slide"
+          data-img="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?auto=format&fit=crop&w=1920&q=80"
+        ></div>
+      </div>
+      <!-- ใบสนเบลอ ๆ ยื่นจากขอบซ้าย บังตัวอักษรบางส่วน -->
+      <svg
+        class="hero-foliage"
+        viewBox="0 0 520 900"
+        preserveAspectRatio="xMinYMid slice"
+        aria-hidden="true"
+      >
+        <defs>
+          <g id="tuft">
+            <ellipse cx="52" cy="0" rx="58" ry="7" transform="rotate(-32)" />
+            <ellipse cx="60" cy="0" rx="64" ry="7" transform="rotate(-16)" />
+            <ellipse cx="66" cy="0" rx="68" ry="8" transform="rotate(-2)" />
+            <ellipse cx="62" cy="0" rx="64" ry="7" transform="rotate(12)" />
+            <ellipse cx="54" cy="0" rx="58" ry="7" transform="rotate(26)" />
+            <ellipse cx="44" cy="0" rx="50" ry="6" transform="rotate(40)" />
+          </g>
+        </defs>
+        <g fill="#07101d">
+          <path
+            d="M-60 -40 C 150 40, 40 170, 130 290 C 210 390, 70 460, 150 570 C 225 670, 60 760, 130 940 L -80 940 Z"
+          />
+          <use href="#tuft" transform="translate(150 170) rotate(18) scale(1.6)" />
+          <use href="#tuft" transform="translate(265 250) rotate(-8) scale(1.25)" />
+          <use href="#tuft" transform="translate(360 315) rotate(20) scale(1.05)" />
+          <use href="#tuft" transform="translate(300 400) rotate(42) scale(0.85)" />
+          <use href="#tuft" transform="translate(150 480) rotate(-20) scale(1.35)" />
+          <use href="#tuft" transform="translate(255 560) rotate(10) scale(1.0)" />
+          <use href="#tuft" transform="translate(120 730) rotate(-34) scale(1.45)" />
+          <use href="#tuft" transform="translate(235 800) rotate(14) scale(1.0)" />
+        </g>
+      </svg>
       <div class="wrap">
         <span class="eyebrow">ศูนย์ติดตั้งฟิล์มกรองแสง</span>
-        <h1 class="h-display">Live Cooler.<br /><em>See Clearer.</em></h1>
+        <h1 class="h-display">Welcome to<br /><em>WORLD FILM</em></h1>
         <p class="thai-sub">
           ฟิล์มกรองแสงเซรามิกพรีเมียม เพื่อบ้านและอาคารที่เย็นสบาย คมชัด
           ตลอดทั้งวัน
@@ -1651,76 +1899,60 @@
           </svg>
           ติดตั้งโดยทีมช่างมืออาชีพ · มากกว่า 40 สาขาทั่วประเทศ
         </p>
-        <div class="hero-cta">
-          <a href="tel:+66952292086" class="btn btn-gold">โทร 095-229-2086</a>
+        <div class="contact-cards">
+          <a class="ccard" href="https://line.me/R/ti/p/@worldcenter">
+            <span class="ci"
+              ><svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2C6.5 2 2 5.6 2 10c0 3.9 3.5 7.2 8.3 7.8.3.1.7.2.8.5.1.3.1.7 0 1l-.1.8c0 .2-.2 1 .8.5s5.3-3.1 7.2-5.3C20.5 13.7 22 12 22 10c0-4.4-4.5-8-10-8z"
+                /></svg
+            ></span>
+            <div>
+              <div class="lab">Line</div>
+              <div class="val">@WORLDCENTER</div>
+            </div>
+          </a>
+          <a class="ccard" href="tel:+66952292086">
+            <span class="ci"
+              ><svg viewBox="0 0 24 24">
+                <path
+                  d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.2 2.2z"
+                /></svg
+            ></span>
+            <div>
+              <div class="lab">Call</div>
+              <div class="val">095-229-2086</div>
+            </div>
+          </a>
+          <a
+            class="ccard"
+            href="https://www.facebook.com/Worldsfilm1"
+            target="_blank"
+            rel="noopener"
+          >
+            <span class="ci"
+              ><svg viewBox="0 0 24 24">
+                <path
+                  d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"
+                /></svg
+            ></span>
+            <div>
+              <div class="lab">Facebook</div>
+              <div class="val">World's Film</div>
+            </div>
+          </a>
         </div>
+      </div>
+      <div class="hero-dots" aria-label="เลือกสไลด์">
+        <button type="button" aria-label="สไลด์ที่ 1"></button>
+        <button type="button" aria-label="สไลด์ที่ 2"></button>
+        <button type="button" aria-label="สไลด์ที่ 3"></button>
       </div>
       <div class="scrollcue">เลื่อนลง<span></span></div>
     </section>
 
-    <!-- ============ STAT BAND ============ -->
-    <section class="stats">
-      <div class="wrap">
-        <div class="grid">
-          <div class="stat">
-            <div class="num">40+</div>
-            <div class="lab">สาขาทั่วประเทศ</div>
-          </div>
-          <div class="stat">
-            <div class="num">99%</div>
-            <div class="lab">กันรังสี UV สูงสุด</div>
-          </div>
-          <div class="stat">
-            <div class="num">85%</div>
-            <div class="lab">ลดความร้อนสูงสุด</div>
-          </div>
-          <div class="stat">
-            <div class="num">8</div>
-            <div class="lab">ปี รับประกันสูงสุด</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ INTRO ============ -->
-    <section class="section" id="about">
-      <div class="wrap">
-        <div class="intro-grid">
-          <div class="figure reveal" aria-hidden="true">
-            <span class="seal"
-              ><b>8</b><span>ปี<br />รับประกัน</span></span
-            >
-          </div>
-          <div class="intro-copy reveal">
-            <span class="eyebrow">ยินดีต้อนรับสู่ WORLD FILM</span>
-            <p class="statement">
-              ความเย็นสบายและแสงธรรมชาติ อยู่ร่วมกันได้อย่างลงตัว
-            </p>
-            <p>
-              WORLD FILM
-              คือศูนย์บริการติดตั้งฟิล์มกรองแสงที่ออกแบบมาเพื่อสภาพอากาศเมืองไทยโดยเฉพาะ
-              ด้วยฟิล์มเซรามิกนาโน Finnix Ceramic
-              ที่ลดความร้อนสะสมภายในอาคารได้เหนือกว่าฟิล์มทั่วไป
-            </p>
-            <p>
-              เราเชื่อว่าบ้านที่ดีไม่ควรต้องเลือกระหว่างความเย็นกับวิวสวย
-              ฟิล์มของเราจึงกรองความร้อนและรังสี UV โดยยังคงความใส คมชัด
-              และให้แสงธรรมชาติเข้าถึงได้อย่างเต็มที่
-            </p>
-            <div class="sign">
-              <span class="line"></span>
-              <div class="who">
-                <b>WORLD FILM Center</b
-                ><span>ติดตั้งโดยทีมช่างผู้เชี่ยวชาญ มากกว่า 40 สาขา</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ============ BENEFITS / WHY ============ -->
-    <section class="section section--tint" id="why">
+    <section class="section" id="why">
       <div class="wrap">
         <div class="sec-head reveal">
           <span class="eyebrow center">ทำไมต้องติดฟิล์ม</span>
@@ -1780,6 +2012,114 @@
               เสริมความเป็นส่วนตัวในเวลากลางวัน โดยไม่ทำให้ห้องมืดทึบหรืออึดอัด
             </p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ INTRO — Split Layout + สไลด์สรรพคุณฟิล์ม ============ -->
+    <section class="section section--tint" id="about">
+      <div class="wrap">
+        <div class="intro-grid">
+          <div class="figure reveal" aria-hidden="true">
+            <div class="figure-slides">
+              <div
+                class="fslide on"
+                data-img="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80"
+              ></div>
+              <div
+                class="fslide"
+                data-img="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1000&q=80"
+              ></div>
+              <div
+                class="fslide"
+                data-img="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1000&q=80"
+              ></div>
+              <div
+                class="fslide"
+                data-img="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=80"
+              ></div>
+              <div
+                class="fslide"
+                data-img="https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=1000&q=80"
+              ></div>
+            </div>
+            <span class="seal"
+              ><b>8</b><span>ปี<br />รับประกัน</span></span
+            >
+          </div>
+          <div class="intro-copy reveal">
+            <span class="eyebrow">ยินดีต้อนรับสู่ WORLD FILM</span>
+            <div class="intro-panels">
+              <div class="ipanel on">
+                <div class="ikicker">01 / 05 · WORLD FILM</div>
+                <h3>ความเย็นสบายและแสงธรรมชาติ อยู่ร่วมกันได้อย่างลงตัว</h3>
+                <p>
+                  WORLD FILM
+                  คือศูนย์บริการติดตั้งฟิล์มกรองแสงที่ออกแบบมาเพื่อสภาพอากาศเมืองไทยโดยเฉพาะ
+                  ด้วยฟิล์มเซรามิกนาโน Finnix Ceramic
+                  ที่ลดความร้อนสะสมภายในอาคารได้เหนือกว่าฟิล์มทั่วไป
+                </p>
+                <div class="sign">
+                  <span class="line"></span>
+                  <div class="who">
+                    <b>WORLD FILM Center</b
+                    ><span>ติดตั้งโดยทีมช่างผู้เชี่ยวชาญ มากกว่า 40 สาขา</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ipanel">
+                <div class="ikicker">02 / 05 · สรรพคุณฟิล์ม</div>
+                <h3>ลดความร้อนสูงสุด 85%</h3>
+                <p>
+                  ฟิล์มเซรามิกนาโนสกัดรังสีอินฟราเรดต้นเหตุของความร้อนก่อนเข้าสู่ตัวบ้าน
+                  ห้องจึงเย็นเร็วขึ้น แอร์ทำงานเบาลง
+                  และประหยัดค่าไฟได้อย่างเห็นผลตลอดทั้งปี
+                </p>
+              </div>
+              <div class="ipanel">
+                <div class="ikicker">03 / 05 · สรรพคุณฟิล์ม</div>
+                <h3>ปกป้องจากรังสี UV สูงสุด 99%</h3>
+                <p>
+                  กรองรังสีอัลตราไวโอเลตที่ทำร้ายผิว และทำให้เฟอร์นิเจอร์
+                  พื้นไม้ ผ้าม่านซีดจาง
+                  ให้ทุกคนในบ้านใช้ชีวิตใกล้หน้าต่างได้อย่างสบายใจ
+                </p>
+              </div>
+              <div class="ipanel">
+                <div class="ikicker">04 / 05 · สรรพคุณฟิล์ม</div>
+                <h3>ใสคมชัด ไม่บังวิวสวย</h3>
+                <p>
+                  เทคโนโลยีเซรามิกให้ความใสสูง
+                  มองวิวภายนอกได้ชัดเจนทั้งกลางวันและกลางคืน
+                  โดยยังคงแสงธรรมชาติที่ทำให้บ้านดูโปร่งสบาย
+                </p>
+              </div>
+              <div class="ipanel">
+                <div class="ikicker">05 / 05 · สรรพคุณฟิล์ม</div>
+                <h3>เพิ่มความเป็นส่วนตัวทุกช่วงเวลา</h3>
+                <p>
+                  เลือกระดับความทึบได้ตามรุ่นฟิล์ม
+                  มองจากภายนอกเข้ามาได้ยากขึ้นในเวลากลางวัน
+                  โดยภายในห้องยังคงสว่างและไม่อึดอัด
+                </p>
+              </div>
+            </div>
+            <div class="intro-nav">
+              <button type="button" class="iprev" aria-label="สรรพคุณก่อนหน้า">
+                <svg viewBox="0 0 24 24"><path d="M22 12H3M10 5l-7 7 7 7" /></svg>
+              </button>
+              <button type="button" class="inext" aria-label="สรรพคุณถัดไป">
+                <svg viewBox="0 0 24 24"><path d="M2 12h19M14 5l7 7-7 7" /></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="intro-dots" aria-label="เลือกหัวข้อสรรพคุณ">
+          <button type="button" class="active" aria-label="หัวข้อที่ 1"></button>
+          <button type="button" aria-label="หัวข้อที่ 2"></button>
+          <button type="button" aria-label="หัวข้อที่ 3"></button>
+          <button type="button" aria-label="หัวข้อที่ 4"></button>
+          <button type="button" aria-label="หัวข้อที่ 5"></button>
         </div>
       </div>
     </section>
@@ -1899,7 +2239,7 @@
                   d="M12 2 4 6v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V6l-8-4z"
                 />
                 <path d="M9 12l2 2 4-4" /></svg
-              ><b>รับประกัน 8 ปี</b><span>ยาวนานหมดห่วง</span>
+              ><b>รับประกัน 10 ปี</b><span>ยาวนานหมดห่วง</span>
             </div>
             <div class="fitem">
               <svg viewBox="0 0 24 24">
@@ -1910,49 +2250,6 @@
               ><b>ปลอดสารพิษ</b><span>Low VOCs ปลอดภัย</span>
             </div>
           </div>
-        </div>
-        <div class="contact-cards reveal">
-          <a class="ccard" href="https://line.me/R/ti/p/@worldcenter">
-            <span class="ci"
-              ><svg viewBox="0 0 24 24">
-                <path
-                  d="M12 2C6.5 2 2 5.6 2 10c0 3.9 3.5 7.2 8.3 7.8.3.1.7.2.8.5.1.3.1.7 0 1l-.1.8c0 .2-.2 1 .8.5s5.3-3.1 7.2-5.3C20.5 13.7 22 12 22 10c0-4.4-4.5-8-10-8z"
-                /></svg
-            ></span>
-            <div>
-              <div class="lab">Line</div>
-              <div class="val">@WORLDCENTER</div>
-            </div>
-          </a>
-          <a class="ccard" href="tel:+66952292086">
-            <span class="ci"
-              ><svg viewBox="0 0 24 24">
-                <path
-                  d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.2 2.2z"
-                /></svg
-            ></span>
-            <div>
-              <div class="lab">Call</div>
-              <div class="val">095-229-2086</div>
-            </div>
-          </a>
-          <a
-            class="ccard"
-            href="https://www.facebook.com/Worldsfilm1"
-            target="_blank"
-            rel="noopener"
-          >
-            <span class="ci"
-              ><svg viewBox="0 0 24 24">
-                <path
-                  d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"
-                /></svg
-            ></span>
-            <div>
-              <div class="lab">Facebook</div>
-              <div class="val">World's Film</div>
-            </div>
-          </a>
         </div>
       </div>
     </section>
@@ -2077,13 +2374,74 @@
           a.addEventListener("click", () => menu.classList.remove("open")),
         );
 
-      /* lazy background tiles (degrade to navy if image fails) */
-      document.querySelectorAll(".tile[data-img]").forEach((t) => {
+      /* lazy background tiles + hero slides (degrade to navy if image fails) */
+      document
+        .querySelectorAll(
+          ".tile[data-img], .hero-slides .slide[data-img], .fslide[data-img]",
+        )
+        .forEach((t) => {
         const img = new Image();
         img.onload = () =>
           (t.style.backgroundImage = `url('${t.dataset.img}')`);
         img.src = t.dataset.img;
       });
+
+      /* hero slideshow — เฟดสลับทุก 6 วิ + จุด pagination (จุด active สีทอง) */
+      const slides = document.querySelectorAll(".hero-slides .slide");
+      const dots = document.querySelectorAll(".hero-dots button");
+      let cur = 0,
+        slideTimer;
+      function showSlide(i) {
+        slides[cur].classList.remove("on");
+        dots[cur].classList.remove("active");
+        cur = i;
+        slides[cur].classList.add("on");
+        dots[cur].classList.add("active");
+      }
+      function playSlides() {
+        clearInterval(slideTimer);
+        slideTimer = setInterval(
+          () => showSlide((cur + 1) % slides.length),
+          6000,
+        );
+      }
+      if (slides.length && dots.length === slides.length) {
+        showSlide(0);
+        playSlides();
+        dots.forEach((d, i) =>
+          d.addEventListener("click", () => {
+            showSlide(i);
+            playSlides();
+          }),
+        );
+      }
+
+      /* intro split-layout carousel — ลูกศรซ้าย/ขวา + จุดไข่ปลา */
+      const fslides = document.querySelectorAll(".figure-slides .fslide");
+      const ipanels = document.querySelectorAll(".intro-panels .ipanel");
+      const idots = document.querySelectorAll(".intro-dots button");
+      let icur = 0;
+      function showIntro(n) {
+        const i = (n + ipanels.length) % ipanels.length;
+        fslides[icur].classList.remove("on");
+        ipanels[icur].classList.remove("on");
+        idots[icur].classList.remove("active");
+        icur = i;
+        fslides[icur].classList.add("on");
+        ipanels[icur].classList.add("on");
+        idots[icur].classList.add("active");
+      }
+      if (ipanels.length) {
+        document
+          .querySelector(".intro-nav .iprev")
+          .addEventListener("click", () => showIntro(icur - 1));
+        document
+          .querySelector(".intro-nav .inext")
+          .addEventListener("click", () => showIntro(icur + 1));
+        idots.forEach((d, i) =>
+          d.addEventListener("click", () => showIntro(i)),
+        );
+      }
 
       /* scroll reveal */
       const io = new IntersectionObserver(
