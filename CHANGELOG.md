@@ -753,3 +753,12 @@ model-ultraguard-ceramic, model-ultraguard-nano
 **สิ่งที่แก้ไข / ดำเนินการ:**
 - Commit + push งานครั้งที่ 45–48 ทั้งหมดขึ้น GitHub (`KUYLA2555/ProjectWorldFilm`, branch main): hero เต็มจอ+สไลด์ 3 รูป+ใบสน+จุด pagination, section ยินดีต้อนรับแบบ split carousel, เมนู Works → Project Reference (18 ไฟล์), เอกสาร CLAUDE.md/CHANGELOG
 - **กติกาใหม่:** หลังจากนี้ทุกครั้งที่แก้งานจะ commit + push ขึ้น GitHub ให้อัตโนมัติ (บันทึกใน CLAUDE.md หัวข้อ Git & publishing แล้ว)
+
+## ครั้งที่ 50 — 2026-07-16
+
+**Prompt:**
+> /init — วิเคราะห์โค้ดเบสและสร้าง/ปรับปรุงไฟล์ CLAUDE.md
+
+**สิ่งที่แก้ไข / ดำเนินการ:**
+- ตรวจสอบ CLAUDE.md เดิมเทียบกับโค้ดจริงทั้งหมด (โครงสร้างเมนู, CSS สองชุด, ตำแหน่งบล็อก micro-interactions, เบอร์ติดต่อ, README, .gitignore) — ถูกต้องครบถ้วน
+- เพิ่มกติกาที่ยังไม่ได้บันทึกในหัวข้อ Page hierarchy: ลิงก์เมนู "Products" เป็น anchor ไปยัง `#brands` (หน้าแรก) / `index.html#brands` (หน้า root อื่น) / `../index.html#brands` (หน้าในโฟลเดอร์ products)

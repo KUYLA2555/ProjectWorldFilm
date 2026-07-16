@@ -37,7 +37,7 @@ WORLD FILM — a **static marketing website** (hand-written HTML + CSS, no frame
 
 ## Page hierarchy & path rules
 
-Nav order on every page: **logo (→ `index.html`) · Home · Products ▾ · Project Reference · About Us · Contact · CTA pill** (`index.html` · dropdown · `works.html` · `about.html` · `contact.html`). Each page marks its own menu link `class="active"` (product pages mark Products; `index.html` marks Home).
+Nav order on every page: **logo (→ `index.html`) · Home · Products ▾ · Project Reference · About Us · Contact · CTA pill** (`index.html` · dropdown · `works.html` · `about.html` · `contact.html`). Each page marks its own menu link `class="active"` (product pages mark Products; `index.html` marks Home). The **Products top-level link is an anchor, not a page**: `#brands` on `index.html`, `index.html#brands` on other root pages, `../index.html#brands` on `products/*` pages — keep this pattern when adding a page.
 
 ```
 index.html ── "Products" (ฟิล์มของเรา) dropdown / brand cards
