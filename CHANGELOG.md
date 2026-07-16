@@ -762,3 +762,17 @@ model-ultraguard-ceramic, model-ultraguard-nano
 **สิ่งที่แก้ไข / ดำเนินการ:**
 - ตรวจสอบ CLAUDE.md เดิมเทียบกับโค้ดจริงทั้งหมด (โครงสร้างเมนู, CSS สองชุด, ตำแหน่งบล็อก micro-interactions, เบอร์ติดต่อ, README, .gitignore) — ถูกต้องครบถ้วน
 - เพิ่มกติกาที่ยังไม่ได้บันทึกในหัวข้อ Page hierarchy: ลิงก์เมนู "Products" เป็น anchor ไปยัง `#brands` (หน้าแรก) / `index.html#brands` (หน้า root อื่น) / `../index.html#brands` (หน้าในโฟลเดอร์ products)
+
+## ครั้งที่ 51 — 2026-07-16
+
+**Prompt:**
+> ในหมวด Products ที่มีให้เลือกแบรนด์ เอารูป logo ออกเหลือแค่ font
+
+**สิ่งที่แก้ไข:**
+- เอาชิปโลโก้แบรนด์ (`<span class="bl">` + รูป `assets/brands/*.png`) ออกจาก dropdown เมนู Products ทั้ง 15 หน้า — เหลือชื่อแบรนด์เป็นตัวอักษรอย่างเดียว (Finnix / 3M / Regionfilm / Ultra Guard)
+- ลบ CSS `.submenu .bl` และ `.submenu .bl img` ออกจากทั้งสอง stylesheet (inline ใน `index.html` + `products/product.css`)
+- ลด `min-width` ของ `.submenu` จาก 230px → 180px ให้สมดุลกับเมนูแบบข้อความล้วน (แก้ทั้งสองไฟล์)
+- ตรวจสายตาผ่าน localhost แล้วทั้งหน้าแรกและหน้ารุ่นฟิล์ม — dropdown แสดงผลถูกต้อง
+- อัปเดต CLAUDE.md (หมายเหตุเรื่องชิปโลโก้ใน dropdown)
+
+หมายเหตุ: การ์ดโลโก้แบรนด์ 4 ช่องในหน้าแรก (section `#brands`) ยังคงเป็นรูปโลโก้เหมือนเดิม — แก้เฉพาะ dropdown ตามคำสั่ง
