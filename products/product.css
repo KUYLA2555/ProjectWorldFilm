@@ -1160,8 +1160,8 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 210px;
-  padding: 36px 30px;
+  min-height: 300px;
+  padding: 34px 26px;
   position: relative;
   background: radial-gradient(
     120% 95% at 50% 0%,
@@ -1192,7 +1192,7 @@ a {
 }
 .cmc--logo .cmc-img img {
   max-width: 100%;
-  max-height: 128px;
+  max-height: 220px;
   object-fit: contain;
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -1227,11 +1227,11 @@ a {
 }
 @media (max-width: 768px) {
   .cmc--logo .cmc-img {
-    min-height: 170px;
+    min-height: 240px;
     padding: 28px 22px;
   }
   .cmc--logo .cmc-img img {
-    max-height: 110px;
+    max-height: 180px;
   }
 }
 
