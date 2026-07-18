@@ -858,3 +858,16 @@ model-ultraguard-ceramic, model-ultraguard-nano
 - เปลี่ยนพื้น section ติดต่อเราบนหน้ารุ่นจาก tint → paper ให้จังหวะสลับสียังลงตัว (phero → สเปก tint → ติดต่อเรา paper → footer กรมท่า)
 - **ตรวจผ่าน localhost + Chrome:** model-finnix-titanium — hero มีปุ่มทองปุ่มเดียว คลิกแล้วไปหน้า brand-finnix จริง; model-3m-ceramate — โครง section = phero → สเปก → ติดต่อเรา, ไม่มี ctaband; grep ยืนยันทั้ง 10 ไฟล์ไม่มีปุ่ม/section เดิมตกค้าง
 - อัปเดต CLAUDE.md (โครงหน้ารุ่นใหม่ + hero CTA ปุ่มเดียว)
+
+## ครั้งที่ 59 — 2026-07-18
+
+**Prompt:**
+> ใน หน้า products จะบอกรุ่นแต่ล่ะรุ่นเใส่รูปหน่อยซึ่งอยู่ในไฟล์ที่ชื่อ source เอาไปใส่ตามรุ่นแต่ล่ะรุ่น
+
+**สิ่งที่แก้ไข:**
+- **จับคู่รูปโลโก้รุ่นจาก `assets/source/`** (ไฟล์ต้นฉบับ ไม่ขึ้น git): `CM.png` = Finnix Ceramic · `T.T.png` = Finnix Titanium · `EC.png` = Finnix Extra Clear · `C.png` (Finnix Crystalize) = Finnix UV Guard (จับคู่โดยการคัดออก — รุ่น UV เป็นรุ่นเดียวที่เหลือ) · `3M Ceramaate.png` = 3M Ceramate · `3M Ceramic Ultra Clear.png` = 3M Ultra Clear
+- **ย่อรูปเป็นกว้าง 1200px + ตั้งชื่อ ASCII** ด้วย PowerShell System.Drawing แล้วเก็บที่โฟลเดอร์ใหม่ `assets/models/` (ไฟล์ละ ~84–229KB, ต้นฉบับใน source ไม่ถูกแตะ)
+- **แสดงโลโก้รุ่นในกรอบรูปใหญ่ของ hero หน้ารุ่น:** เปลี่ยนกล่องไล่สี `.swatch tone-*` (พร้อมตัวเลข VLT ซึ่งซ้ำกับการ์ดสถิติด้านขวา) เป็นการ์ดขาว `.swatch--img` ใส่รูปโลโก้กลางกรอบ — CSS ใหม่ใน product.css, แก้ HTML 6 หน้ารุ่นที่มีรูป (perl pass เดียว)
+- **รุ่นที่ยังไม่มีรูปในโฟลเดอร์ source:** Regionfilm Ceramic/Smart และ Ultra Guard Ceramic/Nano (4 รุ่น) — ยังใช้กล่องไล่สีเดิม รอไฟล์รูปจากเจ้าของ
+- **ตรวจผ่าน localhost + Chrome:** model-finnix-ceramic และ model-3m-ultra-clear — โลโก้แสดงกลางการ์ดขาวพร้อมกรอบทองเยื้องเดิม โหลดรูปสำเร็จ (naturalWidth 1200)
+- อัปเดต CLAUDE.md (โฟลเดอร์ assets/models + ข้อสังเกตชื่อรุ่น Crystalize) และ README.md (file tree)

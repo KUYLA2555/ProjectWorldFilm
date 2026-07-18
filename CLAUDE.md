@@ -53,7 +53,7 @@ works.html (ผลงาน / portfolio) · about.html (About Us) · contact.htm
 - Root pages reference `assets/...`, `products/...`, `works.html`, `about.html`, `contact.html`.
 - `products/*` pages reference `../index.html`, `../assets/...`, `../works.html`, `../about.html`, sibling `brand-*.html` / `model-*.html`, and `product.css` (same folder).
 - `works.html`, `about.html`, `contact.html` all link `products/product.css` plus their own page-specific inline `<style>`.
-- `.gitignore` excludes `assets/source/` — design originals (logos, brand swatches). Reference only; never edit or link to them.
+- `.gitignore` excludes `assets/source/` — design originals (logos, brand swatches). Reference only; never edit or link to them. Web-ready copies go elsewhere under `assets/` — e.g. `assets/models/` holds per-model logo lockups (resized to 1200px via PowerShell `System.Drawing`, ASCII filenames) shown in the model-page hero `.swatch--img` card. Six models have logos (Finnix ×4, 3M ×2); Regionfilm/Ultra Guard models still use the gradient `.swatch` placeholder — swap it for `.swatch--img` + `<img>` when their artwork arrives. Note: the source file `C.png` ("Finnix Crystalize") was mapped to the UV Guard page by elimination — confirm with the owner if a "Crystalize" model ever appears.
 
 ## Git & publishing
 

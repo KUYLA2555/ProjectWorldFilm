@@ -27,6 +27,9 @@ ProjectWorldFilm/
 │   │   ├── 3m.png
 │   │   ├── regionfilm.png
 │   │   └── ultraguard.png
+│   ├── models/             ← โลโก้ประจำรุ่นฟิล์ม (ย่อจากไฟล์ต้นฉบับใน source/ ใช้บนหน้ารุ่น)
+│   │   ├── finnix-ceramic.png · finnix-titanium.png · finnix-uvguard.png · finnix-extra-clear.png
+│   │   └── 3m-ceramate.png · 3m-ultra-clear.png
 │   └── source/             ← ไฟล์ภาพต้นฉบับ (ไม่ได้ใช้บนเว็บโดยตรง เก็บไว้เผื่ออนาคต · ไม่ขึ้น GitHub)
 │
 └── products/               ← หน้าแบรนด์และหน้ารุ่นฟิล์มทั้งหมด
