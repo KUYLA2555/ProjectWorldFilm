@@ -798,3 +798,16 @@ model-ultraguard-ceramic, model-ultraguard-nano
 - ตรวจสอบ CLAUDE.md เดิมเทียบกับโค้ดจริง — โครงสร้างไฟล์/เมนู/CSS สองชุด/เบอร์ติดต่อ/กติกา git ยังถูกต้องครบ (รวมงานครั้งที่ 51–52 ที่สะท้อนในเอกสารแล้ว)
 - เพิ่มย่อหน้าใหม่ "Homepage-only sliders" ใน CLAUDE.md: hero slideshow (`.hero-slides` เฟดทุก 6 วิ + `.hero-dots`) และ intro split carousel ใน section ยินดีต้อนรับ (`.figure-slides`/`.intro-panels` sync ผ่าน `showIntro`, ลูกศรวงกลม `.iprev`/`.inext` ประกบข้างคอลัมน์ข้อความ + `.intro-dots`) — CSS+JS อยู่เฉพาะใน `index.html` inline
 - แก้คำอธิบาย lazy background images ให้ตรงจริง: มีเฉพาะ `index.html` (`.tile`/`.slide`/`.fslide`) และ `works.html` (`.thumb`) ไม่ได้อยู่ทุกหน้า
+
+## ครั้งที่ 54 — 2026-07-18
+
+**Prompt:**
+> แก้ไข font ทั้งหมดข้อเป็น font ในข้อความ ความเย็นและธรรมชาติ อยู่ร่วมกันได้อย่างลงตัว
+
+**สิ่งที่แก้ไข:**
+- ข้อความอ้างอิง "ความเย็นสบายและแสงธรรมชาติ อยู่ร่วมกันได้อย่างลงตัว" (หัวข้อ section ยินดีต้อนรับ หน้าแรก) ใช้ font **IBM Plex Sans Thai** → เปลี่ยน font ทั้งเว็บให้เป็น IBM Plex Sans Thai ตัวเดียว
+- แทนที่ `font-family` ที่เป็น Trirong (หัวข้อไทย `.h-thai`) และ Cormorant Garamond (ตัว display อังกฤษ `.serif`) ทั้งหมดด้วย `"IBM Plex Sans Thai", sans-serif` — แก้ทั้ง inline CSS ใน `index.html`, `products/product.css`, และ style เฉพาะหน้าใน `works.html` / `about.html` / `contact.html` (รวม 19 ไฟล์, sed pass เดียว)
+- ตัด Cormorant Garamond + Trirong ออกจากลิงก์ Google Fonts ทุกหน้า (เหลือโหลด IBM Plex Sans Thai family เดียว) และลบ `@import` Trirong ใน `product.css` — หน้าเว็บโหลดเบาลง
+- คลาส `.h-thai` / `.serif` ยังอยู่ใน markup เหมือนเดิม (เปลี่ยนเฉพาะ font ที่ชี้ไป) ขนาด/น้ำหนักตัวอักษรคงเดิมทุกจุด
+- **ตรวจผ่าน localhost + Chrome:** หน้าแรก (hero "Welcome to WORLD FILM" + section ยินดีต้อนรับ) และหน้า brand-finnix — computed font ของทุก element เป็น IBM Plex Sans Thai, `document.fonts` โหลดแค่ family เดียว, ไม่มี Trirong/Cormorant หลงเหลือ (grep ยืนยัน)
+- อัปเดต CLAUDE.md (หมายเหตุ Design tokens: เหลือ font เดียว)

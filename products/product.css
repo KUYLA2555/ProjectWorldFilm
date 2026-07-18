@@ -3,7 +3,6 @@
    ใช้โทเคนสี/ฟอนต์ชุดเดียวกับ index.html
    แก้ที่ไฟล์นี้ไฟล์เดียว มีผลกับทุกหน้า product
    ============================================================ */
-@import url("https://fonts.googleapis.com/css2?family=Trirong:wght@500;600;700&display=swap");
 :root {
   --ink: #14223d;
   --ink-soft: #26395c;
@@ -86,7 +85,7 @@ a {
   display: inline-block;
 }
 .h-thai {
-  font-family: "Trirong", "IBM Plex Sans Thai", serif;
+  font-family: "IBM Plex Sans Thai", sans-serif;
   font-weight: 600;
   color: var(--ink);
   line-height: 1.4;
@@ -380,7 +379,7 @@ a {
   left: 20px;
   bottom: 18px;
   color: #fff;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "IBM Plex Sans Thai", sans-serif;
 }
 .swatch .vlt b {
   display: block;
@@ -414,7 +413,7 @@ a {
   font-weight: 600;
 }
 .phead h1 {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "IBM Plex Sans Thai", sans-serif;
   font-size: clamp(2.6rem, 6vw, 4rem);
   font-weight: 600;
   line-height: 1.05;
@@ -449,7 +448,7 @@ a {
   box-shadow: var(--shadow-sm);
 }
 .phl .hi b {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "IBM Plex Sans Thai", sans-serif;
   font-size: 2rem;
   font-weight: 600;
   color: var(--ink);
@@ -616,7 +615,7 @@ a {
   box-shadow: var(--shadow-md);
 }
 .cmc .nm {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "IBM Plex Sans Thai", sans-serif;
   font-size: 1.7rem;
   font-weight: 600;
   color: var(--ink);
@@ -676,7 +675,7 @@ a {
   text-align: center;
 }
 .ctaband h2 {
-  font-family: "Trirong", "IBM Plex Sans Thai", serif;
+  font-family: "IBM Plex Sans Thai", sans-serif;
   font-size: clamp(1.7rem, 4vw, 2.4rem);
   font-weight: 600;
   color: #fff;
@@ -728,7 +727,7 @@ a {
   color: var(--gold-bright);
 }
 .footer .fbrand .name {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "IBM Plex Sans Thai", sans-serif;
   font-size: 1.7rem;
   font-weight: 700;
   color: #fff;
@@ -1024,7 +1023,7 @@ a {
   color: #fff;
 }
 .shadecard .sc-vlt {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "IBM Plex Sans Thai", sans-serif;
   font-size: 2.4rem;
   font-weight: 600;
   line-height: 1;
@@ -1040,7 +1039,7 @@ a {
   margin-top: 4px;
 }
 .shadecard .sc-nm {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "IBM Plex Sans Thai", sans-serif;
   font-size: 1.7rem;
   font-weight: 600;
   margin-top: 14px;
