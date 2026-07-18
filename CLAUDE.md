@@ -62,7 +62,8 @@ works.html (ผลงาน / portfolio) · about.html (About Us) · contact.htm
 
 ## Content conventions
 
-- **Sample-spec banner:** model pages using placeholder VLT / heat-rejection / warranty numbers show a yellow `.sample-note` block. Delete that `<div class="sample-note">…</div>` when real figures are entered.
+- **Spec numbers are still placeholders:** the VLT / heat-rejection / warranty figures on model pages are sample data. The yellow `.sample-note` banners that used to flag this were removed sitewide 2026-07-18 (user request) — the numbers were **not** confirmed as real, so don't treat them as fact.
+- **Model pages** now end with the shared "ติดต่อเรา / พร้อมให้คำปรึกษาทุกพื้นที่" contact section (featurebar + LINE/Call/Facebook `.ccard`s, same block as works/about) inserted before the CTA band; the former "จุดเด่นของรุ่น" (FEATURES) and "เหมาะกับพื้นที่" (USAGE) sections were removed 2026-07-18.
 - **Contact details** — `095-229-2086`, LINE `@worldcenter`, `https://www.facebook.com/Worldsfilm1` — appear in the header CTA pill + `.nav-call` + copy-pill JS, contact cards/section, footer, and FAB of every page; update all occurrences together. (LINE/Facebook now live only in contact sections, footer, and FAB.)
 - **CHANGELOG.md is updated every turn:** append each user request as `## ครั้งที่ N — <date>` with a **Prompt:** quote and a **สิ่งที่แก้ไข:** bullet list of the concrete edits (newest at the bottom, incrementing N). Continue this numbering whenever you change the site.
 - **README.md is the Thai-language owner's guide** — it duplicates the file tree, page map, and contact details. When adding/removing pages or changing contact info, update README.md too (and its `— อัปเดตล่าสุด <date>` footer line).
