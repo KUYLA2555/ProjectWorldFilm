@@ -788,3 +788,13 @@ model-ultraguard-ceramic, model-ultraguard-nano
 - Hover: พื้นเปลี่ยนเป็นสีกรมท่า ลูกศรสีทอง พร้อมขยับตามทิศทาง (ซ้าย -3px / ขวา +3px)
 - จอมือถือ: ≤768px ปุ่ม 46px + padding 58px, ≤480px ปุ่ม 44px + padding 50px (แก้ใน media query เดิม)
 - ตรวจผ่าน localhost แล้ว: ตำแหน่ง/กรอบ/hover ถูกต้อง คลิกแล้วสไลด์เปลี่ยนแผง+รูป+จุดตามปกติ
+
+## ครั้งที่ 53 — 2026-07-18
+
+**Prompt:**
+> /init — วิเคราะห์โค้ดเบสและสร้าง/ปรับปรุงไฟล์ CLAUDE.md
+
+**สิ่งที่แก้ไข:**
+- ตรวจสอบ CLAUDE.md เดิมเทียบกับโค้ดจริง — โครงสร้างไฟล์/เมนู/CSS สองชุด/เบอร์ติดต่อ/กติกา git ยังถูกต้องครบ (รวมงานครั้งที่ 51–52 ที่สะท้อนในเอกสารแล้ว)
+- เพิ่มย่อหน้าใหม่ "Homepage-only sliders" ใน CLAUDE.md: hero slideshow (`.hero-slides` เฟดทุก 6 วิ + `.hero-dots`) และ intro split carousel ใน section ยินดีต้อนรับ (`.figure-slides`/`.intro-panels` sync ผ่าน `showIntro`, ลูกศรวงกลม `.iprev`/`.inext` ประกบข้างคอลัมน์ข้อความ + `.intro-dots`) — CSS+JS อยู่เฉพาะใน `index.html` inline
+- แก้คำอธิบาย lazy background images ให้ตรงจริง: มีเฉพาะ `index.html` (`.tile`/`.slide`/`.fslide`) และ `works.html` (`.thumb`) ไม่ได้อยู่ทุกหน้า
