@@ -871,3 +871,14 @@ model-ultraguard-ceramic, model-ultraguard-nano
 - **รุ่นที่ยังไม่มีรูปในโฟลเดอร์ source:** Regionfilm Ceramic/Smart และ Ultra Guard Ceramic/Nano (4 รุ่น) — ยังใช้กล่องไล่สีเดิม รอไฟล์รูปจากเจ้าของ
 - **ตรวจผ่าน localhost + Chrome:** model-finnix-ceramic และ model-3m-ultra-clear — โลโก้แสดงกลางการ์ดขาวพร้อมกรอบทองเยื้องเดิม โหลดรูปสำเร็จ (naturalWidth 1200)
 - อัปเดต CLAUDE.md (โฟลเดอร์ assets/models + ข้อสังเกตชื่อรุ่น Crystalize) และ README.md (file tree)
+
+## ครั้งที่ 60 — 2026-07-18
+
+**Prompt:**
+> หมายถึงใส่รูปในหน้า เลือกรุ่นที่ใช่สำหรับคุณ แล้วเอารูปในไฟล์ source ไปแทนข้อความแต่ล่ะรุ่นใน text box นั้นๆ
+
+**สิ่งที่แก้ไข:** (หน้าแบรนด์ — section "เลือกรุ่นที่ใช่สำหรับคุณ")
+- **แทนข้อความในการ์ดรุ่นด้วยโลโก้รุ่น:** ถอด series tag / ชื่อรุ่น / กล่องสเปก / คำอธิบาย ออกจากการ์ด `.cmc` แล้วใส่รูปโลโก้จาก `assets/models/` แทน (div ใหม่ `.cmc-img` + CSS ใน product.css) — คงลิงก์ "ดูรายละเอียด →" ไว้ท้ายการ์ด ทั้งเพื่อบอกว่ากดได้และเป็นตัว host ของ stretched-link (กดทั้งการ์ดยังใช้ได้)
+- ทำได้ 6 การ์ดที่มีรูป: brand-finnix.html (Ceramic / Titanium / Crystalize=UV Guard / Extra Clear) + brand-3m.html (Ultra Clear / Ceramate) — การ์ดของ Regionfilm และ Ultra Guard ยังเป็นข้อความเดิม รอไฟล์รูป
+- รูปโลโก้ในหน้ารุ่น (ครั้งที่ 59) คงไว้ตามเดิม
+- **ตรวจผ่าน localhost + Chrome:** brand-finnix — การ์ด 4 ใบแสดงโลโก้ครบ; brand-3m — รูปโหลดครบ 2 ใบ และ `elementFromPoint` กลางรูปชี้ที่ลิงก์ `a.go` (คลิกทั้งการ์ดนำทางได้เหมือนเดิม)
