@@ -811,3 +811,13 @@ model-ultraguard-ceramic, model-ultraguard-nano
 - คลาส `.h-thai` / `.serif` ยังอยู่ใน markup เหมือนเดิม (เปลี่ยนเฉพาะ font ที่ชี้ไป) ขนาด/น้ำหนักตัวอักษรคงเดิมทุกจุด
 - **ตรวจผ่าน localhost + Chrome:** หน้าแรก (hero "Welcome to WORLD FILM" + section ยินดีต้อนรับ) และหน้า brand-finnix — computed font ของทุก element เป็น IBM Plex Sans Thai, `document.fonts` โหลดแค่ family เดียว, ไม่มี Trirong/Cormorant หลงเหลือ (grep ยืนยัน)
 - อัปเดต CLAUDE.md (หมายเหตุ Design tokens: เหลือ font เดียว)
+
+## ครั้งที่ 55 — 2026-07-18
+
+**Prompt:**
+> ลบลายน้ำในหน้า home ตรงแถวคอลัมน์ welcome to world film ที่มีลายน้ำฝั่งซ้ายเอาออก world film ให้ดูเป็นทางการมากกว่านี้หน่อย
+
+**สิ่งที่แก้ไข:** (index.html หน้าเดียว — ลายน้ำเป็น component เฉพาะหน้าแรก)
+- **ลบลายน้ำใบสนเบลอฝั่งซ้ายของ hero ออกทั้งหมด:** SVG `.hero-foliage` (กิ่งสน 8 ช่อ + เบลอ 10px ที่บังตัวอักษร) พร้อม CSS ทุกจุด — กฎหลัก + keyframe `foliageSway` + กฎใน `prefers-reduced-motion` + กฎซ่อนที่ ≤768px
+- **ปรับ "WORLD FILM" ให้ดูเป็นทางการขึ้น:** เปลี่ยนจากตัวเอียง (italic) เป็นตัวตรง หนา 700 + เพิ่มระยะห่างตัวอักษร 0.04em — ยังคงสีทอง #e7c879 เดิม
+- ตรวจผ่าน localhost + Chrome: ฝั่งซ้าย hero โล่งสะอาด ไม่มีเงาเบลอบังข้อความแล้ว หัวข้อ "Welcome to / WORLD FILM" อ่านชัดเต็มตา
