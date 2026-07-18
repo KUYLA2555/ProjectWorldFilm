@@ -597,6 +597,7 @@ a {
   gap: 22px;
 }
 .cmc {
+  position: relative;
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -666,6 +667,12 @@ a {
 }
 .cmc .go:hover svg {
   transform: translateX(4px);
+}
+/* ทั้งการ์ดรุ่นกดได้ — ยืดพื้นที่คลิกของลิงก์ "ดูรายละเอียด" ให้คลุมเต็มการ์ด */
+.cmc .go::after {
+  content: "";
+  position: absolute;
+  inset: 0;
 }
 
 /* ============ cta band ============ */
