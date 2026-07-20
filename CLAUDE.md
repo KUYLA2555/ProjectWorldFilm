@@ -54,6 +54,7 @@ index.html ── "Products" (ฟิล์มของเรา) dropdown / bran
 works.html (ผลงาน / portfolio) · about.html (About Us) · contact.html  — root-level pages
 ```
 
+- **Brand hero (`.bhero`, `product.css`)** — added 2026-07-20 on the 3 "models-listing" brand pages (`brand-finnix.html`, `brand-3m.html`, `brand-ultraguard.html`): a centered section right after the breadcrumb with the brand name as a large `<h1>` (same clamp scale as `.phead h1`), an `.eyebrow center` above it ("ฟิล์มกรองแสงจาก"), and a `.lead` tagline paragraph — purely to make the brand name visually prominent; the "เลือกรุ่นที่ใช่สำหรับคุณ" models section right below was **left untouched** at the user's request. `brand-regionfilm.html` does **not** get `.bhero` — it already has its own `.phero` hero with a big `<h1>ฟิล์ม Regionfilm</h1>` from the 2026-07-20 brand-page merge, so adding `.bhero` there would duplicate it.
 - Root pages reference `assets/...`, `products/...`, `works.html`, `about.html`, `contact.html`.
 - `products/*` pages reference `../index.html`, `../assets/...`, `../works.html`, `../about.html`, sibling `brand-*.html` / `model-*.html`, and `product.css` (same folder).
 - `works.html`, `about.html`, `contact.html` all link `products/product.css` plus their own page-specific inline `<style>`.

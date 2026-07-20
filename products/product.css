@@ -1086,6 +1086,35 @@ a {
   color: var(--gold);
 }
 
+/* ============ brand hero (ชื่อแบรนด์เด่น เหนือ section เลือกรุ่น) ============ */
+.bhero {
+  padding: 56px 0 8px;
+  text-align: center;
+}
+.bhero h1 {
+  font-family: "IBM Plex Sans Thai", sans-serif;
+  font-size: clamp(2.6rem, 6vw, 4rem);
+  font-weight: 600;
+  line-height: 1.05;
+  color: var(--ink);
+  margin: 14px 0 16px;
+}
+.bhero .lead {
+  max-width: 60ch;
+  margin: 0 auto;
+  color: var(--slate);
+  font-weight: 300;
+  font-size: 1.05rem;
+}
+@media (max-width: 768px) {
+  .bhero {
+    padding: 40px 0 4px;
+  }
+  .bhero h1 {
+    font-size: clamp(1.8rem, 7.5vw, 2.3rem);
+  }
+}
+
 /* ============ brand page — models-first premium layout ============ */
 .brand-top {
   padding-top: 80px;
