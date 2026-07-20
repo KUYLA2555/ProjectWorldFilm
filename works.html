@@ -175,13 +175,15 @@
       /* พื้นที่รูป — degrade เป็นกรมท่าถ้ารูปไม่โหลด (เหมือน tile หน้าแรก) */
       .workcard .thumb {
         aspect-ratio: 4/3;
-        background: var(--ink) center/cover no-repeat;
+        background: var(--ink);
         position: relative;
+        overflow: hidden;
       }
       .workcard .thumb::after {
         content: "";
         position: absolute;
         inset: 0;
+        z-index: 1;
         background: linear-gradient(transparent 55%, rgba(15, 25, 47, 0.55));
         opacity: 0;
         transition: 0.3s;
@@ -201,6 +203,80 @@
         background: rgba(255, 255, 255, 0.92);
         border-radius: 30px;
         padding: 5px 14px;
+      }
+      /* ============ gallery (สไลด์ดูรูปผลงานในการ์ด) ============ */
+      .workcard .gslide {
+        position: absolute;
+        inset: 0;
+        background: center/cover no-repeat;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+      .workcard .gslide.on {
+        opacity: 1;
+      }
+      .workcard .gnav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+        width: 30px;
+        height: 30px;
+        border: 0;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: rgba(15, 25, 47, 0.45);
+        color: #fff;
+        cursor: pointer;
+        opacity: 0;
+        transition: 0.25s ease;
+      }
+      .workcard .thumb:hover .gnav {
+        opacity: 1;
+      }
+      .workcard .gnav:hover {
+        background: var(--gold);
+        color: var(--ink);
+      }
+      .workcard .gprev {
+        left: 10px;
+      }
+      .workcard .gnext {
+        right: 10px;
+      }
+      .workcard .gnav svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .workcard .gdots {
+        display: flex;
+        justify-content: center;
+        gap: 7px;
+        padding: 12px 0 0;
+        background: var(--white);
+      }
+      .workcard .gdots button {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        background: var(--line);
+        transition: 0.25s ease;
+      }
+      .workcard .gdots button:hover {
+        background: var(--gold);
+      }
+      .workcard .gdots button.active {
+        background: var(--gold);
+        transform: scale(1.3);
       }
       .workcard .body {
         padding: 22px 24px 24px;
@@ -444,11 +520,41 @@
         <div class="works reveal" id="works">
           <!-- การ์ด 1 -->
           <article class="workcard" data-cat="home">
-            <div
-              class="thumb"
-              data-img="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
-            >
+            <div class="thumb">
+              <div
+                class="gslide on"
+                data-img="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=800&q=80"
+              ></div>
               <span class="cat">บ้านเดี่ยว</span>
+              <button class="gnav gprev" type="button" aria-label="รูปก่อนหน้า">
+                <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" /></svg>
+              </button>
+              <button class="gnav gnext" type="button" aria-label="รูปถัดไป">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" /></svg>
+              </button>
+            </div>
+            <div class="gdots">
+              <button type="button" class="active" aria-label="รูปที่ 1"></button>
+              <button type="button" aria-label="รูปที่ 2"></button>
+              <button type="button" aria-label="รูปที่ 3"></button>
+              <button type="button" aria-label="รูปที่ 4"></button>
+              <button type="button" aria-label="รูปที่ 5"></button>
             </div>
             <div class="body">
               <h3>บ้านพักอาศัย 2 ชั้น · กรุงเทพฯ</h3>
@@ -475,11 +581,41 @@
 
           <!-- การ์ด 2 -->
           <article class="workcard" data-cat="condo">
-            <div
-              class="thumb"
-              data-img="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=800&q=80"
-            >
+            <div class="thumb">
+              <div
+                class="gslide on"
+                data-img="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80"
+              ></div>
               <span class="cat">คอนโดมิเนียม</span>
+              <button class="gnav gprev" type="button" aria-label="รูปก่อนหน้า">
+                <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" /></svg>
+              </button>
+              <button class="gnav gnext" type="button" aria-label="รูปถัดไป">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" /></svg>
+              </button>
+            </div>
+            <div class="gdots">
+              <button type="button" class="active" aria-label="รูปที่ 1"></button>
+              <button type="button" aria-label="รูปที่ 2"></button>
+              <button type="button" aria-label="รูปที่ 3"></button>
+              <button type="button" aria-label="รูปที่ 4"></button>
+              <button type="button" aria-label="รูปที่ 5"></button>
             </div>
             <div class="body">
               <h3>ห้องชุด High Rise · วิวแม่น้ำ</h3>
@@ -506,11 +642,41 @@
 
           <!-- การ์ด 3 -->
           <article class="workcard" data-cat="office">
-            <div
-              class="thumb"
-              data-img="https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=800&q=80"
-            >
+            <div class="thumb">
+              <div
+                class="gslide on"
+                data-img="https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=800&q=80"
+              ></div>
               <span class="cat">สำนักงาน</span>
+              <button class="gnav gprev" type="button" aria-label="รูปก่อนหน้า">
+                <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" /></svg>
+              </button>
+              <button class="gnav gnext" type="button" aria-label="รูปถัดไป">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" /></svg>
+              </button>
+            </div>
+            <div class="gdots">
+              <button type="button" class="active" aria-label="รูปที่ 1"></button>
+              <button type="button" aria-label="รูปที่ 2"></button>
+              <button type="button" aria-label="รูปที่ 3"></button>
+              <button type="button" aria-label="รูปที่ 4"></button>
+              <button type="button" aria-label="รูปที่ 5"></button>
             </div>
             <div class="body">
               <h3>อาคารสำนักงาน · ผนังกระจกทั้งหลัง</h3>
@@ -537,11 +703,41 @@
 
           <!-- การ์ด 4 -->
           <article class="workcard" data-cat="home">
-            <div
-              class="thumb"
-              data-img="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80"
-            >
+            <div class="thumb">
+              <div
+                class="gslide on"
+                data-img="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=800&q=80"
+              ></div>
               <span class="cat">บ้านเดี่ยว</span>
+              <button class="gnav gprev" type="button" aria-label="รูปก่อนหน้า">
+                <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" /></svg>
+              </button>
+              <button class="gnav gnext" type="button" aria-label="รูปถัดไป">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" /></svg>
+              </button>
+            </div>
+            <div class="gdots">
+              <button type="button" class="active" aria-label="รูปที่ 1"></button>
+              <button type="button" aria-label="รูปที่ 2"></button>
+              <button type="button" aria-label="รูปที่ 3"></button>
+              <button type="button" aria-label="รูปที่ 4"></button>
+              <button type="button" aria-label="รูปที่ 5"></button>
             </div>
             <div class="body">
               <h3>บ้านโมเดิร์น · กระจกบานใหญ่</h3>
@@ -568,11 +764,41 @@
 
           <!-- การ์ด 5 -->
           <article class="workcard" data-cat="hotel">
-            <div
-              class="thumb"
-              data-img="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=800&q=80"
-            >
+            <div class="thumb">
+              <div
+                class="gslide on"
+                data-img="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=800&q=80"
+              ></div>
               <span class="cat">โรงแรม</span>
+              <button class="gnav gprev" type="button" aria-label="รูปก่อนหน้า">
+                <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" /></svg>
+              </button>
+              <button class="gnav gnext" type="button" aria-label="รูปถัดไป">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" /></svg>
+              </button>
+            </div>
+            <div class="gdots">
+              <button type="button" class="active" aria-label="รูปที่ 1"></button>
+              <button type="button" aria-label="รูปที่ 2"></button>
+              <button type="button" aria-label="รูปที่ 3"></button>
+              <button type="button" aria-label="รูปที่ 4"></button>
+              <button type="button" aria-label="รูปที่ 5"></button>
             </div>
             <div class="body">
               <h3>โรงแรม / รีสอร์ท · ห้องพักวิวทะเล</h3>
@@ -599,11 +825,41 @@
 
           <!-- การ์ด 6 -->
           <article class="workcard" data-cat="shop">
-            <div
-              class="thumb"
-              data-img="https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=800&q=80"
-            >
+            <div class="thumb">
+              <div
+                class="gslide on"
+                data-img="https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?auto=format&fit=crop&w=800&q=80"
+              ></div>
+              <div
+                class="gslide"
+                data-img="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=800&q=80"
+              ></div>
               <span class="cat">ร้านค้า / คาเฟ่</span>
+              <button class="gnav gprev" type="button" aria-label="รูปก่อนหน้า">
+                <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" /></svg>
+              </button>
+              <button class="gnav gnext" type="button" aria-label="รูปถัดไป">
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" /></svg>
+              </button>
+            </div>
+            <div class="gdots">
+              <button type="button" class="active" aria-label="รูปที่ 1"></button>
+              <button type="button" aria-label="รูปที่ 2"></button>
+              <button type="button" aria-label="รูปที่ 3"></button>
+              <button type="button" aria-label="รูปที่ 4"></button>
+              <button type="button" aria-label="รูปที่ 5"></button>
             </div>
             <div class="body">
               <h3>คาเฟ่กระจกโค้ง · หน้าร้านรับแดด</h3>
@@ -670,9 +926,9 @@
             <div class="fitem">
               <svg viewBox="0 0 24 24">
                 <path
-                  d="M12 22c4-2.5 7-6.6 7-11V5l-7-3-7 3v6c0 4.4 3 8.5 7 11z"
+                  d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"
                 />
-                <path d="M12 8v4M12 15h.01" /></svg
+                <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" /></svg
               ><b>ปลอดสารพิษ</b><span>Low VOCs ปลอดภัย</span>
             </div>
           </div>
@@ -835,12 +1091,28 @@
           a.addEventListener("click", () => menu.classList.remove("open")),
         );
 
-      /* lazy background thumbs (degrade to navy if image fails) */
-      document.querySelectorAll(".thumb[data-img]").forEach((t) => {
-        const img = new Image();
-        img.onload = () =>
-          (t.style.backgroundImage = `url('${t.dataset.img}')`);
-        img.src = t.dataset.img;
+      /* gallery รูปในการ์ดผลงาน — lazy-load + ปุ่มลูกศร + จุด ต่อการ์ด */
+      document.querySelectorAll(".workcard").forEach((card) => {
+        const slides = card.querySelectorAll(".gslide");
+        const dots = card.querySelectorAll(".gdots button");
+        let cur = 0;
+        slides.forEach((s) => {
+          const img = new Image();
+          img.onload = () => (s.style.backgroundImage = `url('${s.dataset.img}')`);
+          img.src = s.dataset.img;
+        });
+        function showSlide(i) {
+          slides[cur].classList.remove("on");
+          dots[cur].classList.remove("active");
+          cur = (i + slides.length) % slides.length;
+          slides[cur].classList.add("on");
+          dots[cur].classList.add("active");
+        }
+        const gprev = card.querySelector(".gprev"),
+          gnext = card.querySelector(".gnext");
+        if (gprev) gprev.addEventListener("click", () => showSlide(cur - 1));
+        if (gnext) gnext.addEventListener("click", () => showSlide(cur + 1));
+        dots.forEach((d, i) => d.addEventListener("click", () => showSlide(i)));
       });
 
       /* category filter */
