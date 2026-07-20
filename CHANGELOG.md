@@ -918,3 +918,16 @@ model-ultraguard-ceramic, model-ultraguard-nano
 - section "Running / previewing": เพิ่มวิธีปิด server HttpListener ให้ถูกตัว (socket เป็นของ http.sys / PID 4 — ต้อง kill powershell.exe ที่ CommandLine มีชื่อสคริปต์ ไม่ใช่เจ้าของพอร์ต) + วิธีทดสอบจอมือถือใน Chrome automation (resize_window ใช้ไม่ได้บนเครื่องนี้ ให้ inject iframe กว้าง 430px แทน)
 - section "Page hierarchy & path rules": ระบุชื่อ class การ์ดโลโก้รุ่นในหน้าแบรนด์ให้ชัด (`.cmc--logo` — CSS อยู่ใน product.css เท่านั้น) เพื่อให้ grep เจอทันที
 - ยืนยันความถูกต้องของคำอธิบายเดิม: บล็อก nav micro-interactions ยังอยู่ท้ายสุดของทั้งสอง stylesheet (index.html:1572, product.css:1482), โครงหน้า/เส้นทางลิงก์/รายชื่อไฟล์ assets/models ตรงกับของจริงทั้งหมด
+
+## ครั้งที่ 64 — 2026-07-20
+
+**Prompt:**
+> ในหน้า products แบรนด์ regionfilm ลบ 2 รุ่นนั้นออกแล้วเอาหน้าโชว์สเปคนั้นขึ้นมาเลยถ้าเรากดไปที่ regionfilm และในหน้าโชว์สเปครุ่นแต่ล่ะรุ่น ใส่ ผลงาน ในหน้า project reference เพิ่มตรงข้างบนคอมลัมน์แถวพร้อมให้คำทุกพื้นที่
+
+**สิ่งที่แก้ไข:**
+- **Regionfilm เหลือหน้าเดียว — กดแล้วเจอสเปคเลย:** ลบ `model-regionfilm-ceramic.html` + `model-regionfilm-smart.html` ออกจากเว็บ แล้วแปลง `brand-regionfilm.html` เป็นหน้าโชว์สเปคเต็มรูปแบบ (hero + swatch โทนใส 35% + ตัวเลข 35%/75%/99% + ตารางสเปครวมสองโทน ใส/เข้ม, ประกันสูงสุด 5 ปี) — ลิงก์เดิมทุกจุด (dropdown/การ์ดแบรนด์/footer) ชี้มาหน้านี้อยู่แล้ว ไม่ต้องแก้
+- **เพิ่ม section "ผลงานการติดตั้ง" เหนือแถว "พร้อมให้คำปรึกษาทุกพื้นที่" ใน 9 หน้า:** หน้ารุ่นทั้ง 8 (Finnix ×4, 3M ×2, Ultra Guard ×2) + หน้า Regionfilm ใหม่ — การ์ดผลงาน 3 ใบยกมาจากหน้า Project Reference (บ้านเดี่ยว/คอนโด/สำนักงาน พร้อมรูป) + ปุ่ม "ดูผลงานทั้งหมด" ลิงก์ไป `works.html`
+- ก๊อปสไตล์ `.works` / `.workcard` / `.more` จาก works.html ลง `product.css` (บล็อกใหม่ก่อน nav micro-interactions) + เพิ่ม JS โหลดรูปการ์ดแบบ lazy (`[data-img]`) ในหน้ารุ่นทุกหน้า
+- เปลี่ยนพื้น section ติดต่อในหน้ารุ่นจาก paper เป็น `.section--tint` เพื่อให้สลับสีกับ section ผลงานที่แทรกใหม่ (เหมือนคู่ works→contact ในหน้า Project Reference)
+- อัปเดต README.md (ตัด 2 ไฟล์ที่ลบ + ระบุ Regionfilm เป็นหน้าสเปคเดี่ยว) และ CLAUDE.md (ผังหน้า + โครงหน้ารุ่นใหม่ + ขอบเขต lazy images)
+- ตรวจผ่าน localhost + Chrome: brand-regionfilm — hero/สเปค/ผลงาน/ติดต่อครบ; model-finnix-ceramic — การ์ดผลงาน 3 ใบพร้อมรูปอยู่เหนือ "พร้อมให้คำปรึกษาทุกพื้นที่" ถูกตำแหน่ง

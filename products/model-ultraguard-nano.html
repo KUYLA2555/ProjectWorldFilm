@@ -169,8 +169,112 @@
       </div>
     </section>
 
+    <!-- ============ WORKS (ผลงานติดตั้ง — ยกมาจากหน้า Project Reference) ============ -->
+    <section class="section" id="works">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow center">ผลงานการติดตั้ง</span>
+          <h2 class="h-thai">ผลงานติดตั้งจริงจาก WORLD FILM</h2>
+        </div>
+        <div class="works">
+          <article class="workcard">
+            <div
+              class="thumb"
+              data-img="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+            >
+              <span class="cat">บ้านเดี่ยว</span>
+            </div>
+            <div class="body">
+              <h3>บ้านพักอาศัย 2 ชั้น · กรุงเทพฯ</h3>
+              <p class="meta">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"
+                  />
+                </svg>
+                เขตบางแค กรุงเทพฯ
+              </p>
+              <p class="film">ฟิล์มที่ใช้ · <b>Finnix Ceramic 60</b></p>
+              <a class="go" href="../works.html"
+                >ดูผลงาน
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M5 12h14M13 6l6 6-6 6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  /></svg
+              ></a>
+            </div>
+          </article>
+
+          <article class="workcard">
+            <div
+              class="thumb"
+              data-img="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=800&q=80"
+            >
+              <span class="cat">คอนโดมิเนียม</span>
+            </div>
+            <div class="body">
+              <h3>ห้องชุด High Rise · วิวแม่น้ำ</h3>
+              <p class="meta">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"
+                  />
+                </svg>
+                เจริญนคร กรุงเทพฯ
+              </p>
+              <p class="film">ฟิล์มที่ใช้ · <b>3M Ceramate</b></p>
+              <a class="go" href="../works.html"
+                >ดูผลงาน
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M5 12h14M13 6l6 6-6 6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  /></svg
+              ></a>
+            </div>
+          </article>
+
+          <article class="workcard">
+            <div
+              class="thumb"
+              data-img="https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=800&q=80"
+            >
+              <span class="cat">สำนักงาน</span>
+            </div>
+            <div class="body">
+              <h3>อาคารสำนักงาน · ผนังกระจกทั้งหลัง</h3>
+              <p class="meta">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"
+                  />
+                </svg>
+                รัชดาภิเษก กรุงเทพฯ
+              </p>
+              <p class="film">ฟิล์มที่ใช้ · <b>Ultra Guard Ceramic</b></p>
+              <a class="go" href="../works.html"
+                >ดูผลงาน
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M5 12h14M13 6l6 6-6 6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  /></svg
+              ></a>
+            </div>
+          </article>
+        </div>
+        <div class="more">
+          <a href="../works.html" class="btn btn-line">ดูผลงานทั้งหมด</a>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ CONTACT ============ -->
-    <section class="section" id="contact">
+    <section class="section section--tint" id="contact">
       <div class="wrap">
         <div class="sec-head reveal">
           <span class="eyebrow center">ติดต่อเรา</span>
@@ -335,6 +439,14 @@
       burger.addEventListener("click", () => {
         const open = menu.classList.toggle("open");
         burger.setAttribute("aria-expanded", open);
+      });
+
+      /* lazy background thumbs (degrade to navy if image fails) */
+      document.querySelectorAll(".thumb[data-img]").forEach((t) => {
+        const img = new Image();
+        img.onload = () =>
+          (t.style.backgroundImage = `url('${t.dataset.img}')`);
+        img.src = t.dataset.img;
       });
     </script>
   <script>

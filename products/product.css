@@ -1479,6 +1479,142 @@ a {
   }
 }
 
+/* ============ works preview (ผลงานติดตั้ง — ยกมาจากหน้า Project Reference) ============ */
+.works {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+.workcard {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  transition: 0.35s ease;
+}
+.workcard:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+  border-color: transparent;
+}
+/* พื้นที่รูป — degrade เป็นกรมท่าถ้ารูปไม่โหลด (เหมือน tile หน้าแรก) */
+.workcard .thumb {
+  aspect-ratio: 4/3;
+  background: var(--ink) center/cover no-repeat;
+  position: relative;
+}
+.workcard .thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 55%, rgba(15, 25, 47, 0.55));
+  opacity: 0;
+  transition: 0.3s;
+}
+.workcard:hover .thumb::after {
+  opacity: 1;
+}
+.workcard .cat {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  z-index: 2;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 30px;
+  padding: 5px 14px;
+}
+.workcard .body {
+  padding: 22px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.workcard h3 {
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.workcard .meta {
+  font-size: 0.88rem;
+  color: var(--slate);
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 6px;
+}
+.workcard .meta svg {
+  width: 15px;
+  height: 15px;
+  fill: var(--gold);
+  flex: none;
+}
+.workcard .film {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.workcard .film b {
+  color: var(--gold);
+  font-weight: 600;
+}
+.workcard .go {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+.workcard .go svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--gold);
+  fill: none;
+  stroke-width: 1.6;
+  transition: 0.25s;
+}
+.workcard:hover .go svg {
+  transform: translateX(4px);
+}
+/* ปุ่มดูผลงานทั้งหมดใต้กริด */
+.more {
+  text-align: center;
+  margin-top: 52px;
+}
+@media (max-width: 980px) {
+  .works {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .works {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 480px) {
+  .works {
+    gap: 18px;
+  }
+  .workcard .body {
+    padding: 18px 20px 20px;
+  }
+  .more {
+    margin-top: 34px;
+  }
+}
+
 /* ============ nav micro-interactions (premium/buttery) ============ */
 @keyframes navIn {
   from {

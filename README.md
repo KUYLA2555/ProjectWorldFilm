@@ -37,7 +37,7 @@ ProjectWorldFilm/
     │
     ├── brand-finnix.html       ← หน้าแบรนด์ (รวมรุ่นในแบรนด์นั้น)
     ├── brand-3m.html
-    ├── brand-regionfilm.html
+    ├── brand-regionfilm.html   ← หน้าแบรนด์แบบโชว์สเปกเลย (ไม่มีหน้ารุ่นย่อย)
     ├── brand-ultraguard.html
     │
     ├── model-finnix-ceramic.html      ← หน้ารุ่น (สเปกฟิล์มรุ่นนั้น)
@@ -46,8 +46,6 @@ ProjectWorldFilm/
     ├── model-finnix-extra-clear.html
     ├── model-3m-ultra-clear.html
     ├── model-3m-ceramate.html
-    ├── model-regionfilm-ceramic.html
-    ├── model-regionfilm-smart.html
     ├── model-ultraguard-ceramic.html
     └── model-ultraguard-nano.html
 ```
@@ -59,7 +57,7 @@ index.html (หน้าแรก)
    └─ เมนู "ฟิล์มของเรา" / การ์ดแบรนด์ 4 ช่อง
         ├─ products/brand-finnix.html      → model-finnix-* (Ceramic, Titanium, UV Guard, Extra Clear)
         ├─ products/brand-3m.html          → model-3m-* (Ultra Clear, Ceramate)
-        ├─ products/brand-regionfilm.html  → model-regionfilm-* (Ceramic, Smart)
+        ├─ products/brand-regionfilm.html  → โชว์สเปก Regionfilm ในหน้าเดียว (ไม่มีหน้ารุ่นย่อย)
         └─ products/brand-ultraguard.html  → model-ultraguard-* (Ceramic, Nano)
 ```
 
@@ -80,4 +78,4 @@ index.html (หน้าแรก)
 แถบเหลืองแจ้งเตือนบนหน้ารุ่นถูกถอดออกแล้ว (2026-07-18) แต่ตัวเลขยังไม่ได้รับการยืนยัน —
 ควรตรวจสอบสเปกจริงกับทางร้านก่อนใช้อ้างอิง
 
-— อัปเดตล่าสุด 2026-07-18
+— อัปเดตล่าสุด 2026-07-20
