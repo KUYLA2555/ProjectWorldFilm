@@ -27,9 +27,11 @@ ProjectWorldFilm/
 │   │   ├── 3m.png
 │   │   ├── regionfilm.png
 │   │   └── ultraguard.png
-│   ├── models/             ← โลโก้ประจำรุ่นฟิล์ม (ย่อจากไฟล์ต้นฉบับใน source/ ใช้บนหน้ารุ่น)
+│   ├── models/             ← โลโก้ประจำรุ่นฟิล์ม (ย่อจากไฟล์ต้นฉบับใน source/ ใช้ในการ์ดเลือกรุ่นหน้าแบรนด์ Finnix/3M เท่านั้น)
 │   │   ├── finnix-ceramic.png · finnix-titanium.png · finnix-uvguard.png · finnix-extra-clear.png
 │   │   └── 3m-ceramate.png · 3m-ultra-clear.png
+│   ├── line.png            ← โลโก้ LINE จริง (ใช้แทนไอคอน SVG เดิมในการ์ดติดต่อ LINE ทุกจุด)
+│   ├── facebook.png        ← โลโก้ Facebook จริง (ใช้ในการ์ด LINE/Facebook แถว hero หน้าแรกเท่านั้น)
 │   └── source/             ← ไฟล์ภาพต้นฉบับ (ไม่ได้ใช้บนเว็บโดยตรง เก็บไว้เผื่ออนาคต · ไม่ขึ้น GitHub)
 │
 └── products/               ← หน้าแบรนด์และหน้ารุ่นฟิล์มทั้งหมด

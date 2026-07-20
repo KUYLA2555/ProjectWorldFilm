@@ -278,6 +278,101 @@
         background: var(--gold);
         transform: scale(1.3);
       }
+      .workcard .thumb {
+        cursor: zoom-in;
+      }
+
+      /* ============ lightbox (กดรูปแล้วเด้งขยายเต็มจอ) ============ */
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(10, 16, 30, 0.92);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.3s ease,
+          visibility 0.3s;
+      }
+      .lightbox.open {
+        opacity: 1;
+        visibility: visible;
+      }
+      .lightbox img {
+        max-width: min(88vw, 1100px);
+        max-height: 84vh;
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+      }
+      .lightbox .lb-close,
+      .lightbox .lb-nav {
+        position: absolute;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+      .lightbox .lb-close:hover,
+      .lightbox .lb-nav:hover {
+        background: var(--gold);
+        border-color: var(--gold);
+        color: var(--ink);
+      }
+      .lightbox .lb-close {
+        top: 22px;
+        right: 26px;
+        width: 42px;
+        height: 42px;
+      }
+      .lightbox .lb-nav {
+        top: 50%;
+        transform: translateY(-50%);
+        width: 48px;
+        height: 48px;
+      }
+      .lightbox .lb-prev {
+        left: 22px;
+      }
+      .lightbox .lb-next {
+        right: 22px;
+      }
+      .lightbox .lb-close svg,
+      .lightbox .lb-nav svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      @media (max-width: 768px) {
+        .lightbox .lb-nav {
+          width: 40px;
+          height: 40px;
+        }
+        .lightbox .lb-close {
+          width: 34px;
+          height: 34px;
+          top: 14px;
+          right: 14px;
+        }
+        .lightbox .lb-prev {
+          left: 10px;
+        }
+        .lightbox .lb-next {
+          right: 10px;
+        }
+      }
+
       .workcard .body {
         padding: 22px 24px 24px;
         display: flex;
@@ -935,12 +1030,9 @@
         </div>
         <div class="contact-cards reveal">
           <a class="ccard" href="https://line.me/R/ti/p/@worldcenter">
-            <span class="ci"
-              ><svg viewBox="0 0 24 24">
-                <path
-                  d="M12 2C6.5 2 2 5.6 2 10c0 3.9 3.5 7.2 8.3 7.8.3.1.7.2.8.5.1.3.1.7 0 1l-.1.8c0 .2-.2 1 .8.5s5.3-3.1 7.2-5.3C20.5 13.7 22 12 22 10c0-4.4-4.5-8-10-8z"
-                /></svg
-            ></span>
+            <span class="ci ci--line"
+              ><img src="assets/line.png" alt="LINE"
+            /></span>
             <div>
               <div class="lab">Line</div>
               <div class="val">@WORLDCENTER</div>
@@ -1062,6 +1154,20 @@
       ></a>
     </div>
 
+    <!-- ============ LIGHTBOX (ดูรูปผลงานขยายเต็มจอ) ============ -->
+    <div class="lightbox" id="lightbox">
+      <button class="lb-close" type="button" aria-label="ปิด">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </button>
+      <button class="lb-nav lb-prev" type="button" aria-label="รูปก่อนหน้า">
+        <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" /></svg>
+      </button>
+      <img id="lightboxImg" src="" alt="" />
+      <button class="lb-nav lb-next" type="button" aria-label="รูปถัดไป">
+        <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" /></svg>
+      </button>
+    </div>
+
     <script>
       /* header: shadow on scroll + hide down / reveal up */
       const header = document.querySelector(".header");
@@ -1091,7 +1197,36 @@
           a.addEventListener("click", () => menu.classList.remove("open")),
         );
 
-      /* gallery รูปในการ์ดผลงาน — lazy-load + ปุ่มลูกศร + จุด ต่อการ์ด */
+      /* lightbox — กดรูปในการ์ดแล้วขยายเต็มจอ เลื่อนต่อได้ด้วยลูกศร/ปุ่มลูกศรคีย์บอร์ด/Esc ปิด */
+      let activeGallery = null;
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightboxImg");
+      function closeLightbox() {
+        lightbox.classList.remove("open");
+        lightboxImg.src = "";
+        activeGallery = null;
+      }
+      function lbStep(delta) {
+        if (!activeGallery) return;
+        const idx = Array.from(activeGallery.slides).findIndex((s) =>
+          s.classList.contains("on"),
+        );
+        activeGallery.showSlide(idx + delta);
+      }
+      lightbox.querySelector(".lb-close").addEventListener("click", closeLightbox);
+      lightbox.querySelector(".lb-prev").addEventListener("click", () => lbStep(-1));
+      lightbox.querySelector(".lb-next").addEventListener("click", () => lbStep(1));
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (!lightbox.classList.contains("open")) return;
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowLeft") lbStep(-1);
+        if (e.key === "ArrowRight") lbStep(1);
+      });
+
+      /* gallery รูปในการ์ดผลงาน — lazy-load + ปุ่มลูกศร + จุด ต่อการ์ด + เปิด lightbox */
       document.querySelectorAll(".workcard").forEach((card) => {
         const slides = card.querySelectorAll(".gslide");
         const dots = card.querySelectorAll(".gdots button");
@@ -1107,12 +1242,21 @@
           cur = (i + slides.length) % slides.length;
           slides[cur].classList.add("on");
           dots[cur].classList.add("active");
+          if (activeGallery === gallery) lightboxImg.src = slides[cur].dataset.img;
         }
         const gprev = card.querySelector(".gprev"),
           gnext = card.querySelector(".gnext");
         if (gprev) gprev.addEventListener("click", () => showSlide(cur - 1));
         if (gnext) gnext.addEventListener("click", () => showSlide(cur + 1));
         dots.forEach((d, i) => d.addEventListener("click", () => showSlide(i)));
+
+        const gallery = { slides, showSlide };
+        card.querySelector(".thumb").addEventListener("click", (e) => {
+          if (e.target.closest(".gnav")) return;
+          activeGallery = gallery;
+          lightboxImg.src = slides[cur].dataset.img;
+          lightbox.classList.add("open");
+        });
       });
 
       /* category filter */

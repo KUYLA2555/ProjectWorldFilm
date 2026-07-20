@@ -213,6 +213,16 @@
           0 8px 18px rgba(20, 34, 61, 0.12);
         backdrop-filter: blur(6px);
       }
+      /* ไอคอน LINE จริง — พื้นวงกลมโปร่งใส ให้สีเขียวแบรนด์ขึ้นแทน ยังคงกรอบแก้วเดิม */
+      .chan .g.g--line {
+        background: transparent;
+      }
+      .chan .g.g--line img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: contain;
+      }
       .chan .g svg {
         width: 26px;
         height: 26px;
@@ -481,12 +491,9 @@
         </div>
         <div class="chan-list reveal">
           <a class="chan" href="https://line.me/R/ti/p/@worldcenter">
-            <span class="g"
-              ><svg viewBox="0 0 24 24">
-                <path
-                  d="M12 2C6.5 2 2 5.6 2 10c0 3.9 3.5 7.2 8.3 7.8.3.1.7.2.8.5.1.3.1.7 0 1l-.1.8c0 .2-.2 1 .8.5s5.3-3.1 7.2-5.3C20.5 13.7 22 12 22 10c0-4.4-4.5-8-10-8z"
-                /></svg
-            ></span>
+            <span class="g g--line"
+              ><img src="assets/line.png" alt="LINE"
+            /></span>
             <span>
               <span class="lab">Line / แชท</span>
               <span class="val">@WORLDCENTER</span>

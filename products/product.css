@@ -404,32 +404,6 @@ a {
 .swatch.tone-clear {
   background: linear-gradient(160deg, #44557a, #1d2b49);
 }
-/* รูปโลโก้ประจำรุ่น (assets/models/) — พาแนลงาช้าง + กรอบทองด้านใน */
-.swatch--img {
-  background: radial-gradient(
-    120% 95% at 50% 0%,
-    #ffffff 0%,
-    #faf7f0 55%,
-    #f0e9d8 100%
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 32px;
-}
-.swatch--img::before {
-  content: "";
-  position: absolute;
-  inset: 16px;
-  border: 1px solid rgba(192, 151, 63, 0.35);
-  border-radius: 8px;
-  pointer-events: none;
-}
-.swatch--img img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
 
 .phead .tag {
   font-size: 0.74rem;
@@ -1447,6 +1421,16 @@ a {
   width: 22px;
   height: 22px;
   fill: #e7c879;
+}
+/* ไอคอน LINE จริง — พื้นวงกลมโปร่งใส ให้สีเขียวแบรนด์ขึ้นแทนวงกรมท่า+ไอคอนทอง */
+.ccard .ci.ci--line {
+  background: transparent;
+}
+.ccard .ci.ci--line img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: contain;
 }
 .ccard .lab {
   font-size: 0.74rem;
