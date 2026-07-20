@@ -908,3 +908,13 @@ model-ultraguard-ceramic, model-ultraguard-nano
 - เพดานขนาดโลโก้: max-height 128px → **220px** — โลโก้ขยายเต็มความกว้างการ์ด อ่านชื่อรุ่นชัดขึ้นมาก
 - มือถือ ≤768: พาแนล 240px / โลโก้สูงสุด 180px (เดิม 170/110)
 - ตรวจผ่าน localhost + Chrome: brand-finnix — โลโก้ทั้ง 4 ใบใหญ่เต็มการ์ด กรอบทอง/เส้นคั่น/แถบลิงก์ยังจัดวางสวยตามเดิม
+
+## ครั้งที่ 63 — 2026-07-20
+
+**Prompt:**
+> /init — วิเคราะห์โค้ดเบสและสร้าง/ปรับปรุง CLAUDE.md สำหรับ Claude Code instance ถัดไป
+
+**สิ่งที่แก้ไข:** (ตรวจสอบ CLAUDE.md เดิมกับสภาพ repo ปัจจุบัน — ข้อมูลหลักยังถูกต้องครบ จึงปรับปรุงเฉพาะจุดแทนการเขียนใหม่)
+- section "Running / previewing": เพิ่มวิธีปิด server HttpListener ให้ถูกตัว (socket เป็นของ http.sys / PID 4 — ต้อง kill powershell.exe ที่ CommandLine มีชื่อสคริปต์ ไม่ใช่เจ้าของพอร์ต) + วิธีทดสอบจอมือถือใน Chrome automation (resize_window ใช้ไม่ได้บนเครื่องนี้ ให้ inject iframe กว้าง 430px แทน)
+- section "Page hierarchy & path rules": ระบุชื่อ class การ์ดโลโก้รุ่นในหน้าแบรนด์ให้ชัด (`.cmc--logo` — CSS อยู่ใน product.css เท่านั้น) เพื่อให้ grep เจอทันที
+- ยืนยันความถูกต้องของคำอธิบายเดิม: บล็อก nav micro-interactions ยังอยู่ท้ายสุดของทั้งสอง stylesheet (index.html:1572, product.css:1482), โครงหน้า/เส้นทางลิงก์/รายชื่อไฟล์ assets/models ตรงกับของจริงทั้งหมด
