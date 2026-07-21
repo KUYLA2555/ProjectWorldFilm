@@ -960,6 +960,25 @@ a {
   .menu .has-sub {
     width: 100%;
   }
+  .menu .has-sub > a {
+    position: relative;
+  }
+  /* ลูกศร accordion: แตะ "Products" เพื่อกาง/หุบรายชื่อแบรนด์ */
+  .menu .has-sub > a::before {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-50%) rotate(45deg);
+    transition: transform 0.25s ease;
+  }
+  .menu .has-sub.open > a::before {
+    transform: translateY(-50%) rotate(-135deg);
+  }
   .submenu {
     position: static;
     transform: none;
@@ -969,6 +988,15 @@ a {
     border: none;
     box-shadow: none;
     background: transparent;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition:
+      max-height 0.3s ease,
+      padding 0.3s ease;
+  }
+  .menu .has-sub.open .submenu {
+    max-height: 260px;
     padding: 4px 0 8px;
   }
   .menu .has-sub:hover .submenu,
@@ -1377,7 +1405,6 @@ a {
     font-size: clamp(1.35rem, 6vw, 1.8rem);
   }
   .footer .top {
-    grid-template-columns: 1fr;
     gap: 28px;
   }
   .footer {
@@ -1500,15 +1527,6 @@ a {
     grid-template-columns: 1fr;
   }
 }
-@media (max-width: 480px) {
-  .featurebar .grid {
-    grid-template-columns: 1fr;
-  }
-  .fitem {
-    border-right: none;
-  }
-}
-
 /* ============ works preview (ผลงานติดตั้ง — ยกมาจากหน้า Project Reference) ============ */
 .works {
   display: grid;

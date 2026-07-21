@@ -299,6 +299,16 @@
         const open = menu.classList.toggle("open");
         burger.setAttribute("aria-expanded", open);
       });
+
+      /* มือถือ: แตะ "Products" เพื่อกาง/หุบรายชื่อแบรนด์ แทนการลิงก์ออกทันที */
+      const hasSub = menu.querySelector(".has-sub");
+      const hasSubLink = hasSub.querySelector(":scope > a");
+      hasSubLink.addEventListener("click", (e) => {
+        if (getComputedStyle(burger).display !== "none") {
+          e.preventDefault();
+          hasSub.classList.toggle("open");
+        }
+      });
     </script>
   <script>
       /* expandable CTA pill — กดคัดลอกเบอร์โทร */

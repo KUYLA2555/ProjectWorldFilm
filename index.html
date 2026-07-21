@@ -1192,9 +1192,6 @@
         .fitem:nth-child(2) {
           border-right: none;
         }
-        .benefits {
-          grid-template-columns: 1fr;
-        }
         .intro-grid .figure .seal {
           width: 96px;
           height: 96px;
@@ -1204,12 +1201,60 @@
         .intro-grid .figure .seal b {
           font-size: 2rem;
         }
+        /* จอมือถือ: ย่อรูปเป็น thumbnail ลอยชิดซ้าย ให้หัวข้ออยู่แถวเดียวกับรูป ส่วนคำบรรยายเต็มความกว้างด้านล่าง */
+        .intro-grid {
+          display: block;
+        }
+        .intro-grid .figure {
+          float: left;
+          width: 96px;
+          margin: 0 16px 12px 0;
+        }
+        .intro-grid .figure::after {
+          display: none;
+        }
+        .intro-grid .figure .seal {
+          display: none;
+        }
+        /* ซ่อน eyebrow: กล่อง inline-flex กว้างเกินจะเลี่ยงรูปลอยได้ ทำให้เนื้อหาทั้งหมดหล่นไปอยู่ใต้รูปแทน */
+        .intro-copy > .eyebrow {
+          display: none;
+        }
+        .ipanel h3 {
+          max-width: none;
+          font-size: 1.3rem;
+          margin-bottom: 12px;
+          margin-top: 4px;
+        }
+        .ipanel p {
+          clear: left;
+          max-width: none;
+        }
         .intro-copy {
-          padding: 0 58px;
+          padding: 0;
+        }
+        .intro-nav {
+          display: flex;
+          justify-content: center;
+          gap: 16px;
+          margin-top: 24px;
         }
         .intro-nav button {
+          position: static;
+          transform: none;
           width: 46px;
           height: 46px;
+        }
+        .intro-nav .iprev,
+        .intro-nav .inext {
+          left: auto;
+          right: auto;
+        }
+        .intro-nav .iprev:hover {
+          transform: translateX(-3px);
+        }
+        .intro-nav .inext:hover {
+          transform: translateX(3px);
         }
         .intro-nav svg {
           width: 20px;
@@ -1477,6 +1522,25 @@
         .menu .has-sub {
           width: 100%;
         }
+        .menu .has-sub > a {
+          position: relative;
+        }
+        /* ลูกศร accordion: แตะ "Products" เพื่อกาง/หุบรายชื่อแบรนด์ */
+        .menu .has-sub > a::before {
+          content: "";
+          position: absolute;
+          right: 16px;
+          top: 50%;
+          width: 8px;
+          height: 8px;
+          border-right: 2px solid currentColor;
+          border-bottom: 2px solid currentColor;
+          transform: translateY(-50%) rotate(45deg);
+          transition: transform 0.25s ease;
+        }
+        .menu .has-sub.open > a::before {
+          transform: translateY(-50%) rotate(-135deg);
+        }
         .submenu {
           position: static;
           transform: none;
@@ -1486,6 +1550,15 @@
           border: none;
           box-shadow: none;
           background: transparent;
+          padding: 0;
+          max-height: 0;
+          overflow: hidden;
+          transition:
+            max-height 0.3s ease,
+            padding 0.3s ease;
+        }
+        .menu .has-sub.open .submenu {
+          max-height: 260px;
           padding: 4px 0 8px;
         }
         .menu .has-sub:hover .submenu,
@@ -1523,12 +1596,6 @@
         .hero .note {
           font-size: 0.82rem;
         }
-        .featurebar .grid {
-          grid-template-columns: 1fr;
-        }
-        .fitem {
-          border-right: none;
-        }
         .sec-head h2 {
           font-size: clamp(1.4rem, 6.5vw, 1.85rem);
         }
@@ -1538,15 +1605,9 @@
         .ipanel h3 {
           font-size: 1.35rem;
         }
-        .intro-copy {
-          padding: 0 50px;
-        }
         .intro-nav button {
           width: 44px;
           height: 44px;
-        }
-        .intro-grid {
-          gap: 30px;
         }
         /* กรอบทองรอบรูป: ลด offset ไม่ให้ชนขอบจอ */
         .intro-grid .figure::after {
@@ -1577,7 +1638,6 @@
           grid-auto-rows: 200px;
         }
         .footer .top {
-          grid-template-columns: 1fr;
           gap: 28px;
         }
         .footer {
@@ -2315,11 +2375,20 @@
         const open = menu.classList.toggle("open");
         burger.setAttribute("aria-expanded", open);
       });
-      menu
-        .querySelectorAll("a")
-        .forEach((a) =>
-          a.addEventListener("click", () => menu.classList.remove("open")),
-        );
+      menu.querySelectorAll("a").forEach((a) => {
+        if (a.parentElement.classList.contains("has-sub")) return;
+        a.addEventListener("click", () => menu.classList.remove("open"));
+      });
+
+      /* มือถือ: แตะ "Products" เพื่อกาง/หุบรายชื่อแบรนด์ แทนการลิงก์ออกทันที */
+      const hasSub = menu.querySelector(".has-sub");
+      const hasSubLink = hasSub.querySelector(":scope > a");
+      hasSubLink.addEventListener("click", (e) => {
+        if (getComputedStyle(burger).display !== "none") {
+          e.preventDefault();
+          hasSub.classList.toggle("open");
+        }
+      });
 
       /* lazy background tiles + hero slides (degrade to navy if image fails) */
       document
