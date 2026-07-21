@@ -1252,6 +1252,19 @@
           min-height: 44px;
           align-items: center;
         }
+        .fab {
+          right: 14px;
+          bottom: 14px;
+          gap: 10px;
+        }
+        .fab a {
+          width: 46px;
+          height: 46px;
+        }
+        .fab svg {
+          width: 21px;
+          height: 21px;
+        }
       }
       @media (prefers-reduced-motion: reduce) {
         * {
@@ -1548,9 +1561,17 @@
         .ccard {
           padding: 20px 22px;
         }
+        .brandlogos {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 8px;
+        }
         .brandlogo {
-          min-height: 100px;
-          padding: 24px 16px;
+          min-height: 64px;
+          padding: 10px 6px;
+          border-radius: 8px;
+        }
+        .brandlogo img {
+          max-height: 22px;
         }
         .gallery {
           grid-auto-rows: 200px;

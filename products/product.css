@@ -807,9 +807,6 @@ a {
   .compare {
     grid-template-columns: 1fr;
   }
-  .shadegrid {
-    grid-template-columns: 1fr;
-  }
   .footer .top {
     grid-template-columns: 1fr 1fr;
   }
@@ -1085,6 +1082,11 @@ a {
   font-style: normal;
   color: var(--gold);
 }
+@media (max-width: 980px) {
+  .shadegrid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* ============ brand hero (ชื่อแบรนด์เด่น เหนือ section เลือกรุ่น) ============ */
 .bhero {
@@ -1257,7 +1259,9 @@ a {
     padding: 0 20px;
   }
   .phl .hi {
+    flex-grow: 0;
     min-width: calc(50% - 7px);
+    max-width: calc(50% - 7px);
   }
   .ctaband .cta .btn,
   .phead .cta .btn {
@@ -1299,6 +1303,19 @@ a {
   .brand-go {
     min-height: 44px;
     align-items: center;
+  }
+  .fab {
+    right: 14px;
+    bottom: 14px;
+    gap: 10px;
+  }
+  .fab a {
+    width: 46px;
+    height: 46px;
+  }
+  .fab svg {
+    width: 21px;
+    height: 21px;
   }
 }
 
