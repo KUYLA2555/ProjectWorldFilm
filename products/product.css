@@ -1602,6 +1602,7 @@ a {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(transparent 55%, rgba(15, 25, 47, 0.55));
   opacity: 0;
   transition: 0.3s;
@@ -1633,6 +1634,45 @@ a {
 .workcard .gslide.on {
   opacity: 1;
 }
+.workcard .gnav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 25, 47, 0.45);
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  transition: 0.25s ease;
+}
+.workcard .thumb:hover .gnav {
+  opacity: 1;
+}
+.workcard .gnav:hover {
+  background: var(--gold);
+  color: var(--ink);
+}
+.workcard .gprev {
+  left: 10px;
+}
+.workcard .gnext {
+  right: 10px;
+}
+.workcard .gnav svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .workcard .gdots {
   display: flex;
   justify-content: center;
@@ -1656,6 +1696,96 @@ a {
 .workcard .gdots button.active {
   background: var(--gold);
   transform: scale(1.3);
+}
+/* ============ lightbox (กดรูปแล้วเด้งขยายเต็มจอ) ============ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 16, 30, 0.92);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s;
+}
+.lightbox.open {
+  opacity: 1;
+  visibility: visible;
+}
+.lightbox img {
+  max-width: min(88vw, 1100px);
+  max-height: 84vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+.lightbox .lb-close,
+.lightbox .lb-nav {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.lightbox .lb-close:hover,
+.lightbox .lb-nav:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+}
+.lightbox .lb-close {
+  top: 22px;
+  right: 26px;
+  width: 42px;
+  height: 42px;
+}
+.lightbox .lb-nav {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+}
+.lightbox .lb-prev {
+  left: 22px;
+}
+.lightbox .lb-next {
+  right: 22px;
+}
+.lightbox .lb-close svg,
+.lightbox .lb-nav svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@media (max-width: 768px) {
+  .lightbox .lb-nav {
+    width: 40px;
+    height: 40px;
+  }
+  .lightbox .lb-close {
+    width: 34px;
+    height: 34px;
+    top: 14px;
+    right: 14px;
+  }
+  .lightbox .lb-prev {
+    left: 10px;
+  }
+  .lightbox .lb-next {
+    right: 10px;
+  }
 }
 .workcard .body {
   padding: 22px 24px 24px;
