@@ -1020,3 +1020,14 @@ model-ultraguard-ceramic, model-ultraguard-nano
   - เพิ่มคำอธิบาย **accordion เมนู Products บนมือถือ** (JS intercept คลิก + `.has-sub.open` + `max-height: 0→260px` + chevron ลูกศรหมุน อยู่ใน ≤768 ของทั้ง 2 stylesheet ทั้ง 16 หน้า) ในหัวข้อ capsule header, Per-page JS และหมายเหตุว่า anchor `#brands` กดไม่ถึงบนมือถือ
   - เพิ่มแนวทาง **มือถือคงแถว/คอลัมน์ใกล้ PC** ในหัวข้อ Responsive: `.benefits` 2×2, featurebar + footer คง 2 คอลัมน์ (override 1 คอลัมน์เดิมถูกลบแล้ว — ห้ามใส่กลับ), `.brandlogos` แถวเดียว 4 ช่องที่ ≤480px, `.fab` ย่อเป็น 46px + บทเรียนบั๊ก `.shadegrid` (rule ที่มาทีหลังทับ media query เดิม)
   - เพิ่ม layout มือถือของ section ยินดีต้อนรับ (รูป float 96px + ซ่อน eyebrow/seal + ปุ่มลูกศรย้ายลงล่าง) ในหัวข้อ Homepage-only sliders
+
+## ครั้งที่ 72 — 2026-07-22
+
+**Prompt:**
+> /init — วิเคราะห์โค้ดเบสและปรับปรุงไฟล์ CLAUDE.md สำหรับ Claude Code instance ถัดไป
+
+**สิ่งที่แก้ไข:**
+- ตรวจทาน CLAUDE.md เทียบกับโค้ดจริงทั้งหมด (โค้ดไม่มีการเปลี่ยนแปลงตั้งแต่ /init ครั้งก่อน) — ยืนยันว่าข้อมูลเดิมถูกต้องครบ: accordion Products อยู่ครบ 16 หน้า, `.bhero` + responsive ใน product.css, smart-hide `.nav-hidden` ในทั้ง 2 stylesheet, โครงสร้าง README/assets ตรงตามที่บันทึก
+- เพิ่ม 2 จุดที่ยังไม่ได้บันทึกใน CLAUDE.md:
+  - **บันทึกปัญหาค้าง "รับประกัน 8 ปี vs 10 ปี"** — index.html/contact.html ใช้ 10 ปี ส่วนอีก 14 หน้า (รวมข้อความใน about/works) ใช้ 8 ปี; รายงานผู้ใช้ไปแล้วตั้งแต่ครั้งที่ 69 และตั้งใจคงไว้รอเลขจริงจากเจ้าของร้าน — กำชับ instance ถัดไปไม่ให้แก้เองหรือรายงานซ้ำ
+  - **ระบุว่า `assets/brands/` (โลโก้ 4 แบรนด์) ใช้เฉพาะ index.html เท่านั้น** — หน้าแบรนด์แสดงชื่อเป็นตัวอักษร ไม่ใช้โลโก้
