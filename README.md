@@ -28,7 +28,7 @@ ProjectWorldFilm/
 │   │   ├── regionfilm.png
 │   │   └── ultraguard.png
 │   ├── models/             ← โลโก้ประจำรุ่นฟิล์ม (ย่อจากไฟล์ต้นฉบับใน source/ ใช้ในการ์ดเลือกรุ่นหน้าแบรนด์ Finnix/3M เท่านั้น)
-│   │   ├── finnix-ceramic.png · finnix-titanium.png · finnix-uvguard.png · finnix-extra-clear.png
+│   │   ├── finnix-ceramic.png · finnix-titanium.png · finnix-uvguard.png · finnix-extra-clear.png · finnix-crystalize.png
 │   │   └── 3m-ceramate.png · 3m-ultra-clear.png
 │   ├── line.png            ← โลโก้ LINE จริง (ใช้แทนไอคอน SVG เดิมในการ์ดติดต่อ LINE ทุกจุด)
 │   ├── facebook.png        ← โลโก้ Facebook จริง (ใช้ในการ์ด LINE/Facebook แถว hero หน้าแรกเท่านั้น)
@@ -46,6 +46,7 @@ ProjectWorldFilm/
     ├── model-finnix-titanium.html
     ├── model-finnix-uvguard.html
     ├── model-finnix-extra-clear.html
+    ├── model-finnix-crystalize.html
     ├── model-3m-ultra-clear.html
     ├── model-3m-ceramate.html
     ├── model-ultraguard-ceramic.html
@@ -57,7 +58,7 @@ ProjectWorldFilm/
 ```
 index.html (หน้าแรก)
    └─ เมนู "ฟิล์มของเรา" / การ์ดแบรนด์ 4 ช่อง
-        ├─ products/brand-finnix.html      → model-finnix-* (Ceramic, Titanium, UV Guard, Extra Clear)
+        ├─ products/brand-finnix.html      → model-finnix-* (Ceramic, Titanium, UV Guard, Extra Clear, Crystalize)
         ├─ products/brand-3m.html          → model-3m-* (Ultra Clear, Ceramate)
         ├─ products/brand-regionfilm.html  → โชว์สเปก Regionfilm ในหน้าเดียว (ไม่มีหน้ารุ่นย่อย)
         └─ products/brand-ultraguard.html  → model-ultraguard-* (Ceramic, Nano)
@@ -86,4 +87,4 @@ index.html (หน้าแรก)
 - **"200+ โครงการที่ส่งมอบ"** ในหน้าผลงาน — ยังไม่ได้ยืนยันว่าตรงกับความจริง
 - **คำรับประกันของร้านใช้ "10 ปี" ทุกหน้าแล้ว** ส่วนตารางสเปกรายรุ่นยังเป็นตัวเลขคนละชุด (5–8 ปี ตามรุ่น) ซึ่งก็ยังเป็นข้อมูลตัวอย่าง
 
-— อัปเดตล่าสุด 2026-07-22
+— อัปเดตล่าสุด 2026-07-24

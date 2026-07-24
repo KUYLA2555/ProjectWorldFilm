@@ -1155,3 +1155,20 @@ model-ultraguard-ceramic, model-ultraguard-nano
 - ยกโค้ดกลับมาจากคอมมิต 4537110 (ก่อนถูกตัดในครั้งที่ 77) แบบเลือกเฉพาะส่วนสไลด์ ไม่ revert ทั้งไฟล์
 - ตรวจผ่าน localhost + Chrome: ปุ่ม next/prev/จุด เลื่อนครบ 5 สไลด์และวนรอบถูกต้อง, รูป+ตรา 10 ปี, ลูกศร 2 ข้าง, จุด 5 จุด (จุดแรกสีทอง) แสดงครบ
 - อัปเดต `CLAUDE.md` (หมวด Homepage slider + รายการ text-bloat) ให้ระบุว่าสไลด์ถูกคืนแล้ว 2026-07-24
+
+## ครั้งที่ 81 — 2026-07-24
+
+**Prompt:**
+> ในหน้า products แบรนด์ finnix ที่มี 4 รุ่นเพิ่มอีกรุ่นให้เป็น 5 รุ่น แล้วพอมี 5 รุ่นแล้ว เอา logo ที่อยู่ในไฟล์แต่ล่ะอันมาใส่ให้ตรงกับรุ่นนั้นๆ เอาแค่แบรนด์ finnix
+> (ตามด้วย) ฉันใส่ logo UV Guard ไปในไฟล์แล้วลองเช็คดู
+
+**สิ่งที่แก้ไข — เพิ่ม Finnix เป็น 5 รุ่น + จับคู่โลโก้ให้ตรงทุกรุ่น:**
+- ตรวจไฟล์โลโก้ต้นฉบับใน `assets/source/` พบว่า Finnix มี 5 โลโก้จริง: `CM`=Ceramic, `EC`=Extra Clear, `T.T`=Titanium, `C`=**Crystalize**, และ `LOGO SM.png` (ชื่อชวนเข้าใจผิด) = **UV Guard** ตัวจริง (ผู้ใช้เพิ่งวางไฟล์นี้เข้ามาให้)
+- **แก้โลโก้ UV Guard ที่ผิดมานาน** — เดิม `finnix-uvguard.png` เป็นโลโก้ Crystalize (ถูกจับใส่ผิดตั้งแต่แรกโดยการตัดตัวเลือก) ตอนนี้:
+  - คัดโลโก้ Crystalize เดิม → `finnix-crystalize.png` (รุ่นใหม่)
+  - สร้าง `finnix-uvguard.png` ใหม่จากโลโก้ UV Guard ตัวจริง — โลโก้นี้อัตราส่วนกว้าง-เตี้ยกว่ารุ่นอื่น จึงจัดกึ่งกลางบนแคนวาส 1200×848 (กว้าง ~1190px) ให้ขนาดเท่าการ์ดอื่นทั้ง 5
+- **เพิ่มหน้ารุ่นที่ 5: `model-finnix-crystalize.html`** — ยกโครงจากหน้า UV Guard แล้วปรับเนื้อหาเป็น Crystalize (swatch `tone-prem`, VLT 50%, ลดความร้อน 84%, UV 99%, รับประกัน 8 ปี — ตัวเลข placeholder เหมือนรุ่นอื่น), แกลเลอรีผลงาน + lightbox ครบ
+- **`brand-finnix.html`** — เพิ่มการ์ดที่ 5 (Crystalize) + แก้ข้อความ "4 รุ่น" → "5 รุ่น" ทั้ง eyebrow, lead, meta description
+- ลบไฟล์ทดสอบ `assets/models/LOGO SM.png` ที่ผู้ใช้วางไว้ (ใช้ต้นฉบับใน `assets/source/` แทน)
+- ตรวจผ่าน localhost + Chrome: การ์ด 5 ใบเรียงโลโก้ถูกทุกอัน (Ceramic·Titanium·UV Guard / Extra Clear·Crystalize), UV Guard โชว์โลโก้ที่ถูกแล้ว, หน้ารุ่น Crystalize เปิดได้ครบ
+- อัปเดต `README.md` (tree + page map + วันที่) และ `CLAUDE.md` (hierarchy 5 รุ่น + ตารางจับคู่โลโก้ Finnix + ปิดประเด็น "Crystalize" ที่เคยค้าง)
