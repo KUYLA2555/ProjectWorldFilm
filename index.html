@@ -483,6 +483,32 @@
         fill: #e7c879;
         flex: none;
       }
+      /* แผงข้อความ hero — เปลี่ยนตามสไลด์ (ซ้อน grid เดียว เฟดสลับ ไม่ให้เนื้อหาใต้แผงขยับ) */
+      .hero-panels {
+        display: grid;
+      }
+      .hpanel {
+        grid-area: 1 / 1;
+        align-self: start;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(16px);
+        transition: 0.6s ease;
+        pointer-events: none;
+      }
+      .hpanel.on {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        pointer-events: auto;
+      }
+      /* หัวข้อภาษาไทยบนสไลด์ 2–3 — เล็กลงจากหัว Welcome to WORLD FILM ให้พอดี */
+      .hero h1.h-th {
+        font-size: clamp(2.1rem, 4.6vw, 3.5rem);
+        max-width: 18ch;
+        line-height: 1.2;
+        margin-bottom: 14px;
+      }
       /* ============ brand logos (คลิก → หน้าแบรนด์) ============ */
       .brandlogos {
         display: grid;
@@ -515,68 +541,20 @@
         transition: 0.3s ease;
       }
 
-      /* ============ intro banner — ข้อความซ้อนทับบนรูปเต็มความกว้าง ============ */
-      .intro-banner {
-        position: relative;
-        width: 100%;
-        min-height: clamp(480px, 58vw, 620px);
-        border-radius: 18px;
-        overflow: hidden;
-        box-shadow: var(--shadow-md);
-        display: flex;
+      /* ============ intro ============ */
+      .intro-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.15fr;
+        gap: 64px;
         align-items: center;
-        isolation: isolate;
       }
-      /* ชั้นรูปพื้นหลัง เปลี่ยนตามแผงข้อความ (โหลดผ่าน data-img) */
-      .figure-slides {
+      /* warranty seal on intro image */
+      .intro-grid .figure .seal {
         position: absolute;
-        inset: 0;
-        overflow: hidden;
-        z-index: 0;
-      }
-      .figure-slides .fslide {
-        position: absolute;
-        inset: 0;
-        background: var(--ink) center/cover no-repeat;
-        opacity: 0;
-        transform: scale(1.06);
-        transition:
-          opacity 0.8s ease,
-          transform 6s ease;
-      }
-      .figure-slides .fslide.on {
-        opacity: 1;
-        transform: scale(1);
-      }
-      /* ไล่เฉดมืด: เข้มทางซ้าย + ก้นภาพ ให้ข้อความสีอ่อนอ่านชัด */
-      .intro-banner::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: 1;
-        pointer-events: none;
-        background:
-          linear-gradient(
-            90deg,
-            rgba(12, 20, 38, 0.9) 0%,
-            rgba(12, 20, 38, 0.72) 34%,
-            rgba(12, 20, 38, 0.28) 64%,
-            rgba(12, 20, 38, 0) 100%
-          ),
-          linear-gradient(
-            0deg,
-            rgba(12, 20, 38, 0.55) 0%,
-            rgba(12, 20, 38, 0) 46%
-          );
-      }
-      /* ตรารับประกัน มุมขวาบน */
-      .intro-banner .seal {
-        position: absolute;
-        top: 26px;
-        right: 26px;
-        z-index: 4;
-        width: 106px;
-        height: 106px;
+        left: 20px;
+        bottom: 20px;
+        width: 116px;
+        height: 116px;
         border-radius: 50%;
         background: var(--gold-bright);
         color: var(--ink);
@@ -587,35 +565,61 @@
         text-align: center;
         border: 3px solid #fff;
         box-shadow: var(--shadow-md);
+        z-index: 3;
       }
-      .intro-banner .seal b {
+      .intro-grid .figure .seal b {
         font-family: "IBM Plex Sans Thai", sans-serif;
-        font-size: 2.3rem;
+        font-size: 2.5rem;
         font-weight: 600;
         line-height: 1;
       }
-      .intro-banner .seal span {
-        font-size: 0.7rem;
+      .intro-grid .figure .seal span {
+        font-size: 0.72rem;
         font-weight: 600;
         line-height: 1.2;
         margin-top: 3px;
       }
-      /* กล่องข้อความซ้อนทับ ชิดซ้าย กึ่งกลางแนวตั้ง */
-      .intro-overlay {
+      .intro-grid .figure {
+        aspect-ratio: 4/5;
+        border-radius: 12px;
+        background: var(--ink);
         position: relative;
-        z-index: 3;
-        max-width: 640px;
-        padding: clamp(30px, 5vw, 66px);
-        padding-bottom: clamp(70px, 8vw, 104px);
-        color: #fff;
+        box-shadow: var(--shadow-md);
       }
-      .intro-overlay .eyebrow {
-        color: var(--gold-bright);
+      .intro-grid .figure::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 1px solid var(--gold);
+        transform: translate(18px, 18px);
+        z-index: -1;
+        border-radius: 12px;
       }
-      /* แผงข้อความ — ซ้อนใน grid เดียว สลับด้วยลูกศร/จุด */
+      /* รูปในกรอบ เปลี่ยนตามแผงข้อความ (โหลดผ่าน data-img) */
+      .figure-slides {
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .figure-slides .fslide {
+        position: absolute;
+        inset: 0;
+        background: var(--ink) center/cover no-repeat;
+        opacity: 0;
+        transform: scale(1.04);
+        transition:
+          opacity 0.7s ease,
+          transform 0.9s ease;
+      }
+      .figure-slides .fslide.on {
+        opacity: 1;
+        transform: scale(1);
+      }
+      /* แผงข้อความสรรพคุณฟิล์ม — ซ้อนใน grid เดียว สลับด้วยลูกศร/จุด */
       .intro-panels {
         display: grid;
-        margin-top: 16px;
+        margin-top: 18px;
       }
       .ipanel {
         grid-area: 1 / 1;
@@ -635,109 +639,118 @@
         font-size: 0.78rem;
         letter-spacing: 0.22em;
         text-transform: uppercase;
-        color: var(--gold-bright);
+        color: var(--gold);
         font-weight: 600;
         margin-bottom: 14px;
       }
       .ipanel h3 {
         font-family: "IBM Plex Sans Thai", sans-serif;
-        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        font-size: clamp(1.5rem, 2.6vw, 2.15rem);
         font-weight: 700;
-        color: #fff;
-        line-height: 1.3;
-        margin: 0 0 18px;
-        max-width: 20ch;
-        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        color: var(--ink);
+        line-height: 1.35;
+        margin: 0 0 22px;
+        max-width: 18ch;
       }
       .ipanel p {
-        max-width: 50ch;
-        line-height: 1.85;
-        color: rgba(255, 255, 255, 0.9);
-        font-weight: 300;
+        max-width: 46ch;
+        line-height: 1.9;
       }
-      .ipanel .sign {
-        margin-top: 22px;
-        display: flex;
-        align-items: center;
-        gap: 14px;
+      /* ลูกศรเลื่อน: กรอบวงกลมประกบสองข้างคอลัมน์ข้อความ กึ่งกลางแนวตั้ง */
+      .intro-copy {
+        position: relative;
+        padding: 0 76px;
       }
-      .ipanel .sign .line {
-        width: 46px;
-        height: 1px;
-        background: var(--gold-bright);
-      }
-      .ipanel .sign .who b {
-        font-weight: 600;
-        color: #fff;
-      }
-      .ipanel .sign .who span {
-        display: block;
-        font-size: 0.85rem;
-        color: rgba(255, 255, 255, 0.75);
-      }
-      /* แถบควบคุมล่าง: จุดไข่ปลาชิดซ้าย · ลูกศรชิดขวา (ซ้อนบนภาพ) */
-      .intro-dots {
+      .intro-nav button {
         position: absolute;
-        left: clamp(30px, 5vw, 66px);
-        bottom: 30px;
-        z-index: 4;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 52px;
+        height: 52px;
+        display: grid;
+        place-items: center;
+        background: none;
+        border: 1px solid rgba(20, 34, 61, 0.4);
+        border-radius: 50%;
+        padding: 0;
+        color: var(--ink);
+        cursor: pointer;
+        transition: 0.3s ease;
+      }
+      .intro-nav .iprev {
+        left: 0;
+      }
+      .intro-nav .inext {
+        right: 0;
+      }
+      .intro-nav svg {
+        width: 24px;
+        height: 24px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 1.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .intro-nav .iprev:hover {
+        transform: translateY(-50%) translateX(-3px);
+      }
+      .intro-nav .inext:hover {
+        transform: translateY(-50%) translateX(3px);
+      }
+      .intro-nav button:hover {
+        background: var(--ink);
+        border-color: var(--ink);
+        color: #e7c879;
+      }
+      /* จุดไข่ปลาล่างสุด — จุด active สีทอง จุดอื่นเทาเข้มบนพื้นอ่อน */
+      .intro-dots {
         display: flex;
-        gap: 9px;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 52px;
       }
       .intro-dots button {
-        width: 9px;
-        height: 9px;
+        width: 8px;
+        height: 8px;
         border-radius: 50%;
         border: 0;
         padding: 0;
         cursor: pointer;
-        background: rgba(255, 255, 255, 0.45);
+        background: #97a1b3;
         transition: 0.3s ease;
       }
       .intro-dots button:hover {
-        background: rgba(255, 255, 255, 0.8);
+        background: var(--ink);
       }
       .intro-dots button.active {
-        width: 26px;
-        border-radius: 6px;
-        background: var(--gold-bright);
+        background: var(--gold);
+        transform: scale(1.3);
       }
-      .intro-nav {
-        position: absolute;
-        right: clamp(24px, 5vw, 42px);
-        bottom: 24px;
-        z-index: 4;
+      .intro-copy p {
+        color: var(--slate);
+        margin-bottom: 16px;
+        font-weight: 300;
+      }
+      .intro-copy .sign {
+        margin-top: 26px;
         display: flex;
-        gap: 12px;
+        align-items: center;
+        gap: 14px;
       }
-      .intro-nav button {
-        width: 50px;
-        height: 50px;
-        display: grid;
-        place-items: center;
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.45);
-        border-radius: 50%;
-        padding: 0;
-        color: #fff;
-        cursor: pointer;
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        transition: 0.3s ease;
+      .intro-copy .sign .line {
+        width: 46px;
+        height: 1px;
+        background: var(--gold);
       }
-      .intro-nav button:hover {
-        background: var(--gold-bright);
-        border-color: var(--gold-bright);
+      .intro-copy .sign .who b {
+        font-weight: 600;
         color: var(--ink);
       }
-      .intro-nav svg {
-        width: 22px;
-        height: 22px;
-        stroke: currentColor;
-        fill: none;
-        stroke-width: 1.5;
-        stroke-linecap: round;
-        stroke-linejoin: round;
+      .intro-copy .sign .who span {
+        display: block;
+        font-size: 0.85rem;
+        color: var(--slate);
       }
 
       /* ============ benefits ============ */
@@ -1118,8 +1131,9 @@
 
       /* ============ responsive ============ */
       @media (max-width: 980px) {
-        .intro-banner {
-          min-height: clamp(440px, 66vw, 560px);
+        .intro-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
         }
         .benefits {
           grid-template-columns: repeat(2, 1fr);
@@ -1204,58 +1218,73 @@
         .fitem:nth-child(2) {
           border-right: none;
         }
-        /* จอมือถือ: แบนเนอร์ข้อความชิดล่าง เฉดมืดจากก้นภาพขึ้นบน */
-        .intro-banner {
-          min-height: 440px;
-          align-items: flex-end;
-          border-radius: 14px;
+        .intro-grid .figure .seal {
+          width: 96px;
+          height: 96px;
+          left: 14px;
+          bottom: 14px;
         }
-        .intro-banner::before {
-          background: linear-gradient(
-            0deg,
-            rgba(12, 20, 38, 0.92) 0%,
-            rgba(12, 20, 38, 0.6) 34%,
-            rgba(12, 20, 38, 0.1) 72%,
-            rgba(12, 20, 38, 0) 100%
-          );
+        .intro-grid .figure .seal b {
+          font-size: 2rem;
         }
-        .intro-overlay {
-          max-width: 100%;
-          padding: 40px 22px 84px;
+        /* จอมือถือ: ย่อรูปเป็น thumbnail ลอยชิดซ้าย ให้หัวข้ออยู่แถวเดียวกับรูป ส่วนคำบรรยายเต็มความกว้างด้านล่าง */
+        .intro-grid {
+          display: block;
         }
-        .intro-banner .seal {
-          width: 76px;
-          height: 76px;
-          top: 16px;
-          right: 16px;
+        .intro-grid .figure {
+          float: left;
+          width: 96px;
+          margin: 0 16px 12px 0;
         }
-        .intro-banner .seal b {
-          font-size: 1.6rem;
+        .intro-grid .figure::after {
+          display: none;
+        }
+        .intro-grid .figure .seal {
+          display: none;
+        }
+        /* ซ่อน eyebrow: กล่อง inline-flex กว้างเกินจะเลี่ยงรูปลอยได้ ทำให้เนื้อหาทั้งหมดหล่นไปอยู่ใต้รูปแทน */
+        .intro-copy > .eyebrow {
+          display: none;
         }
         .ipanel h3 {
           max-width: none;
+          font-size: 1.3rem;
           margin-bottom: 12px;
+          margin-top: 4px;
         }
         .ipanel p {
+          clear: left;
           max-width: none;
-          line-height: 1.7;
         }
-        .intro-dots {
-          left: 22px;
-          bottom: 28px;
+        .intro-copy {
+          padding: 0;
         }
         .intro-nav {
-          right: 16px;
-          bottom: 18px;
-          gap: 10px;
+          display: flex;
+          justify-content: center;
+          gap: 16px;
+          margin-top: 24px;
         }
         .intro-nav button {
-          width: 42px;
-          height: 42px;
+          position: static;
+          transform: none;
+          width: 46px;
+          height: 46px;
+        }
+        .intro-nav .iprev,
+        .intro-nav .inext {
+          left: auto;
+          right: auto;
+        }
+        .intro-nav .iprev:hover {
+          transform: translateX(-3px);
+        }
+        .intro-nav .inext:hover {
+          transform: translateX(3px);
         }
         .intro-nav svg {
-          width: 18px;
-          height: 18px;
+          width: 20px;
+          height: 20px;
         }
         .gallery {
           grid-template-columns: 1fr;
@@ -1587,6 +1616,9 @@
         .hero h1 {
           font-size: clamp(1.9rem, 8.5vw, 2.4rem);
         }
+        .hero h1.h-th {
+          font-size: clamp(1.7rem, 7vw, 2.2rem);
+        }
         .hero .thai-sub {
           font-size: 0.98rem;
         }
@@ -1600,13 +1632,15 @@
           margin-bottom: 42px;
         }
         .ipanel h3 {
-          font-size: 1.45rem;
+          font-size: 1.35rem;
         }
-        .intro-banner {
-          min-height: 400px;
+        .intro-nav button {
+          width: 44px;
+          height: 44px;
         }
-        .intro-overlay {
-          padding: 34px 18px 76px;
+        /* กรอบทองรอบรูป: ลด offset ไม่ให้ชนขอบจอ */
+        .intro-grid .figure::after {
+          transform: translate(12px, 12px);
         }
         .bcard {
           padding: 28px 22px;
@@ -1884,24 +1918,44 @@
     <section class="hero">
       <div class="hero-slides" aria-hidden="true">
         <div
-          class="slide"
-          data-img="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80"
+          class="slide on"
+          data-img="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80"
         ></div>
         <div
           class="slide"
-          data-img="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80"
+          data-img="https://images.unsplash.com/photo-1668036268050-ca69ef2f0ca0?auto=format&fit=crop&w=1920&q=80"
         ></div>
         <div
           class="slide"
-          data-img="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?auto=format&fit=crop&w=1920&q=80"
+          data-img="https://images.unsplash.com/photo-1651481127251-60027d79519f?auto=format&fit=crop&w=1920&q=80"
         ></div>
       </div>
       <div class="wrap">
-        <span class="eyebrow">ศูนย์ติดตั้งฟิล์มกรองแสง</span>
-        <h1 class="h-display">Welcome to<br /><em>WORLD FILM</em></h1>
-        <p class="thai-sub">
-          ฟิล์มกรองแสงเซรามิกพรีเมียม เพื่อบ้านและอาคาร
-        </p>
+        <div class="hero-panels">
+          <div class="hpanel on">
+            <span class="eyebrow">ศูนย์ติดตั้งฟิล์มกรองแสง</span>
+            <h1 class="h-display">Welcome to<br /><em>WORLD FILM</em></h1>
+            <p class="thai-sub">
+              ฟิล์มกรองแสงเซรามิกพรีเมียม เพื่อบ้านและอาคาร
+            </p>
+          </div>
+          <div class="hpanel">
+            <span class="eyebrow">เพื่อทุกคนในบ้าน</span>
+            <h1 class="h-display h-th">บ้านคือพื้นที่<em>แห่งความสุข</em></h1>
+            <p class="thai-sub">
+              เลือกปกป้องรังสี UV เพิ่มความสบาย มอบทุกช่วงเวลาที่มีความหมาย
+              เพราะทุกคนในบ้านสำคัญ ไม่ว่าจะเดิน 2 ขา หรือ 4 ขา
+              ให้ทุกวันในบ้านน่าอยู่ยิ่งขึ้น
+            </p>
+          </div>
+          <div class="hpanel">
+            <span class="eyebrow">มาตรฐานการติดตั้ง</span>
+            <h1 class="h-display h-th">ทีมช่าง<em>มืออาชีพ</em></h1>
+            <p class="thai-sub">
+              มีมาตรฐานการติดตั้ง ใส่ใจทุกรายละเอียด เพื่อคุณภาพที่ดีที่สุด
+            </p>
+          </div>
+        </div>
         <p class="note">
           <svg viewBox="0 0 24 24">
             <path d="M12 2 4 6v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V6l-8-4z" />
@@ -2017,27 +2071,39 @@
     <!-- ============ INTRO — Split Layout + สไลด์สรรพคุณฟิล์ม ============ -->
     <section class="section section--tint" id="about">
       <div class="wrap">
-        <div class="intro-banner reveal">
-          <div class="figure-slides">
-            <div
-              class="fslide on"
-              data-img="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"
-            ></div>
-            <div
-              class="fslide"
-              data-img="https://images.unsplash.com/photo-1668036268050-ca69ef2f0ca0?auto=format&fit=crop&w=1600&q=80"
-            ></div>
-            <div
-              class="fslide"
-              data-img="https://images.unsplash.com/photo-1651481127251-60027d79519f?auto=format&fit=crop&w=1600&q=80"
-            ></div>
+        <div class="intro-grid">
+          <div class="figure reveal" aria-hidden="true">
+            <div class="figure-slides">
+              <div
+                class="fslide on"
+                data-img="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80"
+              ></div>
+              <div
+                class="fslide"
+                data-img="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1000&q=80"
+              ></div>
+              <div
+                class="fslide"
+                data-img="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1000&q=80"
+              ></div>
+              <div
+                class="fslide"
+                data-img="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=80"
+              ></div>
+              <div
+                class="fslide"
+                data-img="https://images.unsplash.com/photo-1616137466211-f939a420be84?auto=format&fit=crop&w=1000&q=80"
+              ></div>
+            </div>
+            <span class="seal"
+              ><b>10</b><span>ปี<br />รับประกัน</span></span
+            >
           </div>
-          <span class="seal"><b>10</b><span>ปี<br />รับประกัน</span></span>
-          <div class="intro-overlay">
+          <div class="intro-copy reveal">
             <span class="eyebrow">ยินดีต้อนรับสู่ WORLD FILM</span>
             <div class="intro-panels">
               <div class="ipanel on">
-                <div class="ikicker">01 / 03 · WORLD FILM</div>
+                <div class="ikicker">01 / 05 · WORLD FILM</div>
                 <h3>ความเย็นสบายและแสงธรรมชาติ อยู่ร่วมกันได้อย่างลงตัว</h3>
                 <p>
                   WORLD FILM
@@ -2054,38 +2120,58 @@
                 </div>
               </div>
               <div class="ipanel">
-                <div class="ikicker">02 / 03 · เพื่อทุกคนในบ้าน</div>
-                <h3>บ้านคือพื้นที่แห่งความสุข</h3>
+                <div class="ikicker">02 / 05 · สรรพคุณฟิล์ม</div>
+                <h3>ลดความร้อนสูงสุด 85%</h3>
                 <p>
-                  เลือกปกป้องรังสี UV เพิ่มความสบาย
-                  มอบทุกช่วงเวลาที่มีความหมาย เพราะทุกคนในบ้านสำคัญ
-                  ไม่ว่าจะเดิน 2 ขา หรือ 4 ขา — ให้ทุกวันในบ้านน่าอยู่ยิ่งขึ้น
+                  ฟิล์มเซรามิกนาโนสกัดรังสีอินฟราเรดต้นเหตุของความร้อนก่อนเข้าสู่ตัวบ้าน
+                  ห้องจึงเย็นเร็วขึ้น แอร์ทำงานเบาลง
+                  และประหยัดค่าไฟได้อย่างเห็นผลตลอดทั้งปี
                 </p>
               </div>
               <div class="ipanel">
-                <div class="ikicker">03 / 03 · มาตรฐานการติดตั้ง</div>
-                <h3>มีมาตรฐานการติดตั้งโดยทีมช่างมืออาชีพ</h3>
+                <div class="ikicker">03 / 05 · สรรพคุณฟิล์ม</div>
+                <h3>ปกป้องจากรังสี UV สูงสุด 99%</h3>
                 <p>
-                  ใส่ใจทุกรายละเอียดในทุกขั้นตอนการติดตั้ง
-                  ตั้งแต่วัดหน้างานจนถึงรีดฟิล์มเก็บงาน
-                  เพื่อคุณภาพที่ดีที่สุดในทุกผลงาน
+                  กรองรังสีอัลตราไวโอเลตที่ทำร้ายผิว และทำให้เฟอร์นิเจอร์
+                  พื้นไม้ ผ้าม่านซีดจาง
+                  ให้ทุกคนในบ้านใช้ชีวิตใกล้หน้าต่างได้อย่างสบายใจ
+                </p>
+              </div>
+              <div class="ipanel">
+                <div class="ikicker">04 / 05 · สรรพคุณฟิล์ม</div>
+                <h3>ใสคมชัด ไม่บังวิวสวย</h3>
+                <p>
+                  เทคโนโลยีเซรามิกให้ความใสสูง
+                  มองวิวภายนอกได้ชัดเจนทั้งกลางวันและกลางคืน
+                  โดยยังคงแสงธรรมชาติที่ทำให้บ้านดูโปร่งสบาย
+                </p>
+              </div>
+              <div class="ipanel">
+                <div class="ikicker">05 / 05 · สรรพคุณฟิล์ม</div>
+                <h3>เพิ่มความเป็นส่วนตัวทุกช่วงเวลา</h3>
+                <p>
+                  เลือกระดับความทึบได้ตามรุ่นฟิล์ม
+                  มองจากภายนอกเข้ามาได้ยากขึ้นในเวลากลางวัน
+                  โดยภายในห้องยังคงสว่างและไม่อึดอัด
                 </p>
               </div>
             </div>
+            <div class="intro-nav">
+              <button type="button" class="iprev" aria-label="สรรพคุณก่อนหน้า">
+                <svg viewBox="0 0 24 24"><path d="M22 12H3M10 5l-7 7 7 7" /></svg>
+              </button>
+              <button type="button" class="inext" aria-label="สรรพคุณถัดไป">
+                <svg viewBox="0 0 24 24"><path d="M2 12h19M14 5l7 7-7 7" /></svg>
+              </button>
+            </div>
           </div>
-          <div class="intro-nav">
-            <button type="button" class="iprev" aria-label="สไลด์ก่อนหน้า">
-              <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" /></svg>
-            </button>
-            <button type="button" class="inext" aria-label="สไลด์ถัดไป">
-              <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" /></svg>
-            </button>
-          </div>
-          <div class="intro-dots" aria-label="เลือกสไลด์">
-            <button type="button" class="active" aria-label="สไลด์ที่ 1"></button>
-            <button type="button" aria-label="สไลด์ที่ 2"></button>
-            <button type="button" aria-label="สไลด์ที่ 3"></button>
-          </div>
+        </div>
+        <div class="intro-dots" aria-label="เลือกหัวข้อสรรพคุณ">
+          <button type="button" class="active" aria-label="หัวข้อที่ 1"></button>
+          <button type="button" aria-label="หัวข้อที่ 2"></button>
+          <button type="button" aria-label="หัวข้อที่ 3"></button>
+          <button type="button" aria-label="หัวข้อที่ 4"></button>
+          <button type="button" aria-label="หัวข้อที่ 5"></button>
         </div>
       </div>
     </section>
@@ -2358,14 +2444,17 @@
       /* hero slideshow — เฟดสลับทุก 6 วิ + จุด pagination (จุด active สีทอง) */
       const slides = document.querySelectorAll(".hero-slides .slide");
       const dots = document.querySelectorAll(".hero-dots button");
+      const hpanels = document.querySelectorAll(".hero-panels .hpanel");
       let cur = 0,
         slideTimer;
       function showSlide(i) {
         slides[cur].classList.remove("on");
         dots[cur].classList.remove("active");
+        if (hpanels[cur]) hpanels[cur].classList.remove("on");
         cur = i;
         slides[cur].classList.add("on");
         dots[cur].classList.add("active");
+        if (hpanels[cur]) hpanels[cur].classList.add("on");
       }
       function playSlides() {
         clearInterval(slideTimer);
