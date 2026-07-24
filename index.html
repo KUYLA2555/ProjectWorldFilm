@@ -515,20 +515,68 @@
         transition: 0.3s ease;
       }
 
-      /* ============ intro ============ */
-      .intro-grid {
-        display: grid;
-        grid-template-columns: 1fr 1.15fr;
-        gap: 64px;
+      /* ============ intro banner — ข้อความซ้อนทับบนรูปเต็มความกว้าง ============ */
+      .intro-banner {
+        position: relative;
+        width: 100%;
+        min-height: clamp(480px, 58vw, 620px);
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        display: flex;
         align-items: center;
+        isolation: isolate;
       }
-      /* warranty seal on intro image */
-      .intro-grid .figure .seal {
+      /* ชั้นรูปพื้นหลัง เปลี่ยนตามแผงข้อความ (โหลดผ่าน data-img) */
+      .figure-slides {
         position: absolute;
-        left: 20px;
-        bottom: 20px;
-        width: 116px;
-        height: 116px;
+        inset: 0;
+        overflow: hidden;
+        z-index: 0;
+      }
+      .figure-slides .fslide {
+        position: absolute;
+        inset: 0;
+        background: var(--ink) center/cover no-repeat;
+        opacity: 0;
+        transform: scale(1.06);
+        transition:
+          opacity 0.8s ease,
+          transform 6s ease;
+      }
+      .figure-slides .fslide.on {
+        opacity: 1;
+        transform: scale(1);
+      }
+      /* ไล่เฉดมืด: เข้มทางซ้าย + ก้นภาพ ให้ข้อความสีอ่อนอ่านชัด */
+      .intro-banner::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background:
+          linear-gradient(
+            90deg,
+            rgba(12, 20, 38, 0.9) 0%,
+            rgba(12, 20, 38, 0.72) 34%,
+            rgba(12, 20, 38, 0.28) 64%,
+            rgba(12, 20, 38, 0) 100%
+          ),
+          linear-gradient(
+            0deg,
+            rgba(12, 20, 38, 0.55) 0%,
+            rgba(12, 20, 38, 0) 46%
+          );
+      }
+      /* ตรารับประกัน มุมขวาบน */
+      .intro-banner .seal {
+        position: absolute;
+        top: 26px;
+        right: 26px;
+        z-index: 4;
+        width: 106px;
+        height: 106px;
         border-radius: 50%;
         background: var(--gold-bright);
         color: var(--ink);
@@ -539,75 +587,35 @@
         text-align: center;
         border: 3px solid #fff;
         box-shadow: var(--shadow-md);
-        z-index: 3;
       }
-      .intro-grid .figure .seal b {
+      .intro-banner .seal b {
         font-family: "IBM Plex Sans Thai", sans-serif;
-        font-size: 2.5rem;
+        font-size: 2.3rem;
         font-weight: 600;
         line-height: 1;
       }
-      .intro-grid .figure .seal span {
-        font-size: 0.72rem;
+      .intro-banner .seal span {
+        font-size: 0.7rem;
         font-weight: 600;
         line-height: 1.2;
         margin-top: 3px;
       }
-      .intro-grid .figure {
-        aspect-ratio: 4/5;
-        border-radius: 12px;
-        background: var(--ink);
+      /* กล่องข้อความซ้อนทับ ชิดซ้าย กึ่งกลางแนวตั้ง */
+      .intro-overlay {
         position: relative;
-        box-shadow: var(--shadow-md);
+        z-index: 3;
+        max-width: 640px;
+        padding: clamp(30px, 5vw, 66px);
+        padding-bottom: clamp(70px, 8vw, 104px);
+        color: #fff;
       }
-      .intro-grid .figure::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border: 1px solid var(--gold);
-        transform: translate(18px, 18px);
-        z-index: -1;
-        border-radius: 12px;
+      .intro-overlay .eyebrow {
+        color: var(--gold-bright);
       }
-      /* รูปในกรอบ เปลี่ยนตามแผงข้อความ (โหลดผ่าน data-img) */
-      .figure-slides {
-        position: absolute;
-        inset: 0;
-        border-radius: 12px;
-        overflow: hidden;
-      }
-      .figure-slides .fslide {
-        position: absolute;
-        inset: 0;
-        background: var(--ink) center/cover no-repeat;
-        opacity: 0;
-        transform: scale(1.04);
-        transition:
-          opacity 0.7s ease,
-          transform 0.9s ease;
-      }
-      .figure-slides .fslide.on {
-        opacity: 1;
-        transform: scale(1);
-      }
-      /* ไล่เฉดเข้มบาง ๆ ก้นรูป — ให้ตรารับประกันเด่นขึ้นและภาพดูมีมิติ */
-      .figure-slides::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          to top,
-          rgba(20, 34, 61, 0.5) 0%,
-          rgba(20, 34, 61, 0.14) 32%,
-          rgba(20, 34, 61, 0) 58%
-        );
-        z-index: 2;
-        pointer-events: none;
-      }
-      /* แผงข้อความสรรพคุณฟิล์ม — ซ้อนใน grid เดียว สลับด้วยลูกศร/จุด */
+      /* แผงข้อความ — ซ้อนใน grid เดียว สลับด้วยลูกศร/จุด */
       .intro-panels {
         display: grid;
-        margin-top: 18px;
+        margin-top: 16px;
       }
       .ipanel {
         grid-area: 1 / 1;
@@ -627,118 +635,109 @@
         font-size: 0.78rem;
         letter-spacing: 0.22em;
         text-transform: uppercase;
-        color: var(--gold);
+        color: var(--gold-bright);
         font-weight: 600;
         margin-bottom: 14px;
       }
       .ipanel h3 {
         font-family: "IBM Plex Sans Thai", sans-serif;
-        font-size: clamp(1.5rem, 2.6vw, 2.15rem);
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
         font-weight: 700;
-        color: var(--ink);
-        line-height: 1.35;
-        margin: 0 0 22px;
-        max-width: 18ch;
+        color: #fff;
+        line-height: 1.3;
+        margin: 0 0 18px;
+        max-width: 20ch;
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
       }
       .ipanel p {
-        max-width: 46ch;
-        line-height: 1.9;
-      }
-      /* ลูกศรเลื่อน: กรอบวงกลมประกบสองข้างคอลัมน์ข้อความ กึ่งกลางแนวตั้ง */
-      .intro-copy {
-        position: relative;
-        padding: 0 76px;
-      }
-      .intro-nav button {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 52px;
-        height: 52px;
-        display: grid;
-        place-items: center;
-        background: none;
-        border: 1px solid rgba(20, 34, 61, 0.4);
-        border-radius: 50%;
-        padding: 0;
-        color: var(--ink);
-        cursor: pointer;
-        transition: 0.3s ease;
-      }
-      .intro-nav .iprev {
-        left: 0;
-      }
-      .intro-nav .inext {
-        right: 0;
-      }
-      .intro-nav svg {
-        width: 24px;
-        height: 24px;
-        stroke: currentColor;
-        fill: none;
-        stroke-width: 1.2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-      }
-      .intro-nav .iprev:hover {
-        transform: translateY(-50%) translateX(-3px);
-      }
-      .intro-nav .inext:hover {
-        transform: translateY(-50%) translateX(3px);
-      }
-      .intro-nav button:hover {
-        background: var(--ink);
-        border-color: var(--ink);
-        color: #e7c879;
-      }
-      /* จุดไข่ปลาล่างสุด — จุด active สีทอง จุดอื่นเทาเข้มบนพื้นอ่อน */
-      .intro-dots {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 52px;
-      }
-      .intro-dots button {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        border: 0;
-        padding: 0;
-        cursor: pointer;
-        background: #97a1b3;
-        transition: 0.3s ease;
-      }
-      .intro-dots button:hover {
-        background: var(--ink);
-      }
-      .intro-dots button.active {
-        background: var(--gold);
-        transform: scale(1.3);
-      }
-      .intro-copy p {
-        color: var(--slate);
-        margin-bottom: 16px;
+        max-width: 50ch;
+        line-height: 1.85;
+        color: rgba(255, 255, 255, 0.9);
         font-weight: 300;
       }
-      .intro-copy .sign {
-        margin-top: 26px;
+      .ipanel .sign {
+        margin-top: 22px;
         display: flex;
         align-items: center;
         gap: 14px;
       }
-      .intro-copy .sign .line {
+      .ipanel .sign .line {
         width: 46px;
         height: 1px;
-        background: var(--gold);
+        background: var(--gold-bright);
       }
-      .intro-copy .sign .who b {
+      .ipanel .sign .who b {
         font-weight: 600;
-        color: var(--ink);
+        color: #fff;
       }
-      .intro-copy .sign .who span {
+      .ipanel .sign .who span {
         display: block;
         font-size: 0.85rem;
-        color: var(--slate);
+        color: rgba(255, 255, 255, 0.75);
+      }
+      /* แถบควบคุมล่าง: จุดไข่ปลาชิดซ้าย · ลูกศรชิดขวา (ซ้อนบนภาพ) */
+      .intro-dots {
+        position: absolute;
+        left: clamp(30px, 5vw, 66px);
+        bottom: 30px;
+        z-index: 4;
+        display: flex;
+        gap: 9px;
+      }
+      .intro-dots button {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.45);
+        transition: 0.3s ease;
+      }
+      .intro-dots button:hover {
+        background: rgba(255, 255, 255, 0.8);
+      }
+      .intro-dots button.active {
+        width: 26px;
+        border-radius: 6px;
+        background: var(--gold-bright);
+      }
+      .intro-nav {
+        position: absolute;
+        right: clamp(24px, 5vw, 42px);
+        bottom: 24px;
+        z-index: 4;
+        display: flex;
+        gap: 12px;
+      }
+      .intro-nav button {
+        width: 50px;
+        height: 50px;
+        display: grid;
+        place-items: center;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        border-radius: 50%;
+        padding: 0;
+        color: #fff;
+        cursor: pointer;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        transition: 0.3s ease;
+      }
+      .intro-nav button:hover {
+        background: var(--gold-bright);
+        border-color: var(--gold-bright);
+        color: var(--ink);
+      }
+      .intro-nav svg {
+        width: 22px;
+        height: 22px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 1.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
       }
 
       /* ============ benefits ============ */
@@ -1119,9 +1118,8 @@
 
       /* ============ responsive ============ */
       @media (max-width: 980px) {
-        .intro-grid {
-          grid-template-columns: 1fr;
-          gap: 40px;
+        .intro-banner {
+          min-height: clamp(440px, 66vw, 560px);
         }
         .benefits {
           grid-template-columns: repeat(2, 1fr);
@@ -1206,73 +1204,58 @@
         .fitem:nth-child(2) {
           border-right: none;
         }
-        .intro-grid .figure .seal {
-          width: 96px;
-          height: 96px;
-          left: 14px;
-          bottom: 14px;
+        /* จอมือถือ: แบนเนอร์ข้อความชิดล่าง เฉดมืดจากก้นภาพขึ้นบน */
+        .intro-banner {
+          min-height: 440px;
+          align-items: flex-end;
+          border-radius: 14px;
         }
-        .intro-grid .figure .seal b {
-          font-size: 2rem;
+        .intro-banner::before {
+          background: linear-gradient(
+            0deg,
+            rgba(12, 20, 38, 0.92) 0%,
+            rgba(12, 20, 38, 0.6) 34%,
+            rgba(12, 20, 38, 0.1) 72%,
+            rgba(12, 20, 38, 0) 100%
+          );
         }
-        /* จอมือถือ: ย่อรูปเป็น thumbnail ลอยชิดซ้าย ให้หัวข้ออยู่แถวเดียวกับรูป ส่วนคำบรรยายเต็มความกว้างด้านล่าง */
-        .intro-grid {
-          display: block;
+        .intro-overlay {
+          max-width: 100%;
+          padding: 40px 22px 84px;
         }
-        .intro-grid .figure {
-          float: left;
-          width: 96px;
-          margin: 0 16px 12px 0;
+        .intro-banner .seal {
+          width: 76px;
+          height: 76px;
+          top: 16px;
+          right: 16px;
         }
-        .intro-grid .figure::after {
-          display: none;
-        }
-        .intro-grid .figure .seal {
-          display: none;
-        }
-        /* ซ่อน eyebrow: กล่อง inline-flex กว้างเกินจะเลี่ยงรูปลอยได้ ทำให้เนื้อหาทั้งหมดหล่นไปอยู่ใต้รูปแทน */
-        .intro-copy > .eyebrow {
-          display: none;
+        .intro-banner .seal b {
+          font-size: 1.6rem;
         }
         .ipanel h3 {
           max-width: none;
-          font-size: 1.3rem;
           margin-bottom: 12px;
-          margin-top: 4px;
         }
         .ipanel p {
-          clear: left;
           max-width: none;
+          line-height: 1.7;
         }
-        .intro-copy {
-          padding: 0;
+        .intro-dots {
+          left: 22px;
+          bottom: 28px;
         }
         .intro-nav {
-          display: flex;
-          justify-content: center;
-          gap: 16px;
-          margin-top: 24px;
+          right: 16px;
+          bottom: 18px;
+          gap: 10px;
         }
         .intro-nav button {
-          position: static;
-          transform: none;
-          width: 46px;
-          height: 46px;
-        }
-        .intro-nav .iprev,
-        .intro-nav .inext {
-          left: auto;
-          right: auto;
-        }
-        .intro-nav .iprev:hover {
-          transform: translateX(-3px);
-        }
-        .intro-nav .inext:hover {
-          transform: translateX(3px);
+          width: 42px;
+          height: 42px;
         }
         .intro-nav svg {
-          width: 20px;
-          height: 20px;
+          width: 18px;
+          height: 18px;
         }
         .gallery {
           grid-template-columns: 1fr;
@@ -1617,15 +1600,13 @@
           margin-bottom: 42px;
         }
         .ipanel h3 {
-          font-size: 1.35rem;
+          font-size: 1.45rem;
         }
-        .intro-nav button {
-          width: 44px;
-          height: 44px;
+        .intro-banner {
+          min-height: 400px;
         }
-        /* กรอบทองรอบรูป: ลด offset ไม่ให้ชนขอบจอ */
-        .intro-grid .figure::after {
-          transform: translate(12px, 12px);
+        .intro-overlay {
+          padding: 34px 18px 76px;
         }
         .bcard {
           padding: 28px 22px;
@@ -2036,27 +2017,23 @@
     <!-- ============ INTRO — Split Layout + สไลด์สรรพคุณฟิล์ม ============ -->
     <section class="section section--tint" id="about">
       <div class="wrap">
-        <div class="intro-grid">
-          <div class="figure reveal" aria-hidden="true">
-            <div class="figure-slides">
-              <div
-                class="fslide on"
-                data-img="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80"
-              ></div>
-              <div
-                class="fslide"
-                data-img="https://images.unsplash.com/photo-1668036268050-ca69ef2f0ca0?auto=format&fit=crop&w=1000&q=80"
-              ></div>
-              <div
-                class="fslide"
-                data-img="https://images.unsplash.com/photo-1651481127251-60027d79519f?auto=format&fit=crop&w=1000&q=80"
-              ></div>
-            </div>
-            <span class="seal"
-              ><b>10</b><span>ปี<br />รับประกัน</span></span
-            >
+        <div class="intro-banner reveal">
+          <div class="figure-slides">
+            <div
+              class="fslide on"
+              data-img="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"
+            ></div>
+            <div
+              class="fslide"
+              data-img="https://images.unsplash.com/photo-1668036268050-ca69ef2f0ca0?auto=format&fit=crop&w=1600&q=80"
+            ></div>
+            <div
+              class="fslide"
+              data-img="https://images.unsplash.com/photo-1651481127251-60027d79519f?auto=format&fit=crop&w=1600&q=80"
+            ></div>
           </div>
-          <div class="intro-copy reveal">
+          <span class="seal"><b>10</b><span>ปี<br />รับประกัน</span></span>
+          <div class="intro-overlay">
             <span class="eyebrow">ยินดีต้อนรับสู่ WORLD FILM</span>
             <div class="intro-panels">
               <div class="ipanel on">
@@ -2095,20 +2072,20 @@
                 </p>
               </div>
             </div>
-            <div class="intro-nav">
-              <button type="button" class="iprev" aria-label="สไลด์ก่อนหน้า">
-                <svg viewBox="0 0 24 24"><path d="M22 12H3M10 5l-7 7 7 7" /></svg>
-              </button>
-              <button type="button" class="inext" aria-label="สไลด์ถัดไป">
-                <svg viewBox="0 0 24 24"><path d="M2 12h19M14 5l7 7-7 7" /></svg>
-              </button>
-            </div>
           </div>
-        </div>
-        <div class="intro-dots" aria-label="เลือกสไลด์">
-          <button type="button" class="active" aria-label="สไลด์ที่ 1"></button>
-          <button type="button" aria-label="สไลด์ที่ 2"></button>
-          <button type="button" aria-label="สไลด์ที่ 3"></button>
+          <div class="intro-nav">
+            <button type="button" class="iprev" aria-label="สไลด์ก่อนหน้า">
+              <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" /></svg>
+            </button>
+            <button type="button" class="inext" aria-label="สไลด์ถัดไป">
+              <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" /></svg>
+            </button>
+          </div>
+          <div class="intro-dots" aria-label="เลือกสไลด์">
+            <button type="button" class="active" aria-label="สไลด์ที่ 1"></button>
+            <button type="button" aria-label="สไลด์ที่ 2"></button>
+            <button type="button" aria-label="สไลด์ที่ 3"></button>
+          </div>
         </div>
       </div>
     </section>
