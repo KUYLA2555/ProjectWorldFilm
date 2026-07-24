@@ -9,7 +9,20 @@ WORLD FILM — a **static marketing website** (hand-written HTML + CSS, no frame
 ## Running / previewing
 
 - Quickest look: open `index.html` in a browser directly.
-- For anything needing HTTP (the Chrome-automation extension blocks `file://`): serve with a PowerShell `System.Net.HttpListener` bound to `http://localhost:<port>/` (run with `run_in_background`). Pages live at `/index.html`, `/works.html`, `/about.html`, `/contact.html`, `/products/*.html`.
+- For anything needing HTTP (the Chrome-automation extension blocks `file://`): serve with a PowerShell `System.Net.HttpListener` bound to `http://localhost:<port>/` (run with `run_in_background`). Pages live at `/index.html`, `/works.html`, `/about.html`, `/contact.html`, `/products/*.html`. Concrete server (adjust `$root`/`$prefix`):
+  ```powershell
+  $root='C:\Claude\ProjectWorldFilm'; $prefix='http://localhost:8753/'
+  $l=[System.Net.HttpListener]::new(); $l.Prefixes.Add($prefix); $l.Start()
+  while($l.IsListening){ $c=$l.GetContext()
+    $rel=[Uri]::UnescapeDataString($c.Request.Url.AbsolutePath.TrimStart('/')); if(!$rel){$rel='index.html'}
+    $p=Join-Path $root $rel
+    if(Test-Path $p -PathType Leaf){
+      $ext=[IO.Path]::GetExtension($p)
+      $c.Response.ContentType=@{'.html'='text/html; charset=utf-8';'.css'='text/css; charset=utf-8';'.png'='image/png';'.jpg'='image/jpeg'}[$ext]
+      $b=[IO.File]::ReadAllBytes($p); $c.Response.OutputStream.Write($b,0,$b.Length)
+    } else { $c.Response.StatusCode=404 }
+    $c.Response.Close() }
+  ```
 - **Stopping the server:** the listening socket is owned by http.sys (System / PID 4), not the script — kill the `powershell.exe` whose CommandLine contains the script name, never the port owner.
 - **Testing mobile widths in Chrome automation:** `resize_window` reports success but the OS ignores it on this machine. Instead inject an `<iframe src="index.html" style="width:430px;height:932px">` via `javascript_tool` and inspect/click inside `contentDocument` (same-origin on localhost).
 - Many sections start hidden (`.reveal` = opacity 0 until scrolled into view via IntersectionObserver). After navigating, scroll so they animate in before screenshotting, or the page looks blank.
