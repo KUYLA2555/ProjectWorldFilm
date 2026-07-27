@@ -431,36 +431,8 @@ a {
   max-width: 46ch;
 }
 
-/* highlight stats ใต้ชื่อรุ่น */
-.phl {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-bottom: 28px;
-}
-.phl .hi {
-  flex: 1;
-  min-width: 120px;
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 18px 20px;
-  box-shadow: var(--shadow-sm);
-}
-.phl .hi b {
-  font-family: "IBM Plex Sans Thai", sans-serif;
-  font-size: 2rem;
-  font-weight: 600;
-  color: var(--ink);
-  line-height: 1;
-}
-.phl .hi span {
-  display: block;
-  font-size: 0.82rem;
-  color: var(--slate);
-  margin-top: 4px;
-  font-weight: 300;
-}
+/* หมายเหตุ: กล่องสถิติ .phl/.hi (VLT / ลดความร้อน / กันรังสี UV) ใต้ชื่อรุ่น
+   ถูกถอดออกจากทุกหน้าสเปก 2026-07-27 ตามที่ผู้ใช้สั่ง — CSS ลบทิ้งด้วย */
 .phead .cta {
   display: flex;
   gap: 12px;
@@ -1082,9 +1054,19 @@ a {
   font-weight: 300;
   margin-top: 2px;
 }
+/* .sc-body = กรอบครอบสเปก + แผ่นฟิล์มโปร่งที่สไลด์ขึ้นมา (ต้อง relative + ซ่อนส่วนเกิน) */
+.shadecard .sc-body {
+  flex: 1;
+  overflow: hidden;
+  /* ซ้อน 2 เลเยอร์ในช่องเดียวกัน — ความสูงยึดตามเลเยอร์ที่สูงกว่า ข้อความจึงไม่โดนตัด */
+  display: grid;
+}
+.shadecard .sc-specs,
+.shadecard .sc-view {
+  grid-area: 1 / 1;
+}
 .shadecard .sc-specs {
   padding: 18px 26px 26px;
-  flex: 1;
 }
 .shadecard .sc-row {
   display: flex;
@@ -1109,6 +1091,100 @@ a {
 .shadecard .sc-row .v em {
   font-style: normal;
   color: var(--gold);
+}
+
+/* ---- แผ่นฟิล์มโปร่ง (.sc-view): ปกติโชว์สเปก พอเอาเมาส์ไปชี้ให้สไลด์ขึ้นมาโชว์วิว ---- */
+.shadecard .sc-view {
+  position: relative;
+  z-index: 2;
+  background-image: url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  transform: translateY(100%);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+/* ฝ้าบาง ๆ ทับรูปทั้งแผ่น — คุมโทนให้สว่างโปร่ง แต่ยังเห็นวิวชัด */
+.shadecard .sc-view::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.26) 100%
+  );
+}
+/* ขอบบนเป็นเส้นทองบาง ๆ ให้ดูเหมือนขอบแผ่นฟิล์มที่เลื่อนขึ้นมา */
+.shadecard .sc-view::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold-bright),
+    transparent
+  );
+}
+.shadecard:hover .sc-view,
+.shadecard:focus-within .sc-view,
+.shadecard.sc-open .sc-view {
+  transform: translateY(0);
+}
+/* แผ่นฝ้าขาวใต้ข้อความ — ให้ตัวหนังสืออ่านชัดโดยไม่ต้องบังรูปทั้งใบ
+   (พื้นทึบทั้งแผ่น แล้วไล่เฉดจาง ๆ ไว้ "เหนือ" แผ่น ทุกบรรทัดจึงอยู่บนพื้นขาวเสมอ) */
+.shadecard .sc-view-in {
+  position: relative;
+  width: 100%;
+  padding: 18px 26px 22px;
+  background: rgba(255, 255, 255, 0.94);
+}
+.shadecard .sc-view-in::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 36px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.94)
+  );
+}
+.shadecard .sc-view-k {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+}
+.shadecard .sc-view b {
+  display: block;
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: 6px;
+  line-height: 1.35;
+}
+.shadecard .sc-view p {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--slate);
+}
+@media (prefers-reduced-motion: reduce) {
+  .shadecard .sc-view {
+    transition: none;
+  }
 }
 @media (max-width: 980px) {
   .shadegrid {
@@ -1329,11 +1405,6 @@ a {
   .wrap {
     padding: 0 20px;
   }
-  .phl .hi {
-    flex-grow: 0;
-    min-width: calc(50% - 7px);
-    max-width: calc(50% - 7px);
-  }
   .ctaband .cta .btn,
   .phead .cta .btn {
     width: 100%;
@@ -1417,12 +1488,6 @@ a {
   .spectable .row {
     padding: 13px 16px;
     font-size: 0.88rem;
-  }
-  .phl .hi {
-    padding: 13px 15px;
-  }
-  .phl .hi b {
-    font-size: 1.7rem;
   }
   .swatch {
     max-width: 260px;
