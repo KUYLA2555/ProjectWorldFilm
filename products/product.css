@@ -1055,18 +1055,22 @@ a {
   margin-top: 2px;
 }
 /* .sc-body = กรอบครอบสเปก + แผ่นฟิล์มโปร่งที่สไลด์ขึ้นมา (ต้อง relative + ซ่อนส่วนเกิน) */
-.shadecard .sc-body {
-  flex: 1;
-  overflow: hidden;
-  /* ซ้อน 2 เลเยอร์ในช่องเดียวกัน — ความสูงยึดตามเลเยอร์ที่สูงกว่า ข้อความจึงไม่โดนตัด */
+/* .sc-head = ช่องหัวการ์ด ซ้อน 2 เลเยอร์: วิวใสอยู่ล่าง / แผ่นฟิล์มน้ำเงินอยู่บน
+   ใช้ grid ช่องเดียวเพื่อให้ความสูงยึดเลเยอร์ที่สูงกว่า ข้อความจึงไม่โดนตัด */
+.shadecard .sc-head {
+  position: relative;
   display: grid;
+  overflow: hidden;
+  /* เผื่อความสูงไว้ให้เห็นวิวเป็นแถบใหญ่พอตอนฟิล์มเลื่อนขึ้น (ไม่ใช่เหลือแค่ริ้วเดียว) */
+  min-height: 232px;
 }
-.shadecard .sc-specs,
-.shadecard .sc-view {
+.shadecard .sc-head > .sc-view,
+.shadecard .sc-head > .sc-top {
   grid-area: 1 / 1;
 }
 .shadecard .sc-specs {
   padding: 18px 26px 26px;
+  flex: 1;
 }
 .shadecard .sc-row {
   display: flex;
@@ -1093,18 +1097,48 @@ a {
   color: var(--gold);
 }
 
-/* ---- แผ่นฟิล์มโปร่ง (.sc-view): ปกติโชว์สเปก พอเอาเมาส์ไปชี้ให้สไลด์ขึ้นมาโชว์วิว ---- */
-.shadecard .sc-view {
+/* ---- แผ่นฟิล์มน้ำเงิน (.sc-top) สไลด์ขึ้นตอนชี้เมาส์ เผยวิวใส (.sc-view) ที่อยู่ข้างหลัง ---- */
+.shadecard .sc-top {
   position: relative;
   z-index: 2;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+/* เส้นทองบาง ๆ ที่ขอบล่างของแผ่นฟิล์ม — ขอบที่กำลังเลื่อนขึ้น */
+.shadecard .sc-top::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold-bright),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.shadecard:hover .sc-top,
+.shadecard:focus-within .sc-top,
+.shadecard.sc-open .sc-top {
+  transform: translateY(-100%);
+}
+.shadecard:hover .sc-top::after,
+.shadecard:focus-within .sc-top::after,
+.shadecard.sc-open .sc-top::after {
+  opacity: 1;
+}
+/* วิวใสที่รออยู่ข้างหลังแผ่นฟิล์ม */
+.shadecard .sc-view {
+  position: relative;
   background-image: url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80");
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: flex-end;
-  transform: translateY(100%);
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
 }
 /* ฝ้าบาง ๆ ทับรูปทั้งแผ่น — คุมโทนให้สว่างโปร่ง แต่ยังเห็นวิวชัด */
 .shadecard .sc-view::before {
@@ -1117,33 +1151,21 @@ a {
     rgba(255, 255, 255, 0.26) 100%
   );
 }
-/* ขอบบนเป็นเส้นทองบาง ๆ ให้ดูเหมือนขอบแผ่นฟิล์มที่เลื่อนขึ้นมา */
-.shadecard .sc-view::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--gold-bright),
-    transparent
-  );
-}
-.shadecard:hover .sc-view,
-.shadecard:focus-within .sc-view,
-.shadecard.sc-open .sc-view {
-  transform: translateY(0);
-}
 /* แผ่นฝ้าขาวใต้ข้อความ — ให้ตัวหนังสืออ่านชัดโดยไม่ต้องบังรูปทั้งใบ
-   (พื้นทึบทั้งแผ่น แล้วไล่เฉดจาง ๆ ไว้ "เหนือ" แผ่น ทุกบรรทัดจึงอยู่บนพื้นขาวเสมอ) */
+   (พื้นทึบทั้งแผ่น แล้วไล่เฉดจาง ๆ ไว้ "เหนือ" แผ่น ทุกบรรทัดจึงอยู่บนพื้นขาวเสมอ)
+   ซ่อนไว้ก่อน แล้วค่อยจาง ๆ ขึ้นตอนฟิล์มเลื่อนพ้น — กันไม่ให้เห็นทะลุแผ่นฟิล์มตอนยังไม่ชี้เมาส์ */
 .shadecard .sc-view-in {
   position: relative;
   width: 100%;
   padding: 18px 26px 22px;
   background: rgba(255, 255, 255, 0.94);
+  opacity: 0;
+  transition: opacity 0.35s ease 0.15s;
+}
+.shadecard:hover .sc-view-in,
+.shadecard:focus-within .sc-view-in,
+.shadecard.sc-open .sc-view-in {
+  opacity: 1;
 }
 .shadecard .sc-view-in::before {
   content: "";
@@ -1182,7 +1204,8 @@ a {
   color: var(--slate);
 }
 @media (prefers-reduced-motion: reduce) {
-  .shadecard .sc-view {
+  .shadecard .sc-top,
+  .shadecard .sc-view-in {
     transition: none;
   }
 }
