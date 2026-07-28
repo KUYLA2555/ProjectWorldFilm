@@ -1313,3 +1313,15 @@ model-ultraguard-ceramic, model-ultraguard-nano
 - **เพิ่มหัวข้อใหม่ "Verifying a sitewide change"** — เว็บนี้ไม่มี test/linter ตัวตรวจว่าการแก้แบบทั้งเว็บลงครบทุกหน้าจริงคือ counting grep ใส่คำสั่งตัวอย่างพร้อมจำนวนที่ควรได้ไว้ให้
 - **บันทึกโฟลเดอร์ `assets/PIC/`** (ไฟล์ `_1.jpg` ที่เจ้าของเพิ่งวางไว้ 2026-07-27) — ยังไม่มีหน้าไหนเรียกใช้ และ **ไม่ได้อยู่ใน .gitignore** จึงโผล่เป็น `?? assets/PIC/` เตือนไม่ให้ `git add -A` เข้าไปเองโดยไม่ถาม + หมายเหตุว่าคอมเมนต์ใน `product.css` ที่เขียนว่า "โฟลเดอร์ PIC ยังว่าง" ตกยุคแล้ว
 - อัปเดตเลข CHANGELOG ใน CLAUDE.md เป็น 1,300 บรรทัด / 240 KB (N = 90)
+
+## ครั้งที่ 92 — 2026-07-28
+
+**Prompt:**
+> /init (รันซ้ำอีกครั้ง ทันทีหลังครั้งที่ 91)
+
+**สิ่งที่แก้ไข — ไม่มีอะไรเปลี่ยนในเว็บตั้งแต่ครั้งที่ 91 จึงใช้รอบนี้ตรวจ "ข้อที่ยังไม่เคยตรวจ" ใน CLAUDE.md แทนการทำซ้ำ:**
+- **ตรวจเพิ่มอีกชุด ผลคือถูกต้องทั้งหมด** — path ของลิงก์ Products (`#brands` 1 · `index.html#brands` 3 · `../index.html#brands` 17 = brand 4 หน้ามี 2 จุด nav+breadcrumb, model 9 หน้ามี 1 จุด), `data-th` ครบ 5 label × 17 หน้า, `class="active"` ครบ 17 หน้า, hero 3 สไลด์ = 3 hpanel = 3 จุดกลม, intro carousel 5 `.fslide` = 5 `.ipanel`, `.submenu::before` = 18px ทั้งสองไฟล์, บล็อก nav micro-interactions อยู่ท้ายสุดจริงทั้งสองไฟล์ (index บรรทัด 1677 ก่อน `</style>` 1829 · product.css 1963–2114), `.bband` เป็น `display:block`, `.shadegrid` = `repeat(3,1fr)`, `.sc-head` min-height 232px
+- **ยืนยัน featurebar ตรงกันเป๊ะ** — ทั้ง 4 คู่ label/sublabel ขึ้นมาหน้าละครั้ง รวมคู่ละ **13 ครั้งพอดี** (+ contact.html ที่ใช้ markup ของตัวเอง = 14 หน้า) รวมทั้งคำสะกด `ประเมิณ` ที่จงใจปล่อยไว้
+- **ยืนยันของที่ตั้งใจลบไปแล้วยังไม่กลับมา** — `swatch--img`, `scrollcue`, `mailto:`, `intro-banner`/`intro-overlay`, `.bl` chips ไม่เหลือในไฟล์ไหนเลย
+- **เจอเพิ่ม 1 จุด: CSS ของ `.sample-note` ยังอยู่ใน `product.css`** (~บรรทัด 989) ทั้งที่ markup ถูกถอดออกหมดแล้วตั้งแต่ 2026-07-18 — เท่ากับกฎยังพร้อมทำงาน ถ้าใครเผลอใส่ `<div class="sample-note">` แถบเหลืองจะกลับมาเงียบ ๆ บันทึกไว้ใน CLAUDE.md คู่กับ `.work-hero .mini` ที่เป็น dead code เหมือนกัน
+- **ปรับบล็อก "Verifying a sitewide change"** ให้ใช้ grep ที่ดีกว่าเดิม — เช็คจาก **ข้อความ** แทน class (จับคำที่เพี้ยนได้ ไม่ใช่แค่ว่ามี element อยู่) และเพิ่มเหตุผลว่าทำไมวิธีนี้ทนต่อการที่ editor จัดบรรทัดใหม่
