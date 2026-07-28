@@ -27,9 +27,10 @@ ProjectWorldFilm/
 │   │   ├── 3m.png
 │   │   ├── regionfilm.png
 │   │   └── ultraguard.png
-│   ├── models/             ← โลโก้ประจำรุ่นฟิล์ม (ย่อจากไฟล์ต้นฉบับใน source/ ใช้ในการ์ดเลือกรุ่นหน้าแบรนด์ Finnix/3M เท่านั้น)
+│   ├── models/             ← โลโก้ประจำรุ่นฟิล์ม (ย่อจากไฟล์ต้นฉบับใน source/ ใช้ในการ์ดเลือกรุ่นหน้าแบรนด์ Finnix/3M/Ultra Guard)
 │   │   ├── finnix-ceramic.png · finnix-titanium.png · finnix-uvguard.png · finnix-extra-clear.png · finnix-crystalize.png
-│   │   └── 3m-ceramate.png · 3m-ultra-clear.png
+│   │   ├── 3m-ceramate.png · 3m-ultra-clear.png
+│   │   └── ultraguard-nanoceramic.png · ultraguard-super-clear.png
 │   ├── line.png            ← โลโก้ LINE จริง (ใช้แทนไอคอน SVG เดิมในการ์ดติดต่อ LINE ทุกจุด)
 │   ├── facebook.png        ← โลโก้ Facebook จริง (ใช้ในการ์ด LINE/Facebook แถว hero หน้าแรกเท่านั้น)
 │   └── source/             ← ไฟล์ภาพต้นฉบับ (ไม่ได้ใช้บนเว็บโดยตรง เก็บไว้เผื่ออนาคต · ไม่ขึ้น GitHub)
@@ -49,8 +50,8 @@ ProjectWorldFilm/
     ├── model-finnix-crystalize.html
     ├── model-3m-ultra-clear.html
     ├── model-3m-ceramate.html
-    ├── model-ultraguard-ceramic.html
-    └── model-ultraguard-nano.html
+    ├── model-ultraguard-nanoceramic.html
+    └── model-ultraguard-super-clear.html
 ```
 
 ## ผังการเชื่อมหน้า
@@ -61,7 +62,7 @@ index.html (หน้าแรก)
         ├─ products/brand-finnix.html      → model-finnix-* (Ceramic, Titanium, UV Guard, Extra Clear, Crystalize)
         ├─ products/brand-3m.html          → model-3m-* (Ultra Clear, Ceramate)
         ├─ products/brand-regionfilm.html  → โชว์สเปก Regionfilm ในหน้าเดียว (ไม่มีหน้ารุ่นย่อย)
-        └─ products/brand-ultraguard.html  → model-ultraguard-* (Ceramic, Nano)
+        └─ products/brand-ultraguard.html  → model-ultraguard-* (Nanoceramic, Super Clear)
 ```
 
 ทุกหน้าใช้ **โค้ด header/footer ชุดเดียวกัน** — แถบเมนูเป็น **แคปซูลลอยสีกรมท่า**
@@ -83,13 +84,14 @@ index.html (หน้าแรก)
 
 **ตัวเลขที่ยังขัดกันอยู่ รอเจ้าของร้านยืนยัน** (2026-07-22)
 
-- **ลดความร้อนสูงสุด** — คำโปรย (meta) หน้าแรก เขียน 85% · หน้าแบรนด์ Finnix เขียน 88% · หน้ารุ่น Finnix Ceramic / Ultra Guard Nano เขียน 82%
+- **ลดความร้อนสูงสุด** — คำโปรย (meta) หน้าแรก เขียน 85% · หน้าแบรนด์ Finnix เขียน 88% · หน้ารุ่น Finnix Ceramic / Ultra Guard Nanoceramic เขียน 82%
 - **จำนวนโครงการ** — เจ้าของร้านแก้เป็น **"1000+ โครงการที่ส่งมอบ"** ในหน้าผลงานเอง (2026-07-27) ถือเป็นตัวเลขที่เจ้าของยืนยันแล้ว (เดิมเขียน 200+)
-- **ชื่อรุ่น Ultra Guard ไม่ตรงกับสินค้าจริง** (2026-07-28) — โลโก้ที่เจ้าของส่งมาคือ **Ultra Guard Nanoceramic** และ **Ultra Guard Super Clear** แต่ในเว็บตั้งชื่อรุ่นไว้ว่า **Ultra Guard Ceramic** (VLT 30%) กับ **Ultra Guard Nano** (VLT 15%) ดูเหมือนชื่อในเว็บถูกแตกมาจากคำว่า "Nanoceramic" คำเดียว ส่วน "Super Clear" เป็นฟิล์มใสซึ่งไม่ตรงกับหน้าไหนเลย (ทั้งสองหน้าเป็นโทนเข้ม) **ยังไม่ได้ใส่โลโก้ รอเจ้าของยืนยันว่าจะเปลี่ยนชื่อรุ่นให้ตรงสินค้าจริงหรือจะใส่โลโก้ทับชื่อเดิม**
+- **ตัวเลขของรุ่น Ultra Guard Super Clear เป็นค่าตัวอย่างที่ตั้งใหม่** (2026-07-28) — ตอนเปลี่ยนชื่อรุ่นให้ตรงสินค้าจริง หน้านี้เปลี่ยนจากฟิล์มโทนเข้ม (VLT 30%) เป็นฟิล์มใส จึงตั้งค่าใหม่เป็น **VLT 70% · ลดความร้อน 60% · เฉด 70/50/30** โดยอิงชุดตัวเลขของรุ่นใสที่มีอยู่แล้ว (Finnix Extra Clear / 3M Ceramic Ultra Clear) **ยังไม่ใช่สเปกจริง รอเจ้าของยืนยัน**
 
 **เรื่องที่ปิดแล้ว**
 
 - **คำว่า "ประเมิณ" → "ประเมิน" แก้ครบทุกหน้าแล้ว (2026-07-28)** — คำสะกดผิด (ณ ควรเป็น น) ในแถบ 4 ช่องเคยตกทอดมาจากหน้าแรกทุกหน้า ตอนนี้เจ้าของยืนยันให้แก้ จึงกวาดครบทั้ง **14 หน้า** ที่มี section ติดต่อแล้ว (รวม `contact.html` ที่ใช้ markup `.vprop` ของตัวเอง) ไม่เหลือคำสะกดเดิมในไฟล์ไหนอีก
 - **ตัวเลขรับประกันรายรุ่นที่เคยขัดกัน (5–8 ปี) หมดไปแล้ว (2026-07-28)** — ตัวเลขชุดนั้นอยู่ในตารางสเปก "รายละเอียดทางเทคนิค" ซึ่งเจ้าของสั่งถอดออกทั้งหมดแล้ว ตอนนี้ทั้งเว็บเหลือคำรับประกันชุดเดียวคือ **"รับประกันสูงสุด 10 ปี"**
+- **ชื่อรุ่น Ultra Guard ตรงกับสินค้าจริงแล้ว (2026-07-28)** — เดิมเว็บตั้งชื่อไว้ว่า Ultra Guard **Ceramic** กับ **Nano** ซึ่งไม่มีสินค้าจริงชื่อนี้ (ดูเหมือนถูกแตกมาจากคำว่า "Nanoceramic" คำเดียว) เจ้าของเลือกให้เปลี่ยนชื่อตามของจริง จึงกลายเป็น **Ultra Guard Nanoceramic** (โทนเข้ม VLT 15%) กับ **Ultra Guard Super Clear** (ฟิล์มใส VLT 70%) พร้อมใส่โลโก้จริงในการ์ดเลือกรุ่นครบทั้ง 2 รุ่น — ตอนนี้ทุกรุ่นในเว็บมีโลโก้ครบหมดแล้ว (Finnix 5 · 3M 2 · Ultra Guard 2)
 
 — อัปเดตล่าสุด 2026-07-28
