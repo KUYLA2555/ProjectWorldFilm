@@ -374,26 +374,9 @@ a {
   z-index: -1;
   border-radius: 12px;
 }
-.swatch .vlt {
-  position: absolute;
-  left: 20px;
-  bottom: 18px;
-  color: #fff;
-  font-family: "IBM Plex Sans Thai", sans-serif;
-}
-.swatch .vlt b {
-  display: block;
-  font-size: 2.4rem;
-  font-weight: 600;
-  line-height: 1;
-  color: #e7c879;
-}
-.swatch .vlt span {
-  font-size: 0.8rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #cfd6e2;
-}
+/* หมายเหตุ: ป้าย VLT (.vlt — "35% Visible Light") ในกรอบสีน้ำเงินฝั่งซ้ายของหน้ารุ่น
+   ถูกถอดออกทั้ง 10 หน้าสเปก 2026-07-30 ตามคำสั่งเจ้าของร้าน (ถอดทั้ง markup และ CSS)
+   ตัวเลข VLT ยังอยู่ในการ์ด 3 เฉด (.sc-vlt) ซึ่งเป็นของคนละส่วน ไม่ได้แตะ */
 /* โทนของแต่ละรุ่น */
 .swatch.tone-dark {
   background: linear-gradient(160deg, #1a2740, #060b16);
