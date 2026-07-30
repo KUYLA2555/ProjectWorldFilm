@@ -246,12 +246,12 @@
         text-align: center;
         transition: color 0.25s ease-in-out;
       }
-      .menu a:hover,
-      .menu a.active {
+      /* สีทองขึ้นเฉพาะตอนเอาเมาส์ไปชี้เท่านั้น — เมนูของหน้าที่กำลังเปิดอยู่ไม่ต้องเป็นสีทองค้างไว้
+         (ถอด .menu a.active ออก 2026-07-30 ตามคำสั่งเจ้าของร้าน — อย่าใส่กลับ) */
+      .menu a:hover {
         color: var(--gold-bright);
       }
-      .menu a:hover::after,
-      .menu a.active::after {
+      .menu a:hover::after {
         color: #c9a75e;
       }
       .nav-right {
