@@ -465,7 +465,10 @@
         font-family: "IBM Plex Sans Thai", sans-serif;
         font-size: clamp(1.05rem, 2.2vw, 1.45rem);
         font-weight: 500;
-        max-width: 34ch;
+        /* กว้างพอให้ประโยคยาวของสไลด์ 2 ลงตัว 3 บรรทัด + balance ให้แต่ละบรรทัดยาวใกล้กัน
+           (ถ้าแก้ตัวเลขนี้ ต้องเช็คสไลด์ 2 ว่ายังเป็น 3 บรรทัดอยู่) */
+        max-width: 47ch;
+        text-wrap: balance;
         color: #fff;
         margin-bottom: 10px;
       }
@@ -1895,8 +1898,7 @@
             <h1 class="h-display h-th">บ้านคือพื้นที่<em>แห่งความสุข</em></h1>
             <p class="thai-sub">
               เลือกปกป้องรังสี UV เพิ่มความสบาย มอบทุกช่วงเวลาที่มีความหมาย
-              เพราะทุกคนในบ้านสำคัญ ไม่ว่าจะเดิน 2 ขา หรือ 4 ขา
-              ให้ทุกวันในบ้านน่าอยู่ยิ่งขึ้น
+              เพราะทุกคนในบ้านสำคัญ ไม่ว่าจะเดิน 2 ขา หรือ 4 ขาให้ทุกวันในบ้านน่าอยู่ยิ่งขึ้น
             </p>
           </div>
           <div class="hpanel">
@@ -2388,7 +2390,7 @@
         clearInterval(slideTimer);
         slideTimer = setInterval(
           () => showSlide((cur + 1) % slides.length),
-          6000,
+          10000,
         );
       }
       if (slides.length && dots.length === slides.length) {
