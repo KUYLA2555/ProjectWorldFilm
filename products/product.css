@@ -356,7 +356,7 @@ a {
   gap: 56px;
   align-items: center;
 }
-/* swatch แทนรูปจริง (โฟลเดอร์ PIC ยังว่าง) — แสดงโทนฟิล์มของรุ่นนั้น */
+/* swatch ไล่สีแทนรูปจริง — ยังใช้บน 4 หน้าที่เจ้าของยังไม่ส่งภาพสเปกมา (3M 2 รุ่น · Ultra Guard 2 รุ่น) */
 .swatch {
   aspect-ratio: 4/5;
   border-radius: 12px;
@@ -386,6 +386,35 @@ a {
 }
 .swatch.tone-clear {
   background: linear-gradient(160deg, #44557a, #1d2b49);
+}
+/* ภาพสเปกจริงของรุ่น (โฟลเดอร์ WEB → assets/sheets/, 2026-09-16) — ใส่แทน swatch ไล่สีในกรอบซ้ายของ hero
+   มีเฉพาะ 6 หน้าที่เจ้าของส่งภาพมา (Finnix 5 รุ่น + Regionfilm) · กดแล้วขยายใน #lightbox ของหน้านั้น (คลาส .single = ซ่อนลูกศรเลื่อน) */
+.swatch--sheet {
+  margin: 0;
+  background: #fff;
+  cursor: zoom-in;
+}
+.swatch--sheet img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.swatch--sheet .zoom-hint {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(20, 34, 61, 0.12);
+  border-radius: 30px;
+  padding: 5px 12px;
+  pointer-events: none;
+}
+.lightbox.single .lb-nav {
+  display: none;
 }
 
 .phead .tag {
@@ -1603,6 +1632,14 @@ a {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 26px;
+}
+/* หน้ารุ่นที่มีผลงานจริงแค่ 2 การ์ด (เช่น Crystalize) — จัดกึ่งกลางด้วยความกว้างการ์ดเท่าเดิม แทนที่จะชิดซ้ายเว้นช่องขวาโล่ง
+   ใช้ :has() ถ้าเบราว์เซอร์เก่าไม่รองรับก็แค่กลับไปชิดซ้ายตามปกติ · จอ ≤980 ใช้กฎ 2 คอลัมน์ปกติอยู่แล้ว */
+@media (min-width: 981px) {
+  .works:has(> :nth-child(2):last-child) {
+    grid-template-columns: repeat(2, calc((100% - 52px) / 3));
+    justify-content: center;
+  }
 }
 .workcard {
   background: var(--white);

@@ -100,7 +100,10 @@
     <section class="phero">
       <div class="wrap">
         <div class="grid">
-          <div class="swatch tone-prem" aria-hidden="true"></div>
+          <figure class="swatch swatch--sheet" title="กดเพื่อขยายดูค่าฟิล์ม">
+            <img src="../assets/sheets/finnix-titanium.jpg" alt="ตารางค่าฟิล์ม Finnix Titanium (SY 40 / SY 20 / SY 10) — VLT · VLR · IRR · UV · TSER" width="1121" height="1403" />
+            <span class="zoom-hint">แตะเพื่อขยาย</span>
+          </figure>
           <div class="phead">
             <span class="tag">Titanium Series</span>
             <h1>Finnix Titanium</h1>
@@ -588,7 +591,7 @@
       const lightbox = document.getElementById("lightbox");
       const lightboxImg = document.getElementById("lightboxImg");
       function closeLightbox() {
-        lightbox.classList.remove("open");
+        lightbox.classList.remove("open", "single");
         lightboxImg.src = "";
         activeGallery = null;
       }
@@ -612,20 +615,27 @@
         if (e.key === "ArrowRight") lbStep(1);
       });
 
-      /* gallery รูปในการ์ดผลงาน — lazy-load + ปุ่มลูกศร + จุด ต่อการ์ด + เปิด lightbox */
+      /* gallery รูปในการ์ดผลงาน — โหลดเฉพาะรูปแรกก่อน รูปที่เหลือโหลดตอนชี้/แตะการ์ดหรือกดเลื่อน + ปุ่มลูกศร + จุด ต่อการ์ด + เปิด lightbox */
       document.querySelectorAll(".workcard").forEach((card) => {
         const slides = card.querySelectorAll(".gslide");
         const dots = card.querySelectorAll(".gdots button");
         let cur = 0;
-        slides.forEach((s) => {
+        function loadSlide(s) {
+          if (s.dataset.loaded) return;
+          s.dataset.loaded = "1";
           const img = new Image();
           img.onload = () => (s.style.backgroundImage = `url('${s.dataset.img}')`);
           img.src = s.dataset.img;
-        });
+        }
+        loadSlide(slides[0]);
+        const loadRest = () => slides.forEach(loadSlide);
+        card.addEventListener("mouseenter", loadRest, { once: true });
+        card.addEventListener("touchstart", loadRest, { once: true, passive: true });
         function showSlide(i) {
           slides[cur].classList.remove("on");
           dots[cur].classList.remove("active");
           cur = (i + slides.length) % slides.length;
+          loadSlide(slides[cur]);
           slides[cur].classList.add("on");
           dots[cur].classList.add("active");
           if (activeGallery === gallery) lightboxImg.src = slides[cur].dataset.img;
@@ -637,13 +647,34 @@
         dots.forEach((d, i) => d.addEventListener("click", () => showSlide(i)));
 
         const gallery = { slides, showSlide };
-        card.querySelector(".thumb").addEventListener("click", (e) => {
-          if (e.target.closest(".gnav")) return;
+        function openGallery() {
+          loadRest();
           activeGallery = gallery;
+          lightbox.classList.remove("single");
           lightboxImg.src = slides[cur].dataset.img;
           lightbox.classList.add("open");
+        }
+        card.querySelector(".thumb").addEventListener("click", (e) => {
+          if (e.target.closest(".gnav")) return;
+          openGallery();
         });
+        /* ปุ่ม "ดูผลงาน" ที่ไม่ได้ลิงก์ไปไหน (href="#") ให้เปิด lightbox ของการ์ดนั้นแทน */
+        const go = card.querySelector(".go");
+        if (go && go.getAttribute("href") === "#")
+          go.addEventListener("click", (e) => {
+            e.preventDefault();
+            openGallery();
+          });
       });
+
+      /* ภาพสเปกในกรอบซ้ายของ hero (มีเฉพาะหน้ารุ่นที่เจ้าของส่งภาพมา) — กดแล้วขยายใน lightbox เดียวกัน ไม่มีลูกศรเลื่อน */
+      const sheet = document.querySelector(".swatch--sheet");
+      if (sheet)
+        sheet.addEventListener("click", () => {
+          activeGallery = null;
+          lightboxImg.src = sheet.querySelector("img").src;
+          lightbox.classList.add("open", "single");
+        });
     </script>
   <script>
       /* expandable CTA pill — กดคัดลอกเบอร์โทร */
