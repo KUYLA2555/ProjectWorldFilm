@@ -990,6 +990,14 @@ a {
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
+/* รุ่นที่ภาพสเปกมีเฉดเดียว (เช่น UG Super Clear) — จัดการ์ดใบเดียวไว้กึ่งกลาง ด้วยความกว้างเท่าการ์ดปกติ
+   แทนที่จะชิดซ้ายแล้วเว้นช่องขวาโล่ง · ใช้ :has() เบราว์เซอร์เก่าไม่รองรับก็แค่กลับไปชิดซ้าย · จอ ≤980 เป็น 1 คอลัมน์อยู่แล้ว */
+@media (min-width: 981px) {
+  .shadegrid:has(> :first-child:last-child) {
+    grid-template-columns: calc((100% - 48px) / 3);
+    justify-content: center;
+  }
+}
 .shadecard {
   background: var(--white);
   border: 1px solid var(--line);
