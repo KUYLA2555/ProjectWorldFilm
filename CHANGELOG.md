@@ -1679,3 +1679,19 @@ model-ultraguard-ceramic, model-ultraguard-nano
 - **ยังเหลือ 2 ขั้นที่ต้องทำในบัญชีของเจ้าของเอง** — (1) ตั้ง DNS ที่ GoDaddy: ลบ `A @` หน้า Parked กับ `CNAME www` เดิม แล้วใส่ `A @` 4 อัน (185.199.108–111.153) กับ `CNAME www` → `kuyla2555.github.io` · (2) ที่ GitHub Settings → Pages ใส่ Custom domain แล้วติ๊ก Enforce HTTPS เมื่อ DNS ผ่าน
 - **⚠️ ย้ำข้อติดขัดที่ยังค้าง** — repo เป็น private ซึ่ง GitHub Pages ต้องใช้แผนเสียเงิน · ถ้าเปิด `https://kuyla2555.github.io/ProjectWorldFilm/` แล้วขึ้น 404 ต้องแก้ตรงนี้ก่อน (เปลี่ยนเป็น public หรือสมัคร GitHub Pro) ไม่งั้นตั้ง DNS ไปโดเมนก็ยังไม่ขึ้น
 - **จดวิธีทั้งหมดไว้ใน README กับ CLAUDE.md แล้ว** — จะได้ไม่ต้องถามใหม่รอบหน้า
+
+## ครั้งที่ 116 — 2026-09-17
+
+**Prompt:** "เรียบร้อยแล้วจัดการได้เลย" (หลังเจ้าของลบ record `A @ WebsiteBuilder Site` ที่ GoDaddy)
+
+**สิ่งที่แก้ไข / ตรวจสอบ:**
+
+- **🎉 เว็บขึ้นออนไลน์แล้วจริงที่ `worldfilmcenter.com`** — ตรวจแล้วทั้ง `worldfilmcenter.com` และ `www.worldfilmcenter.com` ตอบกลับ `Server: GitHub.com` พร้อมเนื้อหาเว็บจริง (เช็คด้วยคำว่า WORLD FILM และเบอร์ 095-229-2086)
+- **ไล่เปิดทุกเส้นทางสำคัญบนโดเมนจริง ได้ 200 ครบ** — หน้าแรก · works · about · contact · หน้าแบรนด์ · หน้ารุ่น · `assets/sheets/*.jpg` · `assets/works/*/01.jpg`
+- **ยืนยันว่าตัวการคือแถว `A @ WebsiteBuilder Site` ของ GoDaddy** — แถวนี้แปลงเป็น `76.223.105.230` กับ `13.248.243.5` แล้วสุ่มพาคนไปหน้า Parked ของ GoDaddy ประมาณ 2 ใน 3 ครั้ง · พอเจ้าของลบออก DNS เหลือ `185.199.108.153` ตัวเดียวที่ถูกต้อง เว็บจึงขึ้นทันที
+- **เรื่อง repo private ไม่ใช่ปัญหาอย่างที่เคยกังวล** — GitHub Pages เสิร์ฟ repo private นี้ได้ตามปกติ ไม่ต้องเปลี่ยนเป็น public ไม่ต้องสมัคร Pro
+- **⚠️ ยังเข้าแบบ https:// ไม่ได้** — ตรวจใบรับรองแล้วยังเป็นใบ default ของ GitHub (`CN=*.github.io`) แปลว่า Let's Encrypt ยังไม่ออกใบให้โดเมนนี้ · ปกติใช้เวลาไม่กี่ชั่วโมงหลัง DNS ถูกต้อง ถ้าเกินหนึ่งวันให้ลบชื่อโดเมนใน Settings → Pages แล้วใส่กลับใหม่เพื่อสั่งขอใบใหม่ แล้วค่อยติ๊ก Enforce HTTPS
+- **⚠️ ยังใส่ A record ไม่ครบ** — มีแค่ `185.199.108.153` ขาด `.109` `.110` `.111` (ไม่มีตัวสำรองถ้า IP เดียวนี้มีปัญหา)
+- **⚠️ `CNAME www` ยังชี้ `worldfilmcenter.com.`** — ใช้งานได้เพราะวิ่งต่อไปที่ A record แต่ที่ถูกคือ `kuyla2555.github.io`
+- **จดวิธีวินิจฉัยไว้ในคู่มือแล้ว** — `Resolve-DnsName <domain> -Server ns49.domaincontrol.com` อ่านค่าจริงข้าม cache ทั้งหมด และ `Invoke-WebRequest http://185.199.108.153/ -Headers @{Host='<domain>'}` ถาม GitHub ตรง ๆ ว่าเสิร์ฟโดเมนนี้แล้วหรือยัง — สองคำสั่งนี้พิสูจน์ได้ว่าฝั่ง GitHub เสร็จแล้วตั้งแต่ตอนที่โดเมนยังขึ้นหน้า Parked อยู่
+- **ไม่ได้แก้ไฟล์เว็บเลยรอบนี้** — อัปเดตแค่เอกสาร (CLAUDE.md · README.md · CHANGELOG.md)
