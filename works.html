@@ -445,10 +445,7 @@
       .works .workcard:nth-child(n + 7) {
         display: none;
       }
-      .more .cnt {
-        opacity: 0.7;
-        font-weight: 500;
-      }
+      /* หมายเหตุ: ตัวเลข "(อีก N โครงการ)" ท้ายปุ่มถูกถอดออก 2026-09-17 ตามคำสั่งเจ้าของร้าน (.more .cnt) */
 
       /* ============ responsive ============ */
       @media (max-width: 980px) {
@@ -1223,7 +1220,7 @@
 
         <!-- ปุ่มโหลดเพิ่ม — เปิดมาเห็น 6 การ์ด กดแล้วโชว์เพิ่มทีละ 6 (JS ด้านล่าง) ซ่อนเองเมื่อครบ -->
         <div class="more reveal" id="moreWrap">
-          <a href="#" class="btn btn-line" id="moreBtn">ดูผลงานเพิ่มเติม<span class="cnt"></span></a>
+          <a href="#" class="btn btn-line" id="moreBtn">ดูผลงานเพิ่มเติม</a>
         </div>
       </div>
     </section>
@@ -1525,8 +1522,7 @@
       const chips = document.querySelectorAll(".chip"),
         cards = Array.from(document.querySelectorAll(".workcard")),
         moreWrap = document.getElementById("moreWrap"),
-        moreBtn = document.getElementById("moreBtn"),
-        moreCnt = moreBtn.querySelector(".cnt");
+        moreBtn = document.getElementById("moreBtn");
       let shown = PAGE;
       function activeFilter() {
         const a = document.querySelector(".chip.active");
@@ -1539,7 +1535,6 @@
         matched.slice(0, shown).forEach((c) => (c.style.display = "flex"));
         const left = matched.length - Math.min(shown, matched.length);
         moreWrap.style.display = left > 0 ? "" : "none";
-        moreCnt.textContent = left > 0 ? ` (อีก ${left} โครงการ)` : "";
       }
       chips.forEach((chip) =>
         chip.addEventListener("click", () => {
