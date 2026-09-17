@@ -1,0 +1,10 @@
+# WORLD FILM — worldfilmcenter.com
+User-agent: *
+Allow: /
+
+# เอกสารภายในของโปรเจกต์ ไม่ใช่หน้าเว็บ — ไม่ต้องให้ Google เก็บไปแสดงผล
+Disallow: /CLAUDE.md
+Disallow: /CHANGELOG.md
+Disallow: /README.md
+
+Sitemap: https://worldfilmcenter.com/sitemap.xml
