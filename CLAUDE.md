@@ -40,7 +40,7 @@ Every "all N pages" claim depends on these, and they answer most sizing question
 | Real portfolio | **15 projects / 82 photos / ~9.5 MB** in `assets/works/<slug>/NN.jpg` |
 | Spec posters | **10** in `assets/sheets/` — one per spec page, all real (**re-exported by the owner 2026-09-18**) |
 | Remaining Unsplash refs | **9** across 3 files (`index` 6 · `about` 2 · `works` 1) — all decorative backgrounds |
-| CHANGELOG | at `## ครั้งที่ 123` (2026-09-18) — append to the **tail** |
+| CHANGELOG | at `## ครั้งที่ 124` (2026-09-18) — append to the **tail** |
 
 **Line numbers in this file drift** — an insert above a pointer moves everything below it. Treat every `file:NN`
 as a hint: **grep the symbol, don't trust the number**, and if you correct one, correct it here too.
@@ -294,9 +294,13 @@ this list, then re-run the greps above with every "expect 17" bumped to 18.
   that page no longer needs its odd one-off row labels. Shade codes on `model-3m-ultra-clear` went `CM IR 35/15/05`
   → **`3M CM 35/15/5`** to match. **One contradiction survives and is unresolved:** 3M Ceramic Ultra Clear's VLT
   is 37/16/5 — a dark film — while the page's prose still sells it as a clear one. Flagged to the owner, not
-  rewritten. **The `ค่าการตัดรังสีอินฟาเรด` spelling is the owner's own, typed in his instruction** (his posters say
-  อินฟราเรด with ร); it was used verbatim per the don't-correct-his-spelling rule and raised with him — don't
-  "fix" it unasked. Poster values live in `assets/WEB/` (untracked inbox); **the filename codes still mislead, so
+  rewritten **until he said not to leave it (“ไม่ต้องปล่อยให้เป็นแบบนั้น”) the same day** — the word ใส was dropped
+  from that page's `<title>`/og twins and its 3 shade taglines, and from `brand-3m.html`'s meta + `.bhero` lead
+  (**both** 3M models are dark: Ceramate 28/12/5, Ultra Clear 37/16/5). The kept claim is the one the film
+  actually makes — เคลียร์ชัด ไม่ผสมโลหะ มืดนอกสว่างใน. **The product name “Ceramic Ultra Clear” was left
+  alone — it is 3M's real product name, not a claim this site invented.** The row label is **`ค่าการตัดรังสีอินฟราเรด (IR)`** — it shipped for one turn as อินฟาเรด (the owner's own
+  typing, kept verbatim per the don't-correct-his-spelling rule), he was asked, and he said to use the poster
+  spelling, so **68 occurrences were swept to อินฟราเรด on 2026-09-18**. The precedent held: ask, don't assume. Poster values live in `assets/WEB/` (untracked inbox); **the filename codes still mislead, so
   read every image before mapping it** — `UV_WEB` is UV Guard, `NC_WEB` is Regionfilm, `3M_WEB` is Ceramate while
   `3M_CM_WEB` is Ceramic Ultra Clear.
 - **Spec numbers are REAL and the poster is the source of truth.** Every VLT / heat / UV figure on the 10 spec
