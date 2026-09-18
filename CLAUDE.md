@@ -38,9 +38,9 @@ Every "all N pages" claim depends on these, and they answer most sizing question
 | Pages with shared chrome | **17** (capsule header · Products accordion · smart-hide nav · `#copyPill` · footer) |
 | Pages with favicon / og block | **17** |
 | Real portfolio | **15 projects / 82 photos / ~9.5 MB** in `assets/works/<slug>/NN.jpg` |
-| Spec posters | **10** in `assets/sheets/` — one per spec page, all real |
+| Spec posters | **10** in `assets/sheets/` — one per spec page, all real (**re-exported by the owner 2026-09-18**) |
 | Remaining Unsplash refs | **9** across 3 files (`index` 6 · `about` 2 · `works` 1) — all decorative backgrounds |
-| CHANGELOG | at `## ครั้งที่ 121` (2026-09-18) — append to the **tail** |
+| CHANGELOG | at `## ครั้งที่ 123` (2026-09-18) — append to the **tail** |
 
 **Line numbers in this file drift** — an insert above a pointer moves everything below it. Treat every `file:NN`
 as a hint: **grep the symbol, don't trust the number**, and if you correct one, correct it here too.
@@ -82,7 +82,8 @@ grep -rho 'images.unsplash.com' --include=*.html . | wc -l     # expect 9 — in
 grep -rc 'class="workcard' --include=*.html . | grep -v ':0'    # expect exactly 5 files: works 15 · uvguard 6 · ceramic 4 · nanoceramic 4 · crystalize 2 — a 6th file means a stock card came back
 find assets/works -name '*.jpg' | wc -l                        # expect 82 across 15 project folders
 grep -rl 'rel="canonical"' --include=*.html . | wc -l          # expect 17 — same for og:image" / twitter:card / rel="icon"
-grep -rho 'href="tel:+66952292086"' --include=*.html . | wc -l # expect 35 = root 4×3 + spec 10×2 + short brand 3×1
+grep -rho 'href="tel:+66952292086"' --include=*.html . | wc -l # expect 48 = 3/page + the footer's own, on all 17 (footer unified 2026-09-18)
+grep -rl 'class="fsoc"' --include=*.html . | wc -l            # expect 17 — the footer is byte-identical sitewide except path depth
 ```
 
 **Two traps in this block, both by design:**
@@ -111,6 +112,16 @@ differently per file — long tags get split with the closing `>` pushed to the 
 `old_string` that matched one page may not match the next; **anchor sitewide passes on short unique fragments**
 (an `href` value, a phone number) instead of whole tags; and expect formatting-only reflow noise in `git diff`.
 `LF will be replaced by CRLF` warnings are autocrlf chatter — ignore them.
+
+**The footer is byte-identical on all 17 pages (unified 2026-09-18) — `index.html` is the master copy.**
+The owner asked for one footer sitewide (*"ใส่ให้เหมือนกันทุกหน้าเลยย้ำทุกหน้า"*), so the per-page second `.footer .bottom`
+span that `products/*` used to carry is **gone** — that 2026-07-22 rule is dead, don't restore it (two of those
+spans still said "Ultra Guard — Nano" / "— Ceramic", names retired in 2026-07-28). The 13 `products/*` pages
+also gained the `.fsoc` social row and the full street address they never had. **To change the footer, edit
+`index.html` and re-copy the whole `<footer>…</footer>` block to the other 16**, swapping `assets/` → `../assets/`
+and `products/brand-` → `brand-` for `products/*`; a diff-by-hand sweep is what let it drift into 4 variants
+before. **`.fsoc`'s 5 CSS rules were copied into `product.css` in the same pass** — they had only ever existed in
+`index.html`'s inline block, which is exactly the trap the next paragraph warns about.
 
 **CSS lives in two places and is partly duplicated:**
 - `index.html` carries its **entire stylesheet inline**, including design tokens and shared-chrome styles.
@@ -198,7 +209,9 @@ absolute URLs in the codebase are the `og:image` / `og:url` / `canonical` tags, 
 - The **3 models-listing brand pages** (`brand-finnix` · `brand-3m` · `brand-ultraguard`) are deliberately short:
   breadcrumb → `.bhero` → `.compare` card grid → footer. **No contact section, no heading block above the
   cards** — both were removed on purpose. Don't re-add them.
-- **Spec pages** (the 9 `model-*` + `brand-regionfilm`) read: phero → shade section (`.section--tint`) →
+- **Spec pages** (the 9 `model-*` + `brand-regionfilm`) read: phero → shade section (`.section--tint`; each
+  `.sc-specs` holds exactly **2** rows since 2026-09-18 — `ค่าการตัดรังสีอินฟาเรด (IR)` + `กันรังสี UV`; the old
+  `ลดความร้อน (TSER)` and `โทนสี` rows were removed at the owner's request — **don't re-add either**) →
   works preview (**only on the 4 pages with a real matching project** — UV Guard 6 · Ceramic 4 · Crystalize 2 ·
   Nanoceramic 4) → contact section → footer. The other 6 spec pages have **no works section at all**; their
   `#lightbox` markup and gallery JS are kept anyway so all 10 copies stay identical.
@@ -273,6 +286,19 @@ this list, then re-run the greps above with every "expect 17" bumped to 18.
   row/section/card repeats elsewhere, the homepage's wording, item order and icons win — **sync the others to it
   rather than inventing a third variant or "improving" home to match a subpage.** Even homepage quirks get
   propagated; raise them with the owner instead of silently diverging.
+- **The posters were re-exported by the owner on 2026-09-18 and every page was rewritten to them the same day.**
+  The new artwork has **no TSER column at all** — it is VLT · VLR · **IRR** · UV, and IRR is now a real percentage
+  (50–99) instead of the old 6–8. **All four values this file used to flag as implausible are resolved:**
+  Ultra Guard Nanoceramic no longer claims TSER 99 (IRR 83/83/85), Regionfilm's UV is 80/90/90 with IRR 50/55/65
+  (**the old page had those two columns swapped** — fixed), and `3m-ultra-clear`'s poster now fills in UV (99) so
+  that page no longer needs its odd one-off row labels. Shade codes on `model-3m-ultra-clear` went `CM IR 35/15/05`
+  → **`3M CM 35/15/5`** to match. **One contradiction survives and is unresolved:** 3M Ceramic Ultra Clear's VLT
+  is 37/16/5 — a dark film — while the page's prose still sells it as a clear one. Flagged to the owner, not
+  rewritten. **The `ค่าการตัดรังสีอินฟาเรด` spelling is the owner's own, typed in his instruction** (his posters say
+  อินฟราเรด with ร); it was used verbatim per the don't-correct-his-spelling rule and raised with him — don't
+  "fix" it unasked. Poster values live in `assets/WEB/` (untracked inbox); **the filename codes still mislead, so
+  read every image before mapping it** — `UV_WEB` is UV Guard, `NC_WEB` is Regionfilm, `3M_WEB` is Ceramate while
+  `3M_CM_WEB` is Ceramic Ultra Clear.
 - **Spec numbers are REAL and the poster is the source of truth.** Every VLT / heat / UV figure on the 10 spec
   pages was rewritten from `assets/sheets/<slug>.jpg` after the owner said *"ยึดตามค่าในภาพ"*. **A page must
   never disagree with the image sitting next to it**, and any future poster drop is applied to the page in the
@@ -290,8 +316,10 @@ this list, then re-run the greps above with every "expect 17" bumped to 18.
   `https://www.facebook.com/Worldsfilm1` — appear in the header CTA pill, `.nav-call`, the copy-pill JS, contact
   cards/sections and the footer of every page. **Update all occurrences together, and remember `contact.html`
   also carries the phone in its meta description + `og:description` + `twitter:description`** (which is why its
-  count is 8, not 5). Per-page counts as a sweep check: `tel:+66952292086` = 3 root / 2 spec / 1 short brand
-  (**35** total); `line.me/R/ti/p/@worldcenter` = 2 root / 1 spec / 0 short brand (**18** total).
+  count is 8, not 5). Sweep-check totals **since the footer was unified 2026-09-18**:
+  `tel:+66952292086` = **48**, `line.me/R/ti/p/@worldcenter` = **31** — both uniform now, because every page
+  carries the same footer `.fsoc` row. **This closed the old gap where the 3 short brand pages had no
+  tappable LINE link at all.**
   The homepage hero's `.ccard--line` / `.ccard--facebook` treatment is **unique to the hero** and must not be
   copied elsewhere.
 - **Featurebar is identical on all 14 pages that have one.** The canonical 4 items: **ปรึกษาฟรี** / โดยผู้เชี่ยวชาญ ·

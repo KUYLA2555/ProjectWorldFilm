@@ -29,6 +29,21 @@ A rule with no recorded reason gets "helpfully" undone by the next session — t
 
 ---
 
+## ⚠️ สิ่งที่เปลี่ยนหลังแยกไฟล์ (2026-09-18) — อ่านก่อนเชื่อข้อความข้างล่าง
+
+เนื้อหาข้างล่างคือฉบับก่อนวันที่ 2026-09-18 — สามเรื่องนี้เปลี่ยนไปแล้ว อ่านข้างล่างตามนี้:
+
+1. **โปสเตอร์สเปกชุดใหม่ทั้ง 10 ใบ** — ไม่มีคอลัมน์ TSER อีกแล้ว (VLT · VLR · IRR · UV) และ IRR เป็น % จริง (50–99)
+   ข้อความข้างล่างที่เขียนว่า “4 ค่าดูเป็นไปไม่ได้” (TSER 99 ของ UG Nanoceramic · UV 50/55/65 ของ Regionfilm · IRR 6–8 · 3M Ultra Clear เว้นว่าง)
+   **จบไปแล้วทั้งหมด** · หน้า Regionfilm เคยสลับคอลัมน์ IRR กับ UV กัน — แก้แล้ว · รหัสเฉด `CM IR` → `3M CM`
+2. **แถวในการ์ดเฉดเหลือ 2 แถว** — `ค่าการตัดรังสีอินฟาเรด (IR)` + `กันรังสี UV`
+   แถว `ลดความร้อน (TSER)` กับแถว `โทนสี` **ถูกสั่งเอาออกทั้งคู่ ห้ามใส่กลับ**
+3. **footer เหมือนกันทั้ง 17 หน้า** — กฎเก่าที่ว่า “`products/*` เก็บ span ท้ายของตัวเอง” (2026-07-22) **ยกเลิกแล้ว**
+   และข้อที่เขียนว่า 3 หน้าแบรนด์สั้นไม่มีลิงก์ LINE — **ไม่จริงแล้ว** ทุกหน้ามี `.fsoc` ครบ (CSS ย้ายเข้า `product.css` แล้ว)
+4. **จำนวนลิงก์เปลี่ยน** — `tel:` 35 → **48** · `line.me` 18 → **31**
+
+ส่วนที่เหลือของไฟล์นี้ (เหตุผลงานออกแบบ · สิ่งที่ถูกสั่งถอด · กับดัก) ยังใช้ได้ตามเดิม
+
 ## What this is
 
 WORLD FILM — a **static marketing website** (hand-written HTML + CSS, no framework, no backend) for a Thai window-tint / solar-film installation business. All content is Thai (`<html lang="th">`). There is **no build step, no `package.json`, no tests, and no linter**. **Node.js is not installed** (no `npm`/`npx`) and neither is `gh`. **Python 3.11.9 is** — call it as `python` or `py` (`python3` is a Microsoft Store stub, never use it) — but with **no Pillow**, so image resizing stays on PowerShell `System.Drawing`. Its stdout is cp1252 in this shell, so **run it as `python -X utf8`** whenever a script prints Thai (`print('ไทย')` otherwise dies with `UnicodeEncodeError: 'charmap'`); reading/writing files is fine as long as you pass `encoding='utf-8'` explicitly. Earlier revisions of this file claimed Python was absent; that was wrong (corrected 2026-09-16).

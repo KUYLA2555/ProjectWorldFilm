@@ -733,6 +733,32 @@ a {
   margin-top: 12px;
   max-width: 34ch;
 }
+.footer .fsoc {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+.footer .fsoc a {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: 0.25s;
+}
+.footer .fsoc a:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.footer .fsoc svg {
+  width: 16px;
+  height: 16px;
+  fill: #cfd6e2;
+}
+.footer .fsoc a:hover svg {
+  fill: var(--ink);
+}
 .footer .bottom {
   padding-top: 22px;
   display: flex;
