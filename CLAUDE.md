@@ -28,7 +28,7 @@ it mojibakes the Thai. → DECISIONS §What this is
 ## The numbers, at a glance
 
 Every "all N pages" claim depends on these, and they answer most sizing questions.
-**Re-verified 2026-09-18 — all matched.**
+**Re-verified 2026-09-25 — all matched** (committed files; see the `assets/works/` warning below the table).
 
 | | |
 |---|---|
@@ -40,7 +40,14 @@ Every "all N pages" claim depends on these, and they answer most sizing question
 | Real portfolio | **15 projects / 82 photos / ~9.5 MB** in `assets/works/<slug>/NN.jpg` |
 | Spec posters | **10** in `assets/sheets/` — one per spec page, all real (**re-exported by the owner 2026-09-18**) |
 | Remaining Unsplash refs | **9** across 3 files (`index` 6 · `about` 2 · `works` 1) — all decorative backgrounds |
-| CHANGELOG | at `## ครั้งที่ 124` (2026-09-18) — append to the **tail** |
+| CHANGELOG | at `## ครั้งที่ 125` (2026-09-25) — append to the **tail** |
+
+**`assets/works/` is NOT gitignored, and the owner now drops raw photo folders straight into it** (2026-09-25:
+`assets/works/Punthai coffee/` — a space in the name, `1.jpg` not `01.jpg`, files up to 1.7 MB unresized). Unlike
+`assets/PIC/` etc., a `git add -A` / `git add .` there ships the raw folder live on the next push. **Stage by explicit
+path, never `-A`**, and treat such a folder as an inbox: look at the photos, emit resized copies into an ASCII
+`<slug>/NN.jpg` folder, and ask the owner before deleting the original. `find assets/works` counts these drops too;
+`git ls-files` doesn't — that's why the check below uses it.
 
 **Line numbers in this file drift** — an insert above a pointer moves everything below it. Treat every `file:NN`
 as a hint: **grep the symbol, don't trust the number**, and if you correct one, correct it here too.
@@ -80,7 +87,7 @@ grep -rc 'class="gslide' --include=*.html . | grep -v ':0' # exactly 5 files: wo
 grep -rho 'assets/logo-white.png' --include=*.html . | wc -l   # expect 34 = 17 pages × (header + footer)
 grep -rho 'images.unsplash.com' --include=*.html . | wc -l     # expect 9 — index 6 · about 2 · works 1, all decorative
 grep -rc 'class="workcard' --include=*.html . | grep -v ':0'    # expect exactly 5 files: works 15 · uvguard 6 · ceramic 4 · nanoceramic 4 · crystalize 2 — a 6th file means a stock card came back
-find assets/works -name '*.jpg' | wc -l                        # expect 82 across 15 project folders
+git ls-files assets/works | wc -l                              # expect 82 across 15 project folders (committed only — see below)
 grep -rl 'rel="canonical"' --include=*.html . | wc -l          # expect 17 — same for og:image" / twitter:card / rel="icon"
 grep -rho 'href="tel:+66952292086"' --include=*.html . | wc -l # expect 48 = 3/page + the footer's own, on all 17 (footer unified 2026-09-18)
 grep -rl 'class="fsoc"' --include=*.html . | wc -l            # expect 17 — the footer is byte-identical sitewide except path depth
@@ -139,7 +146,7 @@ Absent markup never means the rules are safe to delete. Grep `product.css` befor
 | rule set | lives in | markup | status |
 |---|---|---|---|
 | `.spectable` (7 base + 2 in `≤768`) | `product.css:466` | none | **keep** — table returns when the owner supplies real specs |
-| `.sample-note` (3 rules) | `product.css:970` | none | **keep** — the yellow "sample data" banner |
+| `.sample-note` (3 rules) | `product.css:997` | none | **keep** — the yellow "sample data" banner |
 | `.about-stats` / `.astat` / `.num` / `.lab` (11 rules) | `about.html` inline | none | **keep** — built then reverted 2026-07-30 |
 | `.work-hero .mini` (7 rules) | `works.html` inline | **1** (`1000+`) | **live** — changed 4× in 4 days, never touch unasked |
 | `.gallery` / `.tile` / `.tile.big` / `.cap` | `index.html` inline | none | **keep** — markup deleted 2026-09-17; returns only with **real** photos |
@@ -292,23 +299,24 @@ this list, then re-run the greps above with every "expect 17" bumped to 18.
   Ultra Guard Nanoceramic no longer claims TSER 99 (IRR 83/83/85), Regionfilm's UV is 80/90/90 with IRR 50/55/65
   (**the old page had those two columns swapped** — fixed), and `3m-ultra-clear`'s poster now fills in UV (99) so
   that page no longer needs its odd one-off row labels. Shade codes on `model-3m-ultra-clear` went `CM IR 35/15/05`
-  → **`3M CM 35/15/5`** to match. **One contradiction survives and is unresolved:** 3M Ceramic Ultra Clear's VLT
-  is 37/16/5 — a dark film — while the page's prose still sells it as a clear one. Flagged to the owner, not
-  rewritten **until he said not to leave it (“ไม่ต้องปล่อยให้เป็นแบบนั้น”) the same day** — the word ใส was dropped
-  from that page's `<title>`/og twins and its 3 shade taglines, and from `brand-3m.html`'s meta + `.bhero` lead
-  (**both** 3M models are dark: Ceramate 28/12/5, Ultra Clear 37/16/5). The kept claim is the one the film
-  actually makes — เคลียร์ชัด ไม่ผสมโลหะ มืดนอกสว่างใน. **The product name “Ceramic Ultra Clear” was left
-  alone — it is 3M's real product name, not a claim this site invented.** The row label is **`ค่าการตัดรังสีอินฟราเรด (IR)`** — it shipped for one turn as อินฟาเรด (the owner's own
-  typing, kept verbatim per the don't-correct-his-spelling rule), he was asked, and he said to use the poster
-  spelling, so **68 occurrences were swept to อินฟราเรด on 2026-09-18**. The precedent held: ask, don't assume. Poster values live in `assets/WEB/` (untracked inbox); **the filename codes still mislead, so
-  read every image before mapping it** — `UV_WEB` is UV Guard, `NC_WEB` is Regionfilm, `3M_WEB` is Ceramate while
-  `3M_CM_WEB` is Ceramic Ultra Clear.
-- **Spec numbers are REAL and the poster is the source of truth.** Every VLT / heat / UV figure on the 10 spec
+  → **`3M CM 35/15/5`** to match.
+- **Neither 3M model is a clear film — don't write ใส on the 3M pages** (resolved 2026-09-18, owner:
+  “ไม่ต้องปล่อยให้เป็นแบบนั้น”). Ceramate is 28/12/5 and Ceramic Ultra Clear 37/16/5 VLT, both dark, yet the copy
+  sold Ultra Clear as clear. ใส was dropped from that page's `<title>`/og twins and 3 shade taglines, and from
+  `brand-3m.html`'s meta + `.bhero` lead; the kept claim is เคลียร์ชัด ไม่ผสมโลหะ มืดนอกสว่างใน. **The product name
+  “Ceramic Ultra Clear” stays** — it is 3M's real name, not a claim this site invented.
+- **The shade row label is `ค่าการตัดรังสีอินฟราเรด (IR)`** — it shipped for one turn as อินฟาเรด (the owner's own
+  typing, kept verbatim per the don't-correct-his-spelling rule); he was asked, chose the poster spelling, and
+  **68 occurrences were swept on 2026-09-18**. The precedent held: ask, don't assume.
+- **Poster files arrive in `assets/WEB/` (gitignored inbox) and their filename codes mislead — read every image
+  before mapping it:** `UV_WEB` is UV Guard, `NC_WEB` is Regionfilm, `3M_WEB` is Ceramate, `3M_CM_WEB` is Ceramic
+  Ultra Clear.
+- **Spec numbers are REAL and the poster is the source of truth.** Every VLT / IR / UV figure on the 10 spec
   pages was rewritten from `assets/sheets/<slug>.jpg` after the owner said *"ยึดตามค่าในภาพ"*. **A page must
   never disagree with the image sitting next to it**, and any future poster drop is applied to the page in the
   same pass, not filed as a known difference. Warranty is the exception — **10 ปี sitewide**, from no poster.
-  Four poster values look physically implausible and **the owner has already been told**; they were transcribed
-  exactly as printed, not corrected. → DECISIONS §Content conventions
+  If a poster value ever looks physically implausible, transcribe it exactly and tell the owner — don't correct
+  it. → DECISIONS §Content conventions
 - **No page may show a "project" that isn't real** (owner's rule, 2026-09-17). A works card may only exist where
   a real photo backs it. 95 stock references were deleted outright rather than refilled with other brands'
   projects — **don't rebuild them, and don't refill them.** The 9 surviving Unsplash refs are decorative
