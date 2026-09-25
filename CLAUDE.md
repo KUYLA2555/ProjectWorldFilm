@@ -37,10 +37,10 @@ Every "all N pages" claim depends on these, and they answer most sizing question
 | Pages with a contact section | **14** (all but the 3 short brand pages) |
 | Pages with shared chrome | **17** (capsule header · Products accordion · smart-hide nav · `#copyPill` · footer) |
 | Pages with favicon / og block | **17** |
-| Real portfolio | **15 projects / 82 photos / ~9.5 MB** in `assets/works/<slug>/NN.jpg` |
+| Real portfolio | **19 projects / 110 photos / ~13 MB** in `assets/works/<slug>/NN.jpg` (4 added 2026-09-25) |
 | Spec posters | **10** in `assets/sheets/` — one per spec page, all real (**re-exported by the owner 2026-09-18**) |
 | Remaining Unsplash refs | **9** across 3 files (`index` 6 · `about` 2 · `works` 1) — all decorative backgrounds |
-| CHANGELOG | at `## ครั้งที่ 125` (2026-09-25) — append to the **tail** |
+| CHANGELOG | at `## ครั้งที่ 126` (2026-09-25) — append to the **tail** |
 
 **`assets/works/` is NOT gitignored, and the owner now drops raw photo folders straight into it** (2026-09-25:
 `assets/works/Punthai coffee/` — a space in the name, `1.jpg` not `01.jpg`, files up to 1.7 MB unresized). Unlike
@@ -83,11 +83,11 @@ grep -rho '><b>[^<]*</b><span>[^<]*</span>' --include=*.html . | sort | uniq -c 
 grep -rl 'getComputedStyle(burger)' --include=*.html . | wc -l # expect 17 (every page)
 grep -rc '095-229-2086' --include=*.html .    | grep -v ':0'   # 5/page (8 on contact — 5 + its meta/og/twitter twins, 4 on the 3 short brand pages)
 grep -rho 'data-th="[^"]*"' --include=*.html . | sort | uniq -c # expect all 5 nav labels × 17
-grep -rc 'class="gslide' --include=*.html . | grep -v ':0' # exactly 5 files: works.html 82 · uvguard 30 · ceramic 23 · nanoceramic 23 · crystalize 12
+grep -rc 'class="gslide' --include=*.html . | grep -v ':0' # exactly 6 files: works.html 110 · uvguard 30 · ceramic 23 · nanoceramic 35 · crystalize 22 · titanium 6
 grep -rho 'assets/logo-white.png' --include=*.html . | wc -l   # expect 34 = 17 pages × (header + footer)
 grep -rho 'images.unsplash.com' --include=*.html . | wc -l     # expect 9 — index 6 · about 2 · works 1, all decorative
-grep -rc 'class="workcard' --include=*.html . | grep -v ':0'    # expect exactly 5 files: works 15 · uvguard 6 · ceramic 4 · nanoceramic 4 · crystalize 2 — a 6th file means a stock card came back
-git ls-files assets/works | wc -l                              # expect 82 across 15 project folders (committed only — see below)
+grep -rc 'class="workcard' --include=*.html . | grep -v ':0'    # expect exactly 6 files: works 19 · uvguard 6 · ceramic 4 · nanoceramic 6 · crystalize 3 · titanium 1 — a 7th file means a stock card came back
+git ls-files assets/works | wc -l                              # expect 110 across 19 project folders (committed only — see below)
 grep -rl 'rel="canonical"' --include=*.html . | wc -l          # expect 17 — same for og:image" / twitter:card / rel="icon"
 grep -rho 'href="tel:+66952292086"' --include=*.html . | wc -l # expect 48 = 3/page + the footer's own, on all 17 (footer unified 2026-09-18)
 grep -rl 'class="fsoc"' --include=*.html . | wc -l            # expect 17 — the footer is byte-identical sitewide except path depth
@@ -217,11 +217,16 @@ absolute URLs in the codebase are the `og:image` / `og:url` / `canonical` tags, 
   breadcrumb → `.bhero` → `.compare` card grid → footer. **No contact section, no heading block above the
   cards** — both were removed on purpose. Don't re-add them.
 - **Spec pages** (the 9 `model-*` + `brand-regionfilm`) read: phero → shade section (`.section--tint`; each
-  `.sc-specs` holds exactly **2** rows since 2026-09-18 — `ค่าการตัดรังสีอินฟาเรด (IR)` + `กันรังสี UV`; the old
+  `.sc-specs` holds exactly **2** rows since 2026-09-18 — `ค่าการตัดรังสีอินฟราเรด (IR)` + `กันรังสี UV`; the old
   `ลดความร้อน (TSER)` and `โทนสี` rows were removed at the owner's request — **don't re-add either**) →
-  works preview (**only on the 4 pages with a real matching project** — UV Guard 6 · Ceramic 4 · Crystalize 2 ·
-  Nanoceramic 4) → contact section → footer. The other 6 spec pages have **no works section at all**; their
+  works preview (**only on the 5 pages with a real matching project** — UV Guard 6 · Ceramic 4 · Crystalize 3 ·
+  Nanoceramic 6 · Titanium 1) → contact section → footer. The other 5 spec pages have **no works section at all**; their
   `#lightbox` markup and gallery JS are kept anyway so all 10 copies stay identical.
+  **Giving one of those 5 a works section** (done for Titanium 2026-09-25): copy Crystalize's `#works` block, insert it
+  before `#contact`, and **flip `#contact` from `.section` to `.section--tint`** or the paper/tint rhythm breaks.
+  `product.css` centres a 2-card grid and (since 2026-09-25) a 1-card grid via `:has()` — no markup change needed.
+  Card data (project → film → page) comes from the owner's first promo image in each `PIC_HOME` folder; that
+  promo card itself is never published (it carries a phone graphic), so a folder of N files ships N−1 photos.
 - `assets/source/` is gitignored — design originals, reference only, never link to them.
   **`assets/PIC/`, `assets/PIC_HOME/`, `assets/WEB/` are the owner's photo inboxes and are gitignored as of
   2026-09-18** (~68 MB of clients' photos; they used to be merely untracked, one `git add -A` from a live

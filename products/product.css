@@ -1674,6 +1674,18 @@ a {
     grid-template-columns: repeat(2, calc((100% - 52px) / 3));
     justify-content: center;
   }
+  /* การ์ดเดียว (Titanium มีผลงานจริง 1 โครงการ) — กว้างเท่าการ์ดปกติ วางกึ่งกลาง */
+  .works:has(> :only-child) {
+    grid-template-columns: calc((100% - 52px) / 3);
+    justify-content: center;
+  }
+}
+/* แท็บเล็ต 769–980 เป็น 2 คอลัมน์ — การ์ดเดียวก็ยังวางกึ่งกลางด้วยความกว้างครึ่งหนึ่ง (≤768 เป็น 1 คอลัมน์เต็มอยู่แล้ว) */
+@media (min-width: 769px) and (max-width: 980px) {
+  .works:has(> :only-child) {
+    grid-template-columns: calc((100% - 26px) / 2);
+    justify-content: center;
+  }
 }
 .workcard {
   background: var(--white);
