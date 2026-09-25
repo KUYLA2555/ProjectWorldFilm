@@ -1918,3 +1918,5 @@ model-ultraguard-ceramic, model-ultraguard-nano
 - ตอบเรื่อง 20 โฟลเดอร์ vs 19 โครงการ: `Fast tooth` คือรูปชุดเดียวกับ `FastTooth dental clinic` (6 ใบแรกตรงกันทุกใบ) — เจ้าของสั่งให้คงไว้ 19 โครงการก่อน ถ้ามีสาขาอื่นค่อยเพิ่ม
 - ตรวจทั้งเว็บรอบสุดท้ายก่อนขึ้นจริง — ผ่านหมด: featurebar 13×4 + contact = 14 · nav 5 × 17 · เมนูมือถือ 17 · โลโก้ 34 · tel 48 · LINE 31 · footer `.fsoc` 17 · canonical 17 · Unsplash 9 · รูปผลงาน 107 ไฟล์ครบทุกลิงก์ · แท็กเปิด/ปิดครบคู่ใน 4 หน้าที่แก้ · ไม่มี path แบบ `/…` · ไม่มีไฟล์จากกล่องรับรูป (`PIC_HOME` ฯลฯ) หลุดเข้า git
 - **push ขึ้นเว็บจริงตามที่เจ้าของสั่ง** — รวม commit ครั้งที่ 125–128
+- **ตรวจเว็บจริงหลัง push:** `https://worldfilmcenter.com` ขึ้นครบ — หน้าผลงาน 19 การ์ด · Saransiri 5 ภาพ · หน้า Titanium มีการ์ด The La Villa · Nanoceramic 6 การ์ด · รูปใหม่โหลดได้ · `saransiri-345/06.jpg` ตอบ 404 แล้ว · `CLAUDE.md` ไม่หลุดขึ้นเว็บ (404)
+- **พบว่า HTTPS ออกแล้ว** — `http://` ส่งต่อไป `https://` อัตโนมัติ · DNS ครบ: A record 4 ตัว + `www` ชี้ `kuyla2555.github.io` ถูกต้อง → แก้ `CLAUDE.md` ส่วน Git & publishing ให้ตรง (commit ไว้ในเครื่อง ยังไม่ push — เป็นเอกสารล้วน ไม่กระทบหน้าเว็บ)

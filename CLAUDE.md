@@ -284,10 +284,11 @@ this list, then re-run the greps above with every "expect 17" bumped to 18.
 - **`CNAME` (root, contains `worldfilmcenter.com`) — never delete or rename it**; it is what tells Pages which
   domain to serve. Its companion `.gitattributes` (`CNAME text eol=lf`) exists because `core.autocrlf=true` here
   and a CRLF can make Pages misread the domain.
-- **THE SITE IS LIVE at `http://worldfilmcenter.com`.** Still open on the owner's side: only one of the four
-  Pages A records exists, `CNAME www` points at the apex instead of `kuyla2555.github.io`, and **HTTPS is not
-  issued yet**. If the site ever 404s, **look at DNS first** — private-repo visibility is a dead theory, it
-  serves fine. → DECISIONS §Git & publishing for the GoDaddy parking-page diagnosis and the cache-free DNS check.
+- **THE SITE IS LIVE at `https://worldfilmcenter.com`** — verified 2026-09-25: HTTPS is issued and enforced,
+  all four Pages A records (`185.199.108–111.153`) exist, and `www` is a CNAME to `kuyla2555.github.io`.
+  **`http://` now answers `301` → `https://`**, so a post-push check with plain `curl` finds nothing and looks
+  like a failed deploy — use `curl -sL https://…`. Deploys land within ~2 minutes. If the site ever 404s,
+  **look at DNS first** — private-repo visibility is a dead theory, it serves fine. → DECISIONS §Git & publishing for the GoDaddy parking-page diagnosis and the cache-free DNS check.
 - **The owner also commits from the GitHub web UI**, so a push can be rejected as non-fast-forward.
   **Don't force** — `git fetch origin`, read `git log --oneline HEAD..origin/main`, then `git rebase origin/main`.
   (Git-Bash mangles `rev:path` arguments on Windows; prefix with `MSYS_NO_PATHCONV=1` to read a file out of a
