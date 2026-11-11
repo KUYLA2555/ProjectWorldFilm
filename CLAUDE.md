@@ -38,7 +38,7 @@ Every "all N pages" claim depends on these, and they answer most sizing question
 | Real portfolio | **24 projects / 136 photos / ~17 MB** in `assets/works/<slug>/NN.jpg` (5 added 2026-11-11) |
 | Spec posters | **10** in `assets/sheets/` — one per spec page, all real (**re-exported by the owner 2026-09-18**) |
 | Remaining Unsplash refs | **9** across 3 files (`index` 6 · `about` 2 · `works` 1) — all decorative backgrounds |
-| CHANGELOG | at `## ครั้งที่ 131` (2026-11-11) — append to the **tail** |
+| CHANGELOG | at `## ครั้งที่ 132` (2026-11-11) — append to the **tail** |
 
 **`assets/works/` is NOT gitignored, and the owner now drops raw photo folders straight into it** (2026-09-25:
 `assets/works/Punthai coffee/` — a space in the name, `1.jpg` not `01.jpg`, files up to 1.7 MB unresized). Unlike
