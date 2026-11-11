@@ -18,11 +18,11 @@ grep -rho '><b>[^<]*</b><span>[^<]*</span>' --include=*.html . | sort | uniq -c 
 grep -rl 'getComputedStyle(burger)' --include=*.html . | wc -l # expect 17 (every page)
 grep -rc '095-229-2086' --include=*.html .    | grep -v ':0'   # 5/page (8 on contact — 5 + its meta/og/twitter twins, 4 on the 3 short brand pages)
 grep -rho 'data-th="[^"]*"' --include=*.html . | sort | uniq -c # expect all 5 nav labels × 17
-grep -rc 'class="gslide' --include=*.html . | grep -v ':0' # exactly 6 files: works.html 107 · uvguard 30 · ceramic 23 · nanoceramic 35 · crystalize 19 · titanium 6
+grep -rc 'class="gslide' --include=*.html . | grep -v ':0' # exactly 7 files: works.html 136 · uvguard 39 · ceramic 29 · nanoceramic 43 · crystalize 19 · titanium 6 · extra-clear 6
 grep -rho 'assets/logo-white.png' --include=*.html . | wc -l   # expect 34 = 17 pages × (header + footer)
 grep -rho 'images.unsplash.com' --include=*.html . | wc -l     # expect 9 — index 6 · about 2 · works 1, all decorative
-grep -rc 'class="workcard' --include=*.html . | grep -v ':0'    # expect exactly 6 files: works 19 · uvguard 6 · ceramic 4 · nanoceramic 6 · crystalize 3 · titanium 1 — a 7th file means a stock card came back
-git ls-files assets/works | wc -l                              # expect 107 across 19 project folders (committed only — see below)
+grep -rc 'class="workcard' --include=*.html . | grep -v ':0'    # expect exactly 7 files: works 24 · uvguard 8 · ceramic 5 · nanoceramic 7 · crystalize 3 · titanium 1 · extra-clear 1 — an 8th file means a stock card came back
+git ls-files assets/works | wc -l                              # expect 136 across 24 project folders (committed only — see below)
 grep -rl 'rel="canonical"' --include=*.html . | wc -l          # expect 17 — same for og:image" / twitter:card / rel="icon"
 grep -rho 'href="tel:+66952292086"' --include=*.html . | wc -l # expect 48 = 3/page + the footer's own, on all 17 (footer unified 2026-09-18)
 grep -rl 'class="fsoc"' --include=*.html . | wc -l            # expect 17 — the footer is byte-identical sitewide except path depth

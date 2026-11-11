@@ -35,10 +35,10 @@ Every "all N pages" claim depends on these, and they answer most sizing question
 | Pages with a contact section | **14** (all but the 3 short brand pages) — `grep 'id="contact"'` finds **13**, because `contact.html` *is* the contact page; that's not drift |
 | Pages with shared chrome | **17** (capsule header · Products accordion · smart-hide nav · `#copyPill` · footer) |
 | Pages with favicon / og block | **17** |
-| Real portfolio | **19 projects / 107 photos / ~13 MB** in `assets/works/<slug>/NN.jpg` (4 added 2026-09-25) |
+| Real portfolio | **24 projects / 136 photos / ~17 MB** in `assets/works/<slug>/NN.jpg` (5 added 2026-11-11) |
 | Spec posters | **10** in `assets/sheets/` — one per spec page, all real (**re-exported by the owner 2026-09-18**) |
 | Remaining Unsplash refs | **9** across 3 files (`index` 6 · `about` 2 · `works` 1) — all decorative backgrounds |
-| CHANGELOG | at `## ครั้งที่ 130` (2026-11-11) — append to the **tail** |
+| CHANGELOG | at `## ครั้งที่ 131` (2026-11-11) — append to the **tail** |
 
 **`assets/works/` is NOT gitignored, and the owner now drops raw photo folders straight into it** (2026-09-25:
 `assets/works/Punthai coffee/` — a space in the name, `1.jpg` not `01.jpg`, files up to 1.7 MB unresized). Unlike
