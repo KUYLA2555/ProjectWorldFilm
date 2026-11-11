@@ -13,11 +13,9 @@ WORLD FILM — a **static marketing website** (hand-written HTML + CSS, no frame
 window-tint / solar-film installation business. All content is Thai (`<html lang="th">`). There is **no build
 step, no `package.json`, no tests, and no linter** — you verify by eye and by counting greps.
 
-**Toolchain on this machine:** **Node.js is not installed** (no `npm`/`npx`), and neither is `gh`.
-**Python 3.11.9 is** — call it `python` or `py` (`python3` is a Microsoft Store stub, never use it) — but with
-**no Pillow**, so image resizing stays on PowerShell `System.Drawing`. Python's stdout is cp1252 in this shell,
-so **run it as `python -X utf8`** whenever a script prints Thai; file I/O is fine if you pass
-`encoding='utf-8'` explicitly.
+**Toolchain:** what this machine has installed (Python · Node · ffmpeg · git) is listed in `C:\Claude\CLAUDE.md`;
+`gh` is not installed. Python's stdout is cp1252 in this shell, so **run it as `python -X utf8`** whenever a
+script prints Thai; file I/O is fine if you pass `encoding='utf-8'` explicitly.
 
 **Thai + shell, the short version:** Git-Bash `sed`/`grep` handle Thai UTF-8 cleanly and are the right tool
 when a string has no ASCII anchor. **PowerShell is the fragile one** — don't match Thai bytes with it, and a
@@ -28,84 +26,40 @@ it mojibakes the Thai. → DECISIONS §What this is
 ## The numbers, at a glance
 
 Every "all N pages" claim depends on these, and they answer most sizing questions.
-**Re-verified 2026-09-25 — all matched** (committed files; see the `assets/works/` warning below the table).
+**Re-verified 2026-11-11 — all matched** (committed files; see the `assets/works/` warning below the table).
 
 | | |
 |---|---|
 | HTML pages | **17** = 4 root (`index` · `about` · `works` · `contact`) + 4 `brand-*` + 9 `model-*` |
 | Spec pages | **10** (the 9 `model-*` + `brand-regionfilm`) |
-| Pages with a contact section | **14** (all but the 3 short brand pages) |
+| Pages with a contact section | **14** (all but the 3 short brand pages) — `grep 'id="contact"'` finds **13**, because `contact.html` *is* the contact page; that's not drift |
 | Pages with shared chrome | **17** (capsule header · Products accordion · smart-hide nav · `#copyPill` · footer) |
 | Pages with favicon / og block | **17** |
 | Real portfolio | **19 projects / 107 photos / ~13 MB** in `assets/works/<slug>/NN.jpg` (4 added 2026-09-25) |
 | Spec posters | **10** in `assets/sheets/` — one per spec page, all real (**re-exported by the owner 2026-09-18**) |
 | Remaining Unsplash refs | **9** across 3 files (`index` 6 · `about` 2 · `works` 1) — all decorative backgrounds |
-| CHANGELOG | at `## ครั้งที่ 128` (2026-09-25) — append to the **tail** |
+| CHANGELOG | at `## ครั้งที่ 130` (2026-11-11) — append to the **tail** |
 
 **`assets/works/` is NOT gitignored, and the owner now drops raw photo folders straight into it** (2026-09-25:
 `assets/works/Punthai coffee/` — a space in the name, `1.jpg` not `01.jpg`, files up to 1.7 MB unresized). Unlike
 `assets/PIC/` etc., a `git add -A` / `git add .` there ships the raw folder live on the next push. **Stage by explicit
 path, never `-A`**, and treat such a folder as an inbox: look at the photos, emit resized copies into an ASCII
 `<slug>/NN.jpg` folder, and ask the owner before deleting the original. `find assets/works` counts these drops too;
-`git ls-files` doesn't — that's why the check below uses it.
+`git ls-files` doesn't — that's why the `verify-sitewide` check uses it.
 
 **Line numbers in this file drift** — an insert above a pointer moves everything below it. Treat every `file:NN`
 as a hint: **grep the symbol, don't trust the number**, and if you correct one, correct it here too.
 
 ## Running / previewing
 
-- Quickest look: open `index.html` in a browser directly.
-- For anything needing HTTP (the Chrome-automation extension blocks `file://`):
-  `python -m http.server 8753 --bind 127.0.0.1` from the repo root (Bash tool, `run_in_background`).
-  Stop it with `taskkill //F //IM python.exe`. A PowerShell `HttpListener` fallback is in
-  → DECISIONS §Running / previewing.
-- **Neither server sends `Cache-Control`**, so Chrome will re-show the pre-edit page and make a correct fix look
-  broken. **Always cache-bust when re-checking an edit** — `…/index.html?v=2`, bumping the number each reload.
-- **Many sections start hidden** (`.reveal` = `opacity: 0` until scrolled into view). After navigating, scroll so
-  they animate in before screenshotting, or the page looks blank. **Root pages only** — `products/*` render
-  everything immediately.
-- **Chrome automation quirks on this machine:** `resize_window` reports success but the OS ignores it (test
-  mobile widths by injecting an `<iframe>` instead); the automation tab reports `document.hidden === true`, so
-  smooth scrolls never move (pass `{behavior:'instant'}`) and the `.reveal` observer doesn't fire on programmatic
-  scrolls (use the `computer` tool's mouse-wheel `scroll`). None of that is a site bug.
-  → DECISIONS §Running / previewing
+Previewing in a browser (local server, cache-busting, hidden `.reveal` sections, this machine's Chrome-automation
+quirks) → **skill `preview-site`** (`.claude/skills/preview-site/SKILL.md`).
 
 ## Verifying a sitewide change
 
-There is no linter or test suite, so the check that a shared-chrome / duplicated-block edit landed on **every**
-copy is a counting grep. Run one after any sweep — a page that silently didn't match shows up as a missing row
-or a wrong count:
-
-```bash
-# featurebar: the strongest single check — proves wording, not just presence.
-# All 4 canonical pairs must come back at exactly 13 each (contact.html renders its own markup = the 14th page).
-grep -rho '><b>[^<]*</b><span>[^<]*</span>' --include=*.html . | sort | uniq -c | sort -rn
-grep -rl 'getComputedStyle(burger)' --include=*.html . | wc -l # expect 17 (every page)
-grep -rc '095-229-2086' --include=*.html .    | grep -v ':0'   # 5/page (8 on contact — 5 + its meta/og/twitter twins, 4 on the 3 short brand pages)
-grep -rho 'data-th="[^"]*"' --include=*.html . | sort | uniq -c # expect all 5 nav labels × 17
-grep -rc 'class="gslide' --include=*.html . | grep -v ':0' # exactly 6 files: works.html 107 · uvguard 30 · ceramic 23 · nanoceramic 35 · crystalize 19 · titanium 6
-grep -rho 'assets/logo-white.png' --include=*.html . | wc -l   # expect 34 = 17 pages × (header + footer)
-grep -rho 'images.unsplash.com' --include=*.html . | wc -l     # expect 9 — index 6 · about 2 · works 1, all decorative
-grep -rc 'class="workcard' --include=*.html . | grep -v ':0'    # expect exactly 6 files: works 19 · uvguard 6 · ceramic 4 · nanoceramic 6 · crystalize 3 · titanium 1 — a 7th file means a stock card came back
-git ls-files assets/works | wc -l                              # expect 107 across 19 project folders (committed only — see below)
-grep -rl 'rel="canonical"' --include=*.html . | wc -l          # expect 17 — same for og:image" / twitter:card / rel="icon"
-grep -rho 'href="tel:+66952292086"' --include=*.html . | wc -l # expect 48 = 3/page + the footer's own, on all 17 (footer unified 2026-09-18)
-grep -rl 'class="fsoc"' --include=*.html . | wc -l            # expect 17 — the footer is byte-identical sitewide except path depth
-```
-
-**Two traps in this block, both by design:**
-
-- **The `><b>` featurebar grep silently skips `contact.html`** — its 4 items sit in `.vprop`/`.m` markup whose
-  `<b>` starts a fresh line, which is why the check tops out at 13, not 14. For a **wording** sweep always
-  follow up with a bare text count so the 14th page can't be left behind:
-  `grep -rl 'ประเมินพื้นที่หน้างานฟรี' --include=*.html . | wc -l` → **expect 14**. Count the **full item
-  label**, not a bare word — `contact.html` also says `ประเมินหน้างานฟรี` in ordinary prose.
-- The featurebar grep also returns `1 ><b>1000+</b><span>โครงการที่ส่งมอบ</span>`. That is **not drift** — it's
-  `works.html`'s hero `.mini` stat, which happens to share the markup shape.
-
-Same idea for any duplicated block: **grep the text, not the class**, and check the count is uniform. A page the
-editor re-wrapped still matches a short text fragment when a whole-tag `Edit` would have missed it.
-If a count comes back different, **treat the mismatch as the finding** rather than re-deriving the whole table.
+There is no linter or test suite. **After any shared-chrome / duplicated-block / sitewide edit, run the counting
+greps in skill `verify-sitewide`** (`.claude/skills/verify-sitewide/SKILL.md`) — expected counts plus two
+by-design traps. A page that silently didn't match shows up as a wrong count; **treat the mismatch as the finding.**
 
 ## Architecture — the essentials
 
@@ -164,7 +118,6 @@ the 9 `model-*` pages carry **27** leftover `class="… reveal"` elements. They 
 copy the `.reveal` CSS into `product.css` without the observer, all 27 go invisible sitewide. **Move both or
 neither.**
 
-**Design tokens:** navy `--ink:#14223d` + gold `--gold:#c0973f` / `--gold-bright`, warm paper backgrounds.
 Font is **IBM Plex Sans Thai only** (the `.h-thai` / `.serif` class names survive but resolve to it).
 Sections alternate `.section` (paper) / `.section--tint` (light) / `.ctaband` (navy) — **removing a section flips
 the rhythm, so re-check the alternation on that page afterwards.**
@@ -193,15 +146,6 @@ Nav order on every page: **logo (→ `index.html`) · Home · Products ▾ · Pr
 CTA pill**. The **Products top-level link is an anchor, not a page**: `#brands` on `index.html`,
 `index.html#brands` on other root pages, `../index.html#brands` on `products/*` — keep this pattern.
 
-```
-index.html ── "Products" dropdown / brand cards (most-expensive → cheapest)
-   ├─ products/brand-regionfilm.html → **is itself the spec page**
-   ├─ products/brand-ultraguard.html → model-ultraguard-{nanoceramic,super-clear}.html
-   ├─ products/brand-3m.html         → model-3m-{ceramate,ultra-clear}.html
-   └─ products/brand-finnix.html     → model-finnix-{uvguard,ceramic,extra-clear,titanium,crystalize}.html
-works.html · about.html · contact.html — root-level pages
-```
-
 **Ordering is the owner's price ranking and is applied in five places that must stay in step:** the nav
 `.submenu` (×17), the footer "ฟิล์มของเรา" column (×17), `index.html`'s `.brandlogos` row, and the `.compare`
 model-card grids on the 3 models-listing brand pages. Brands: **Regionfilm · Ultra Guard · 3M · Finnix**.
@@ -212,23 +156,10 @@ model-card grids on the 3 models-listing brand pages. Brands: **Regionfilm · Ul
 the site is served at a domain root, and a single `/assets/…` would break it on one host or the other. The only
 absolute URLs in the codebase are the `og:image` / `og:url` / `canonical` tags, which are deliberate.
 
-**Page shapes:**
-- The **3 models-listing brand pages** (`brand-finnix` · `brand-3m` · `brand-ultraguard`) are deliberately short:
-  breadcrumb → `.bhero` → `.compare` card grid → footer. **No contact section, no heading block above the
-  cards** — both were removed on purpose. Don't re-add them.
-- **Spec pages** (the 9 `model-*` + `brand-regionfilm`) read: phero → shade section (`.section--tint`; each
-  `.sc-specs` holds exactly **2** rows since 2026-09-18 — `ค่าการตัดรังสีอินฟราเรด (IR)` + `กันรังสี UV`; the old
-  `ลดความร้อน (TSER)` and `โทนสี` rows were removed at the owner's request — **don't re-add either**) →
-  works preview (**only on the 5 pages with a real matching project** — UV Guard 6 · Ceramic 4 · Crystalize 3 ·
-  Nanoceramic 6 · Titanium 1) → contact section → footer. The other 5 spec pages have **no works section at all**; their
-  `#lightbox` markup and gallery JS are kept anyway so all 10 copies stay identical.
-  **Giving one of those 5 a works section** (done for Titanium 2026-09-25): copy Crystalize's `#works` block, insert it
-  before `#contact`, and **flip `#contact` from `.section` to `.section--tint`** or the paper/tint rhythm breaks.
-  `product.css` centres a 2-card grid and (since 2026-09-25) a 1-card grid via `:has()` — no markup change needed.
-  Card data (project → film → page) comes from the owner's first promo image in each `PIC_HOME` folder; that
-  promo card itself is never published (it carries a phone graphic), so a folder of N files ships N−1 photos.
-  **The owner's folder is the source of truth for a card's photos** (2026-09-25, *"แก้ไขเอาให้ตรงกับรูปที่มีในโฟเดอร์"*):
-  when it changes, rebuild `assets/works/<slug>/` from it in folder order — including removing photos he dropped.
+**Page shapes** — section order of the 3 short brand pages vs the 10 spec pages, which spec pages carry a works
+section, and how to give one a works section — live in `products/CLAUDE.md`, which loads when you work under
+`products/`.
+
 - `assets/source/` is gitignored — design originals, reference only, never link to them.
   **`assets/PIC/`, `assets/PIC_HOME/`, `assets/WEB/` are the owner's photo inboxes and are gitignored as of
   2026-09-18** (~68 MB of clients' photos; they used to be merely untracked, one `git add -A` from a live
@@ -239,33 +170,14 @@ absolute URLs in the codebase are the `og:image` / `og:url` / `canonical` tags, 
 
 ## Adding or removing a page — checklist
 
-A page is self-contained, so adding one is cheap; what gets forgotten is the **12 places outside it**. Work down
-this list, then re-run the greps above with every "expect 17" bumped to 18.
-
-1. **The page file** — copy the closest existing sibling (`model-*.html` for a model page) so the capsule header,
-   footer and inline `<script>` come along complete.
-2. **`<head>`** — `<title>` and `<meta name="description">`, then the `<!-- ==== favicon / แชร์ลิงก์ (og) ==== -->`
-   block **directly after the description**. `og:title` / `og:description` are **byte-identical twins** of the
-   title and description — edit one, edit the other. `og:image`, `og:url` and `canonical` are **absolute**
-   `https://worldfilmcenter.com/…`; the 3 icon links are relative and change depth (`../assets/` under
-   `products/`).
-3. **Nav `.submenu`** on all 17 other pages, in price order.
-4. **Footer "ฟิล์มของเรา" column** on all 17 other pages, same order.
-5. **The brand page's `.compare` grid** — add a `.cmc--logo` card plus a lockup in `assets/models/`
-   (1200×848, ASCII filename).
-6. **`index.html`** — `.brandlogos` row and the "4 แบรนด์ชั้นนำ" heading, if it's a new brand.
-7. **`.submenu { max-height: 260px }` in _both_ stylesheets** — bump it if this makes a 5th brand.
-8. **`sitemap.xml`** — it is a **generated file with hard-coded `lastmod`**, not a live one. Regenerate it
-   (walk `*.html` + `products/*.html`; `index.html` maps to the bare `/`) or Google keeps crawling a stale list.
-9. **`README.md`** — the page map, plus its `— อัปเดตล่าสุด <date>` footer line.
-10. **This file** — the numbers table at the top.
-11. **`CHANGELOG.md`** — `## ครั้งที่ N` at the tail.
-12. **Re-run the verification greps.** Removing a page is the same list in reverse, plus: check the alternation
-    of `.section` / `.section--tint` on any page you cut a section from, and confirm nothing anchors at it.
+A page is self-contained; what gets forgotten is the **12 places outside it** (nav ×17, footer ×17, sitemap,
+README, this file's numbers, CHANGELOG …). Work through **skill `add-remove-page`**
+(`.claude/skills/add-remove-page/SKILL.md`), then re-run `verify-sitewide` with every "expect 17" bumped to 18.
 
 ## Git & publishing
 
-- Remote `origin` is the **private** GitHub repo `KUYLA2555/ProjectWorldFilm`.
+- The GitHub repo `KUYLA2555/ProjectWorldFilm` is **public** (checked 2026-10-12) — anyone can read every
+  committed file, so never commit secrets.
 - **DO NOT PUSH WITHOUT THE OWNER'S GO-AHEAD.** The old "push every turn" rule **is dead** — it was replaced the
   moment `worldfilmcenter.com` started serving real customers:
   *“ถ้ามีการแก้ไขหรืออัพเดทอะไรอย่าเพิ่งอัพขึ้นเว็บจริงก่อนนะ ให้แก้เสร็จและชัวร์จนยืนยันแล้วว่าใช้งานได้จริง”*.
@@ -276,9 +188,9 @@ this list, then re-run the greps above with every "expect 17" bumped to 18.
   finished and unpushed, say so plainly and name the commits that are waiting.**
 - **A push to `main` auto-deploys (GitHub Pages), so pushing = going live.** `.github/workflows/static.yml` is
   **the one file in the repo the owner wrote himself** — touch it only when asked. Since 2026-09-17 it `rsync`s
-  the repo into `_site/` **excluding `*.md`, `.github/`, `.git/`, `.gitattributes`, `.gitignore`** (publishes
-  **136** files, withholds **7**), so `CLAUDE.md` / `DECISIONS.md` / `CHANGELOG.md` / `README.md` stay in the repo but
-  never reach the live domain. **Two guards must stay:** it `exit 1`s if `_site/CNAME` or `_site/index.html` is
+  the repo into `_site/` **excluding `*.md`, `.github/`, `.git/`, `.gitattributes`, `.gitignore`**, so every
+  `*.md` — `CLAUDE.md`, `products/CLAUDE.md`, `.claude/skills/*/SKILL.md`, `DECISIONS.md`, `CHANGELOG.md`, `README.md` —
+  stays in the repo but never reaches the live domain. **Two guards must stay:** it `exit 1`s if `_site/CNAME` or `_site/index.html` is
   missing. If the exclude list ever widens, keep `CNAME`, `sitemap.xml`, `robots.txt`, `assets/`, `products/`
   and every `*.html`.
 - **`CNAME` (root, contains `worldfilmcenter.com`) — never delete or rename it**; it is what tells Pages which
@@ -358,3 +270,6 @@ this list, then re-run the greps above with every "expect 17" bumped to 18.
   `git log --oneline -3`). Never load the whole file.
 - **`README.md` is the Thai-language owner's guide** and duplicates the file tree, page map and contact details.
   Update it when pages or contact info change, including its `— อัปเดตล่าสุด <date>` footer line.
+  **Its `หมายเหตุสำคัญ` section is stale (checked 2026-11-11)** — it still says spec numbers are samples, the repo is
+  private, HTTPS isn't issued, the short brand pages lack a LINE link, and lists poster values as implausible — all
+  resolved since. **Where README and this file disagree, this file wins**; don't "fix" pages to match README.
