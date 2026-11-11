@@ -38,13 +38,16 @@ Every "all N pages" claim depends on these, and they answer most sizing question
 | Real portfolio | **24 projects / 136 photos / ~17 MB** in `assets/works/<slug>/NN.jpg` (5 added 2026-11-11) |
 | Spec posters | **10** in `assets/sheets/` — one per spec page, all real (**re-exported by the owner 2026-09-18**) |
 | Remaining Unsplash refs | **9** across 3 files (`index` 6 · `about` 2 · `works` 1) — all decorative backgrounds |
-| CHANGELOG | at `## ครั้งที่ 132` (2026-11-11) — append to the **tail** |
+| CHANGELOG | at `## ครั้งที่ 133` (2026-11-11) — append to the **tail** |
 
 **`assets/works/` is NOT gitignored, and the owner now drops raw photo folders straight into it** (2026-09-25:
 `assets/works/Punthai coffee/` — a space in the name, `1.jpg` not `01.jpg`, files up to 1.7 MB unresized). Unlike
 `assets/PIC/` etc., a `git add -A` / `git add .` there ships the raw folder live on the next push. **Stage by explicit
 path, never `-A`**, and treat such a folder as an inbox: look at the photos, emit resized copies into an ASCII
-`<slug>/NN.jpg` folder, and ask the owner before deleting the original. `find assets/works` counts these drops too;
+`<slug>/NN.jpg` folder, and ask the owner before deleting the original. **Two checks before any photo ships**
+(2026-11-11): skip AI-generated sources (OpenAI/C2PA marker — see `products/CLAUDE.md`), and **mosaic every readable
+licence plate** — the owner's standing ask; `prestige-rangsit/01.jpg` was rebuilt from its source with a 9px mosaic over
+both plates. Red dealer plates on showroom cars are not a client's and stay as they are. `find assets/works` counts these drops too;
 `git ls-files` doesn't — that's why the `verify-sitewide` check uses it.
 
 **Line numbers in this file drift** — an insert above a pointer moves everything below it. Treat every `file:NN`
@@ -244,6 +247,11 @@ README, this file's numbers, CHANGELOG …). Work through **skill `add-remove-pa
   broken, isn't — don't "fix" it), and the 9 remaining slots each need a *specific* photo, so handle them one at
   a time, never with `sed`. An exterior-house shot for homepage hero slide 1 and `about.html`'s hero has
   **never been supplied — ask for it.**
+- **AI-made images the owner has seen and chosen to keep (2026-11-11) — don't replace them or raise them again.**
+  Homepage hero `assets/hero/hero-family-pets.jpg` is ChatGPT-generated (its source `PIC/_1.png` carries an OpenAI C2PA
+  manifest); told, the owner answered *"เอาตามเดิมไม่ต้องไปเปลี่ยนอะไรเลย"*. It is a decorative lifestyle slide, not a
+  portfolio claim, so it doesn't break the real-projects rule. The 10 spec posters in `WEB/` carry the same manifest;
+  he was advised to re-check their figures against the manufacturers' sheets — the poster stays the source of truth.
 - **Contact details** — `095-229-2086`, LINE `@worldcenter`,
   `https://www.facebook.com/Worldsfilm1` — appear in the header CTA pill, `.nav-call`, the copy-pill JS, contact
   cards/sections and the footer of every page. **Update all occurrences together, and remember `contact.html`
